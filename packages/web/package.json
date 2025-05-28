@@ -19,7 +19,13 @@
   "devDependencies": {
     "typescript": "^5.3.0"
   },
-  "keywords": ["icons", "evcc", "web-components", "custom-elements", "typescript"],
+  "keywords": [
+    "icons",
+    "evcc",
+    "web-components",
+    "custom-elements",
+    "typescript"
+  ],
   "author": "naltatis, michael@evcc.io",
   "license": "CC-BY-NC-SA-4.0",
   "repository": {

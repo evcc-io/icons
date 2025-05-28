@@ -21,5 +21,9 @@
   },
   "include": ["src/**/*", "scripts/**/*"],
   "exclude": ["node_modules", "dist", "packages", "**/*.test.*", "**/*.spec.*"],
-  "references": [{ "path": "./packages/react" }, { "path": "./packages/vue" }, { "path": "./packages/web" }]
+  "references": [
+    { "path": "./packages/react" },
+    { "path": "./packages/vue" },
+    { "path": "./packages/web" }
+  ]
 }

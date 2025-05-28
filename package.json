@@ -17,10 +17,7 @@
       "require": "./dist/svg-registry.js"
     }
   },
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "npm run clean && npm run build:registry",
     "build:registry": "tsx scripts/build-svg-registry.ts",
