@@ -1,8 +1,8 @@
 {
   "release-type": "node",
-  "include-component-in-tag": true,
-  "tag-separator": "@",
-  "separate-pull-requests": true,
+  "include-component-in-tag": false,
+  "separate-pull-requests": false,
+  "group-pull-request-title-pattern": "chore: release ${version}",
   "changelog-sections": [
     {
       "type": "feat",
@@ -68,5 +68,11 @@
     "packages/web": {
       "package-name": "@evcc/icons-web"
     }
-  }
+  },
+  "groups": [
+    {
+      "title": "evcc-icons",
+      "packages": [".", "packages/react", "packages/vue", "packages/web"]
+    }
+  ]
 }

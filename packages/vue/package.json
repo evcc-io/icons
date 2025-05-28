@@ -1,6 +1,7 @@
 {
   "name": "@evcc/icons-vue",
   "version": "0.1.0",
+  "type": "module",
   "description": "Vue components for evcc icons",
   "main": "dist/index.js",
   "module": "dist/index.js",
