@@ -7,14 +7,14 @@
 	"types": "dist/svg-registry.d.ts",
 	"exports": {
 		".": {
+			"types": "./dist/svg-registry.d.ts",
 			"import": "./dist/svg-registry.js",
-			"require": "./dist/svg-registry.js",
-			"types": "./dist/svg-registry.d.ts"
+			"require": "./dist/svg-registry.js"
 		},
 		"./registry": {
+			"types": "./dist/svg-registry.d.ts",
 			"import": "./dist/svg-registry.js",
-			"require": "./dist/svg-registry.js",
-			"types": "./dist/svg-registry.d.ts"
+			"require": "./dist/svg-registry.js"
 		}
 	},
 	"files": ["dist", "README.md"],

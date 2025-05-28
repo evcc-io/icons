@@ -14,6 +14,7 @@ export default defineConfig({
 		rollupOptions: {
 			external: ["vue", "@evcc/icons"],
 			output: {
+				exports: "named",
 				globals: {
 					vue: "Vue",
 					"@evcc/icons": "EvccIcons",
