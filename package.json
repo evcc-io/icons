@@ -1,72 +1,63 @@
 {
-	"name": "@evcc/icons",
-	"version": "0.1.0",
-	"description": "A collection of evcc icons for vehicles, meters, and chargers. Core SVG registry with framework-specific packages available.",
-	"main": "dist/svg-registry.js",
-	"module": "dist/svg-registry.js",
-	"types": "dist/svg-registry.d.ts",
-	"exports": {
-		".": {
-			"types": "./dist/svg-registry.d.ts",
-			"import": "./dist/svg-registry.js",
-			"require": "./dist/svg-registry.js"
-		},
-		"./registry": {
-			"types": "./dist/svg-registry.d.ts",
-			"import": "./dist/svg-registry.js",
-			"require": "./dist/svg-registry.js"
-		}
-	},
-	"files": ["dist", "README.md"],
-	"scripts": {
-		"build": "npm run clean && npm run build:registry",
-		"build:registry": "tsx scripts/build-svg-registry.ts",
-		"build:docs": "tsx scripts/build-docs.ts",
-		"serve:docs": "tsx scripts/serve-docs.ts",
-		"clean": "rm -rf dist",
-		"clean:all": "npm run clean && cd packages/react && npm run clean && cd ../vue && npm run clean && cd ../web && npm run clean",
-		"prepare": "npm run build",
-		"dev": "npm run build && npm run test:examples",
-		"test:examples": "tsx examples/test.ts",
-		"type-check": "tsc --noEmit",
-		"lint": "npx @biomejs/biome check . && npm run type-check",
-		"lint:svg": "tsx scripts/svg-quality-control.ts",
-		"build:packages": "npm run build && npm run build:react && npm run build:vue && npm run build:web",
-		"build:packages:clean": "npm run clean:all && npm run build:packages",
-		"build:react": "cd packages/react && npm ci && npm run build",
-		"build:vue": "cd packages/vue && npm ci && npm run build",
-		"build:web": "cd packages/web && npm ci && npm run build",
-		"install:packages": "cd packages/react && npm ci && cd ../vue && npm ci && cd ../web && npm ci"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
-		"@types/node": "^22.15.23",
-		"glob": "^11.0.2",
-		"tsx": "^4.7.0",
-		"typescript": "^5.3.0"
-	},
-	"keywords": [
-		"icons",
-		"evcc",
-		"vehicles",
-		"chargers",
-		"meters",
-		"svg",
-		"registry",
-		"typescript"
-	],
-	"author": {
-		"name": "naltatis",
-		"email": "michael@evcc.io",
-		"url": "https://evcc.io"
-	},
-	"license": "CC-BY-NC-SA-4.0",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/evcc-io/evcc-icons.git"
-	},
-	"bugs": {
-		"url": "https://github.com/evcc-io/evcc-icons/issues"
-	},
-	"homepage": "https://github.com/evcc-io/evcc-icons#readme"
+  "name": "@evcc/icons",
+  "version": "0.1.0",
+  "description": "A collection of evcc icons for vehicles, meters, and chargers. Core SVG registry with framework-specific packages available.",
+  "main": "dist/svg-registry.js",
+  "module": "dist/svg-registry.js",
+  "types": "dist/svg-registry.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/svg-registry.d.ts",
+      "import": "./dist/svg-registry.js",
+      "require": "./dist/svg-registry.js"
+    },
+    "./registry": {
+      "types": "./dist/svg-registry.d.ts",
+      "import": "./dist/svg-registry.js",
+      "require": "./dist/svg-registry.js"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "npm run clean && npm run build:registry",
+    "build:registry": "tsx scripts/build-svg-registry.ts",
+    "build:docs": "tsx scripts/build-docs.ts",
+    "serve:docs": "tsx scripts/serve-docs.ts",
+    "clean": "rm -rf dist",
+    "clean:all": "npm run clean && cd packages/react && npm run clean && cd ../vue && npm run clean && cd ../web && npm run clean",
+    "prepare": "npm run build",
+    "dev": "npm run build && npm run test:examples",
+    "test:examples": "tsx examples/test.ts",
+    "type-check": "tsc --noEmit",
+    "lint": "npx @biomejs/biome check . && npm run type-check",
+    "lint:svg": "tsx scripts/svg-quality-control.ts",
+    "build:packages": "npm run build && npm run build:react && npm run build:vue && npm run build:web",
+    "build:packages:clean": "npm run clean:all && npm run build:packages",
+    "build:react": "cd packages/react && npm ci && npm run build",
+    "build:vue": "cd packages/vue && npm ci && npm run build",
+    "build:web": "cd packages/web && npm ci && npm run build",
+    "install:packages": "cd packages/react && npm ci && cd ../vue && npm ci && cd ../web && npm ci"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "^22.15.23",
+    "glob": "^11.0.2",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  },
+  "keywords": ["icons", "evcc", "vehicles", "chargers", "meters", "svg", "registry", "typescript"],
+  "author": {
+    "name": "naltatis",
+    "email": "michael@evcc.io",
+    "url": "https://evcc.io"
+  },
+  "license": "CC-BY-NC-SA-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evcc-io/evcc-icons.git"
+  },
+  "bugs": {
+    "url": "https://github.com/evcc-io/evcc-icons/issues"
+  },
+  "homepage": "https://github.com/evcc-io/evcc-icons#readme"
 }

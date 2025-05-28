@@ -3,61 +3,61 @@ import path from "node:path";
 import { glob } from "glob";
 
 interface IconData {
-	type: string;
-	name: string;
-	path: string;
-	svg: string;
+  type: string;
+  name: string;
+  path: string;
+  svg: string;
 }
 
 const buildDocs = async (): Promise<void> => {
-	console.log("Building documentation...");
+  console.log("Building documentation...");
 
-	// Ensure docs directory exists
-	if (!fs.existsSync("docs")) {
-		fs.mkdirSync("docs", { recursive: true });
-	}
+  // Ensure docs directory exists
+  if (!fs.existsSync("docs")) {
+    fs.mkdirSync("docs", { recursive: true });
+  }
 
-	const svgFiles = await glob("src/**/*.svg");
-	const icons: IconData[] = [];
+  const svgFiles = await glob("src/**/*.svg");
+  const icons: IconData[] = [];
 
-	console.log(`Found ${svgFiles.length} SVG files`);
+  console.log(`Found ${svgFiles.length} SVG files`);
 
-	svgFiles.forEach((filePath) => {
-		const content = fs.readFileSync(filePath, "utf8");
+  svgFiles.forEach((filePath) => {
+    const content = fs.readFileSync(filePath, "utf8");
 
-		// Clean SVG content
-		const cleanSvg = content
-			.replace(/^<\?xml[^>]*\?>/, "")
-			.replace(/<!DOCTYPE[^>]*>/, "")
-			.trim();
+    // Clean SVG content
+    const cleanSvg = content
+      .replace(/^<\?xml[^>]*\?>/, "")
+      .replace(/<!DOCTYPE[^>]*>/, "")
+      .trim();
 
-		// Extract type and name from path
-		const relativePath = path.relative("src", filePath);
-		const type = path.dirname(relativePath).replace(/s$/, ""); // remove 's' from vehicles -> vehicle
-		const name = path.basename(relativePath, ".svg");
+    // Extract type and name from path
+    const relativePath = path.relative("src", filePath);
+    const type = path.dirname(relativePath).replace(/s$/, ""); // remove 's' from vehicles -> vehicle
+    const name = path.basename(relativePath, ".svg");
 
-		icons.push({
-			type,
-			name,
-			path: filePath,
-			svg: cleanSvg,
-		});
-	});
+    icons.push({
+      type,
+      name,
+      path: filePath,
+      svg: cleanSvg,
+    });
+  });
 
-	// Group icons by type
-	const iconsByType = icons.reduce(
-		(acc, icon) => {
-			if (!acc[icon.type]) {
-				acc[icon.type] = [];
-			}
-			acc[icon.type].push(icon);
-			return acc;
-		},
-		{} as Record<string, IconData[]>,
-	);
+  // Group icons by type
+  const iconsByType = icons.reduce(
+    (acc, icon) => {
+      if (!acc[icon.type]) {
+        acc[icon.type] = [];
+      }
+      acc[icon.type].push(icon);
+      return acc;
+    },
+    {} as Record<string, IconData[]>,
+  );
 
-	// Generate HTML documentation
-	const htmlContent = `<!DOCTYPE html>
+  // Generate HTML documentation
+  const htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -144,36 +144,31 @@ const buildDocs = async (): Promise<void> => {
     </div>
 
     ${Object.entries(iconsByType)
-			.map(
-				([type, typeIcons]) => `
+      .map(
+        ([type, typeIcons]) => `
     <div class="icon-section" data-type="${type}">
-        <h2>${type.charAt(0).toUpperCase() + type.slice(1)}s (${
-					typeIcons.length
-				})</h2>
+        <h2>${type.charAt(0).toUpperCase() + type.slice(1)}s (${typeIcons.length})</h2>
         <div class="icon-grid">
             ${typeIcons
-							.map(
-								(icon) => `
+              .map(
+                (icon) => `
             <div class="icon-card" data-name="${icon.name}">
                 <div class="icon-display">
                     ${icon.svg}
                 </div>
                 <div class="icon-name">${icon.name}</div>
-                <button class="copy-btn" onclick="copyToClipboard('${icon.svg.replace(
-									/'/g,
-									"\\'",
-								)}')">
+                <button class="copy-btn" onclick="copyToClipboard('${icon.svg.replace(/'/g, "\\'")}')">
                     Copy SVG
                 </button>
             </div>
             `,
-							)
-							.join("")}
+              )
+              .join("")}
         </div>
     </div>
     `,
-			)
-			.join("")}
+      )
+      .join("")}
 
     <script>
         function copyToClipboard(text) {
@@ -198,9 +193,9 @@ const buildDocs = async (): Promise<void> => {
 </body>
 </html>`;
 
-	fs.writeFileSync("docs/index.html", htmlContent);
-	console.log(`Documentation built with ${icons.length} icons`);
-	console.log("Documentation available at: docs/index.html");
+  fs.writeFileSync("docs/index.html", htmlContent);
+  console.log(`Documentation built with ${icons.length} icons`);
+  console.log("Documentation available at: docs/index.html");
 };
 
 buildDocs().catch(console.error);
