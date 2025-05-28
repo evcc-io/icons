@@ -6,7 +6,7 @@ A collection of evcc icons for vehicles, meters, and chargers. Available as sepa
 
 ## 📖 Documentation
 
-**[View all icons →](https://evcc-io.github.io/evcc-icons/)**
+**[View all icons →](https://evcc-io.github.io/icons/)**
 
 Browse the complete collection of icons with search functionality and click-to-copy SVG code.
 
@@ -159,25 +159,6 @@ console.log(svgRegistry);
 | `width`                          | `string \| number`                  | ❌       | -         | Icon width                             |
 | `height`                         | `string \| number`                  | ❌       | -         | Icon height                            |
 | `className` / `class`            | `string`                            | ❌       | -         | Additional CSS classes                 |
-
-## Available Icons
-
-### Vehicles
-
-- `hyundai-inster` - Hyundai Inster
-- `kia-ev9` - Kia EV9
-- `kia-niro-ev` - Kia Niro EV
-
-### Meters
-
-- `e3dc-s10` - E3DC S10
-
-### Chargers
-
-- `easee-home` - Easee Home
-- `keba-kecontact-p30` - KEBA KeContact P30
-
-**[View all icons with visual preview →](https://evcc-io.github.io/icons/)**
 
 ## Color Customization
 
