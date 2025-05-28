@@ -1,5 +1,5 @@
 {
-  ".": "0.2.0",
+  ".": "0.3.0",
   "packages/react": "0.1.0",
   "packages/vue": "0.1.0",
   "packages/web": "0.1.0"
