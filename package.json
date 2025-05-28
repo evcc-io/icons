@@ -30,6 +30,7 @@
 		"test:examples": "tsx examples/test.ts",
 		"type-check": "tsc --noEmit",
 		"lint": "npx @biomejs/biome check . && npm run type-check",
+		"lint:svg": "tsx scripts/svg-quality-control.ts",
 		"build:packages": "npm run build && npm run build:react && npm run build:vue && npm run build:web",
 		"build:packages:clean": "npm run clean:all && npm run build:packages",
 		"build:react": "cd packages/react && npm ci && npm run build",

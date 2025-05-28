@@ -25,6 +25,9 @@ jobs:
       - name: Lint and type check
         run: npm run lint
 
+      - name: Lint SVGs
+        run: npm run lint:svg
+
       - name: Build core package
         run: npm run build
 
