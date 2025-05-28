@@ -1,89 +1,96 @@
 {
-  "release-type": "node",
-  "include-component-in-tag": false,
-  "separate-pull-requests": false,
-  "group-pull-request-title-pattern": "chore: release ${version}",
-  "skip-github-release": false,
-  "draft": false,
-  "prerelease": false,
-  "bump-minor-pre-major": true,
-  "bump-patch-for-minor-pre-major": false,
-  "versioning-strategy": "default",
-  "extra-files": [],
-  "include-v-in-tag": true,
-  "tag-separator": "@",
-  "release-search-depth": 400,
-  "commit-search-depth": 500,
-  "changelog-sections": [
-    {
-      "type": "feat",
-      "section": "Features",
-      "hidden": false
+    "release-type": "node",
+    "include-component-in-tag": false,
+    "separate-pull-requests": false,
+    "group-pull-request-title-pattern": "chore: release ${version}",
+    "skip-github-release": false,
+    "draft": false,
+    "prerelease": false,
+    "bump-minor-pre-major": true,
+    "bump-patch-for-minor-pre-major": false,
+    "versioning-strategy": "default",
+    "extra-files": [],
+    "include-v-in-tag": true,
+    "tag-separator": "@",
+    "release-search-depth": 400,
+    "commit-search-depth": 500,
+    "sequential-calls": true,
+    "always-link-local": false,
+    "changelog-sections": [
+        {
+            "type": "feat",
+            "section": "Features",
+            "hidden": false
+        },
+        {
+            "type": "fix",
+            "section": "Bug Fixes",
+            "hidden": false
+        },
+        {
+            "type": "docs",
+            "section": "Documentation",
+            "hidden": false
+        },
+        {
+            "type": "style",
+            "section": "Styles",
+            "hidden": false
+        },
+        {
+            "type": "refactor",
+            "section": "Code Refactoring",
+            "hidden": false
+        },
+        {
+            "type": "perf",
+            "section": "Performance Improvements",
+            "hidden": false
+        },
+        {
+            "type": "test",
+            "section": "Tests",
+            "hidden": false
+        },
+        {
+            "type": "build",
+            "section": "Build System",
+            "hidden": false
+        },
+        {
+            "type": "ci",
+            "section": "Continuous Integration",
+            "hidden": false
+        },
+        {
+            "type": "chore",
+            "section": "Chores",
+            "hidden": true
+        }
+    ],
+    "packages": {
+        ".": {
+            "package-name": "@evcc/icons"
+        },
+        "packages/react": {
+            "package-name": "@evcc/icons-react"
+        },
+        "packages/vue": {
+            "package-name": "@evcc/icons-vue"
+        },
+        "packages/web": {
+            "package-name": "@evcc/icons-web"
+        }
     },
-    {
-      "type": "fix",
-      "section": "Bug Fixes",
-      "hidden": false
-    },
-    {
-      "type": "docs",
-      "section": "Documentation",
-      "hidden": false
-    },
-    {
-      "type": "style",
-      "section": "Styles",
-      "hidden": false
-    },
-    {
-      "type": "refactor",
-      "section": "Code Refactoring",
-      "hidden": false
-    },
-    {
-      "type": "perf",
-      "section": "Performance Improvements",
-      "hidden": false
-    },
-    {
-      "type": "test",
-      "section": "Tests",
-      "hidden": false
-    },
-    {
-      "type": "build",
-      "section": "Build System",
-      "hidden": false
-    },
-    {
-      "type": "ci",
-      "section": "Continuous Integration",
-      "hidden": false
-    },
-    {
-      "type": "chore",
-      "section": "Chores",
-      "hidden": true
-    }
-  ],
-  "packages": {
-    ".": {
-      "package-name": "@evcc/icons"
-    },
-    "packages/react": {
-      "package-name": "@evcc/icons-react"
-    },
-    "packages/vue": {
-      "package-name": "@evcc/icons-vue"
-    },
-    "packages/web": {
-      "package-name": "@evcc/icons-web"
-    }
-  },
-  "groups": [
-    {
-      "title": "evcc-icons",
-      "packages": [".", "packages/react", "packages/vue", "packages/web"]
-    }
-  ]
+    "groups": [
+        {
+            "title": "evcc-icons",
+            "packages": [
+                ".",
+                "packages/react",
+                "packages/vue",
+                "packages/web"
+            ]
+        }
+    ]
 }
