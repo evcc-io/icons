@@ -177,7 +177,7 @@ console.log(svgRegistry);
 - `easee-home` - Easee Home
 - `keba-kecontact-p30` - KEBA KeContact P30
 
-**[View all icons with visual preview →](https://evcc-io.github.io/evcc-icons/)**
+**[View all icons with visual preview →](https://evcc-io.github.io/icons/)**
 
 ## Color Customization
 
