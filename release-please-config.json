@@ -3,6 +3,17 @@
   "include-component-in-tag": false,
   "separate-pull-requests": false,
   "group-pull-request-title-pattern": "chore: release ${version}",
+  "skip-github-release": false,
+  "draft": false,
+  "prerelease": false,
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": false,
+  "versioning-strategy": "default",
+  "extra-files": [],
+  "include-v-in-tag": true,
+  "tag-separator": "@",
+  "release-search-depth": 400,
+  "commit-search-depth": 500,
   "changelog-sections": [
     {
       "type": "feat",
