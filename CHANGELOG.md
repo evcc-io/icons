@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0](https://github.com/evcc-io/icons/compare/icons@v0.1.0...icons@v0.2.0) (2025-05-28)
+
+
+### Features
+
+* removed broken icons ([cc63993](https://github.com/evcc-io/icons/commit/cc639931e72de5e068c66e1d016c2f8ae188f979))
+
 ## [Unreleased]
 
 ### Added
