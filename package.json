@@ -24,15 +24,18 @@
 		"build:docs": "tsx scripts/build-docs.ts",
 		"serve:docs": "tsx scripts/serve-docs.ts",
 		"clean": "rm -rf dist",
+		"clean:all": "npm run clean && cd packages/react && npm run clean && cd ../vue && npm run clean && cd ../web && npm run clean",
 		"prepare": "npm run build",
 		"dev": "npm run build && npm run test:examples",
 		"test:examples": "tsx examples/test.ts",
 		"type-check": "tsc --noEmit",
 		"lint": "npx @biomejs/biome check . && npm run type-check",
 		"build:packages": "npm run build && npm run build:react && npm run build:vue && npm run build:web",
-		"build:react": "cd packages/react && npm run build",
-		"build:vue": "cd packages/vue && npm run build",
-		"build:web": "cd packages/web && npm run build"
+		"build:packages:clean": "npm run clean:all && npm run build:packages",
+		"build:react": "cd packages/react && npm ci && npm run build",
+		"build:vue": "cd packages/vue && npm ci && npm run build",
+		"build:web": "cd packages/web && npm ci && npm run build",
+		"install:packages": "cd packages/react && npm ci && cd ../vue && npm ci && cd ../web && npm ci"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",

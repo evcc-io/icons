@@ -9,7 +9,7 @@
 	"scripts": {
 		"build": "npm run clean && npm run build:components",
 		"build:components": "vite build && vue-tsc --declaration --emitDeclarationOnly",
-		"clean": "rm -rf dist",
+		"clean": "rm -rf dist *.tsbuildinfo",
 		"prepare": "npm run build",
 		"type-check": "vue-tsc --noEmit"
 	},

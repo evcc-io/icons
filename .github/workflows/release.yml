@@ -38,14 +38,8 @@ jobs:
       - name: Build core package
         run: npm run build
 
-      - name: Install and build React package
-        run: cd packages/react && npm ci && npm run type-check && npm run build
-
-      - name: Install and build Vue package
-        run: cd packages/vue && npm ci && npm run type-check && npm run build
-
-      - name: Install and build Web package
-        run: cd packages/web && npm ci && npm run type-check && npm run build
+      - name: Install and build all packages
+        run: npm run build:packages:clean
 
       - name: Test examples
         run: npm run test:examples
@@ -77,9 +71,7 @@ jobs:
       - name: Build packages
         run: |
           npm run build
-          cd packages/react && npm ci && npm run build
-          cd ../vue && npm ci && npm run build
-          cd ../web && npm ci && npm run build
+          npm run build:packages:clean
 
       - name: Publish core package
         run: npm publish --access public
