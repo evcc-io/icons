@@ -1,5 +1,7 @@
 # evcc Icons
 
+🖍️ Work in progress 🖍️
+
 A collection of evcc icons for vehicles, meters, and chargers. Available as separate packages for React, Vue, and Web Components.
 
 ## 📖 Documentation
@@ -245,7 +247,7 @@ This project is licensed under the [Creative Commons Attribution-NonCommercial-S
 - ✅ **Free for open source** - Use in open source projects
 - ✅ **Free for education** - Use in educational materials
 - ❌ **No commercial use** - Cannot be used in commercial products or services
-- 📝 **Attribution required** - Must credit "naltatis, michael@evcc.io"
+- 📝 **Attribution required** - Must credit "https://evcc.io"
 - 🔄 **Share-alike** - Derivatives must use the same license
 
-For commercial licensing options, please contact naltatis, michael@evcc.io.
+For commercial licensing options, please contact info@evcc.io.
