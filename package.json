@@ -1,6 +1,6 @@
 {
   "name": "@evcc/icons",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A collection of evcc icons for vehicles, meters, and chargers. Core SVG registry with framework-specific packages available.",
   "main": "dist/svg-registry.js",
   "module": "dist/svg-registry.js",
@@ -17,7 +17,10 @@
       "require": "./dist/svg-registry.js"
     }
   },
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "npm run clean && npm run build:registry",
     "build:registry": "tsx scripts/build-svg-registry.ts",
