@@ -1,0 +1,58 @@
+{
+    "name": "@evcc/icons",
+    "version": "0.1.0",
+    "description": "A collection of evcc icons for vehicles, meters, and chargers. Core SVG registry with framework-specific packages available.",
+    "main": "dist/svg-registry.js",
+    "module": "dist/svg-registry.js",
+    "exports": {
+        ".": {
+            "import": "./dist/svg-registry.js",
+            "require": "./dist/svg-registry.js"
+        },
+        "./registry": {
+            "import": "./dist/svg-registry.js",
+            "require": "./dist/svg-registry.js"
+        }
+    },
+    "types": "dist/svg-registry.d.ts",
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "scripts": {
+        "build": "npm run clean && npm run build:registry",
+        "build:registry": "node scripts/build-svg-registry.js",
+        "build:docs": "node scripts/build-docs.js",
+        "serve:docs": "npm run build:docs && node scripts/serve-docs.js",
+        "clean": "rm -rf dist",
+        "prepare": "npm run build",
+        "dev": "npm run build && npm run test:examples",
+        "test:examples": "node examples/test.js"
+    },
+    "devDependencies": {
+        "glob": "^10.0.0"
+    },
+    "keywords": [
+        "icons",
+        "evcc",
+        "vehicles",
+        "chargers",
+        "meters",
+        "svg",
+        "registry"
+    ],
+    "author": {
+        "name": "naltatis",
+        "email": "michael@evcc.io",
+        "url": "https://github.com/naltatis"
+    },
+    "license": "CC-BY-NC-SA-4.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/evcc-io/evcc-icons.git"
+    },
+    "bugs": {
+        "url": "https://github.com/evcc-io/evcc-icons/issues"
+    },
+    "homepage": "https://github.com/evcc-io/evcc-icons#readme"
+}

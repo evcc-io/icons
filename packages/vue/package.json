@@ -1,0 +1,37 @@
+{
+    "name": "@evcc/icons-vue",
+    "version": "0.1.0",
+    "description": "Vue components for evcc icons",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "scripts": {
+        "build": "npm run clean && npm run build:components",
+        "build:components": "mkdir -p dist && cp src/* dist/",
+        "clean": "rm -rf dist",
+        "prepare": "npm run build"
+    },
+    "peerDependencies": {
+        "vue": "^3.0.0"
+    },
+    "dependencies": {
+        "@evcc/icons": "^0.1.0"
+    },
+    "keywords": [
+        "icons",
+        "evcc",
+        "vue",
+        "components"
+    ],
+    "author": "naltatis, michael@evcc.io",
+    "license": "CC-BY-NC-SA-4.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/evcc-io/evcc-icons.git",
+        "directory": "packages/vue"
+    }
+}

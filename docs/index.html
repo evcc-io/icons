@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>evcc Icons - Complete Overview</title>
+    <style>
+        :root {
+            /* evcc brand colors */
+            --evcc-green: #0FDD42;
+            --evcc-dark: #1c2445;
+            --evcc-accent: #4eb84b;
+
+            /* Light theme */
+            --bg-color: #ffffff;
+            --text-color: #1c2445;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --hover-bg: #f9fafb;
+            --card-bg: #ffffff;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f172a;
+                --text-color: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --border-color: #334155;
+                --hover-bg: #1e293b;
+                --card-bg: #1e293b;
+                --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+                --shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--evcc-green) 0%, var(--evcc-accent) 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(15, 221, 66, 0.9) 0%, rgba(78, 184, 75, 0.9) 100%);
+            z-index: 1;
+        }
+
+        .header>* {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.025em;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header p:last-child {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 0.75rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .category {
+            margin-bottom: 4rem;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--evcc-green);
+            text-transform: capitalize;
+            color: var(--text-color);
+            letter-spacing: -0.025em;
+        }
+
+        .category-count {
+            font-weight: 500;
+            opacity: 0.7;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .icons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .icon-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon-card:hover {
+            background: var(--hover-bg);
+            border-color: var(--evcc-green);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .icon-card:focus {
+            outline: 2px solid var(--evcc-green);
+            outline-offset: 2px;
+        }
+
+        .icon-display {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .icon-display svg {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+        }
+
+        .icon-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            word-break: break-word;
+            color: var(--text-color);
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-top: auto;
+        }
+
+        .search-container {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            background: var(--card-bg);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: var(--shadow);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--evcc-green);
+            box-shadow: 0 0 0 3px rgba(15, 221, 66, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .footer {
+            margin-top: 5rem;
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            background: var(--hover-bg);
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .footer a {
+            color: var(--evcc-green);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .footer a:hover {
+            color: var(--evcc-accent);
+            text-decoration: underline;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: slideUp 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-icon {
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            background: var(--hover-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-icon svg {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+        }
+
+        .modal-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: var(--text-color);
+            letter-spacing: -0.025em;
+        }
+
+        .modal-category {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            text-transform: capitalize;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--hover-bg);
+            border: 1px solid var(--border-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .modal-close:hover {
+            background: var(--evcc-green);
+            color: white;
+            border-color: var(--evcc-green);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.25rem;
+            }
+
+            .header p {
+                font-size: 1.1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .icons-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 1rem;
+            }
+
+            .icon-card {
+                padding: 0.75rem;
+            }
+
+            .icon-display {
+                width: 80px;
+                height: 80px;
+                margin: 0 auto 0.5rem;
+            }
+
+            .icon-name {
+                font-size: 0.8rem;
+            }
+
+            .category-title {
+                font-size: 1.75rem;
+            }
+
+            .modal-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .modal-icon {
+                width: 250px;
+                height: 250px;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .search-input {
+                font-size: 1rem;
+                padding: 0.875rem 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 2rem 0;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .icons-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+
+            .icon-display {
+                width: 70px;
+                height: 70px;
+            }
+
+            .icon-name {
+                font-size: 0.75rem;
+            }
+
+            .modal-icon {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>evcc Icons</h1>
+            <p>A comprehensive collection of icons for electric vehicle charging infrastructure</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search icons..." id="search-input"
+                aria-label="Search icons">
+        </div>
+
+        <div id="icons-container">
+            <!-- Icons will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <p>
+                Icons are licensed under
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"
+                    rel="noopener">CC-BY-NC-SA-4.0</a>
+                |
+                <a href="https://github.com/evcc-io/evcc-icons" target="_blank" rel="noopener">View on GitHub</a>
+                |
+                <a href="https://evcc.io" target="_blank" rel="noopener">evcc.io</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close" aria-label="Close modal">×</button>
+            <div class="modal-icon" id="modal-icon">
+                <!-- SVG will be inserted here -->
+            </div>
+            <h2 class="modal-title" id="modal-title">Icon Title</h2>
+            <p class="modal-category" id="modal-category">Icon Category</p>
+        </div>
+    </div>
+
+    <script>
+        // This will be populated by the build script
+        const iconRegistry = {
+            "vehicle/kia-niro-ev": "<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 120 120\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;\"><g><path d=\"M13.577,67.289l-0.184,-1.882c0,0 1.366,-1.318 4.501,-2.32c3.135,-1.002 9.032,-2.685 19.731,-2.7c-0,-0 11.899,-7.339 16.284,-8.694c4.384,-1.356 19.57,-2.894 46.226,0.849l0.009,0.403c-0,0 -1.295,0.642 -2.138,1.43c-0,-0 3.414,2.138 6.668,4.69c0,0 1.168,0.592 1.378,0.995c0.21,0.402 0.195,1.052 0.258,1.174c0.064,0.123 0.256,0.793 0.268,0.994l-0.215,0.167c-0,0 -0.225,2.598 -0.135,4.009c0.089,1.411 1.042,2.035 1.619,2.496c0,-0 0.067,2.603 0.242,4.968c-0,-0 -0.55,2.357 -1.428,2.987c-0.877,0.629 -4.526,1.054 -5.457,1.12c-0.932,0.065 -7.491,2.078 -18.032,1.716c-10.541,-0.363 -36.055,0.117 -44.124,0.097c-8.069,-0.02 -13.222,0.831 -18.927,0.434c-5.704,-0.397 -5.598,-0.891 -5.598,-0.891c0,0 -2.575,-0.394 -2.464,-1.272c0.111,-0.879 0.579,-1.222 0.579,-1.222c0,-0 -0.481,-3.318 -0.45,-5.09c0.032,-1.772 1.389,-4.458 1.389,-4.458Z\" style=\"fill:var(--evcc-accent-color, #4eb84b);\"/><path d=\"M15.305,66.621c0.357,-0.092 1.081,-0.201 2.277,-0.372c1.196,-0.172 2.807,-0.31 3.221,-0.338c0.413,-0.028 0.736,0.176 0.438,0.518c-0.298,0.341 -1.367,1.953 -2.035,3.231c-0.669,1.277 -0.875,1.82 -0.875,1.82c0,0 -1.89,-0.07 -2.286,-0.099c-0.396,-0.028 -0.404,-0.131 -0.485,-0.371c-0.08,-0.239 -0.543,-1.771 -0.543,-1.771c-0,0 -0.641,-0.014 -0.79,0c-0.15,0.015 -0.219,-0.1 -0.232,-0.263c-0.013,-0.163 0.661,-1.704 0.769,-1.939c0.108,-0.235 0.184,-0.324 0.541,-0.416Z\" style=\"fill:#fff;\"/><path d=\"M89.048,53.139c-0,0 3.944,0.49 4.918,0.661c0.974,0.171 1.832,0.358 2.816,1.029c0.985,0.671 4.287,3.17 4.992,3.705c0.706,0.535 0.762,1.27 0.606,1.841c-0.155,0.571 -1.247,4.46 -1.247,4.46c0,-0 -1.205,-1.025 -1.238,-1.664c-0.032,-0.64 0.501,-3.316 0.196,-3.827c-0.305,-0.511 -3.473,-3.696 -5.511,-4.305c-2.037,-0.609 -3.956,-0.738 -4.577,-1.12c-0.621,-0.382 -0.955,-0.78 -0.955,-0.78Z\" style=\"fill:#fff;\"/><path d=\"M13.577,67.289l-0.184,-1.882c0,0 1.366,-1.318 4.501,-2.32c3.135,-1.002 9.032,-2.685 19.731,-2.7c-0,-0 11.899,-7.339 16.284,-8.694c4.384,-1.356 19.57,-2.894 46.226,0.849l0.009,0.403c-0,0 -1.295,0.642 -2.138,1.43c-0,-0 3.414,2.138 6.668,4.69c0,0 1.168,0.592 1.378,0.995c0.21,0.402 0.195,1.052 0.258,1.174c0.064,0.123 0.256,0.793 0.268,0.994l-0.215,0.167c-0,0 -0.225,2.598 -0.135,4.009c0.089,1.411 1.042,2.035 1.619,2.496c0,-0 0.067,2.603 0.242,4.968c-0,-0 -0.55,2.357 -1.428,2.987c-0.877,0.629 -4.526,1.054 -5.457,1.12c-0.932,0.065 -7.491,2.078 -18.032,1.716c-10.541,-0.363 -36.055,0.117 -44.124,0.097c-8.069,-0.02 -13.222,0.831 -18.927,0.434c-5.704,-0.397 -5.598,-0.891 -5.598,-0.891c0,0 -2.575,-0.394 -2.464,-1.272c0.111,-0.879 0.579,-1.222 0.579,-1.222c0,-0 -0.481,-3.318 -0.45,-5.09c0.032,-1.772 1.389,-4.458 1.389,-4.458Z\" style=\"fill:none;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/><path d=\"M42.993,62.129c0,-0 7.405,-5.833 13.994,-7.301c6.59,-1.467 25.493,-0.553 25.493,-0.553c-0,0 5.781,4.473 5.792,5.635c0.01,1.162 -0.128,1.286 -0.128,1.286l-45.151,0.933Z\" style=\"fill:#fff;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/><circle cx=\"29.943\" cy=\"76.812\" r=\"7.246\" style=\"fill:#fff;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/><circle cx=\"92.501\" cy=\"76.812\" r=\"7.246\" style=\"fill:#fff;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/></g></svg>",
+            "vehicle/kia-ev9": "<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 120 120\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;\"><g><path d=\"M13.693,63.999c0,-0 1.517,-1.493 3.718,-2.45c2.201,-0.958 12.945,-2.185 19.197,-2.11c-0,-0 11.339,-8.081 13.459,-8.899c2.121,-0.817 5.424,-1.932 25.175,-1.58c19.751,0.351 19.994,0.744 23.486,1.286c3.492,0.542 4.355,1.127 4.355,1.127l-0.556,1.096l-0.547,0.132c-0,0 -1.125,0.651 -0.833,1.089c0.291,0.439 4.636,5.543 4.498,6.497c-0,-0 0.504,0.753 0.573,1.177c0.069,0.425 -0.138,2.962 -0.122,4.136c0.016,1.175 0.861,1.817 0.881,2.394c0.02,0.578 0.001,1.154 0.001,1.154l0.595,0.644l0.111,2.238l0.3,0.199c0,-0 -0.302,2.961 -2.606,4.006c-2.305,1.046 -4.091,1.49 -5.726,1.618c-1.635,0.129 -19.959,0.518 -19.959,0.518c-0,0 -25.795,0.465 -33.093,0.404c-7.298,-0.062 -28.288,0.739 -31.312,0.365c-3.025,-0.374 -3.379,-1.124 -3.241,-2.728c0.139,-1.605 0.368,-1.465 0.368,-1.465l-0.353,-3.881c-0,-0 0.123,-0.428 0.478,-1.103c0.354,-0.674 0.691,-1.007 0.816,-1.567c0.126,-0.56 0.337,-4.297 0.337,-4.297Z\" style=\"fill:var(--evcc-accent-color, #4eb84b);\"/><path d=\"M13.297,70.466c0,0 0.596,-0.185 0.782,-0.257c0.187,-0.072 0.459,-0.154 0.668,-0.53c0.128,-0.23 1.358,-2.457 2.334,-4.128c0.625,-1.069 1.171,-1.886 1.171,-1.886c0,-0 0.821,-0.281 1.736,-0.504c0.914,-0.223 1.409,-0.309 1.719,-0.453c0.31,-0.144 1.333,-1.046 1.333,-1.046c0,0 -2.572,0.141 -4.303,0.474c-0,-0 -1.374,0.357 -2.879,1.419c-0.187,0.131 -2.165,0.444 -2.165,0.444l-0.044,0.748c-0,0 1.587,-0.092 1.58,0.101c-0.011,0.344 -0.783,2.155 -0.783,2.155c-0,0 -0.703,1.925 -0.771,2.119c-0.114,0.333 -0.378,1.344 -0.378,1.344Z\" style=\"fill:#fff;\"/><path d=\"M100.781,54.75c0,0 0.079,0.468 0.225,0.71c0.146,0.243 2.216,2.756 2.206,3.566c-0.01,0.811 -0.133,1.448 -0.116,2.717c0.016,1.269 0.142,3.532 0.142,3.532l2.089,1.207c0,0 1.182,0.385 0.959,-0.065c-0.091,-0.183 -0.189,-0.779 -0.19,-1.132c-0.002,-0.334 0.038,-1.205 0.056,-1.621c0.045,-1.042 0.106,-1.906 0.079,-2.136c-0.011,-0.087 -0.013,-0.341 -0.167,-0.605c-0.04,-0.068 -0.075,-0.155 -0.116,-0.23c-0.048,-0.088 -0.1,-0.165 -0.136,-0.238c-0.079,-0.163 -0.167,-0.268 -0.167,-0.268c-0,-0 -0.008,-0.184 -0.069,-0.362c-0.099,-0.286 -0.249,-0.539 -0.354,-0.699c-0.21,-0.323 -0.976,-1.491 -1.724,-2.458c-0.318,-0.41 -1.376,-1.832 -1.802,-2.28c-0.613,-0.642 -0.915,0.362 -0.915,0.362Z\" style=\"fill:#fff;\"/><path d=\"M41.474,60.669c0,0 2.181,-1.617 4.681,-3.208c5.24,-3.333 4.493,-4.093 13.73,-4.597c7.562,-0.414 31.558,0.022 32.683,0.585c1.432,0.716 2.063,1.063 1.192,1.963c-0.87,0.901 -2.191,2.067 -4.87,2.775c-2.679,0.707 -47.416,2.482 -47.416,2.482Z\" style=\"fill:#fff;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/><path d=\"M13.693,63.999c0,-0 1.517,-1.493 3.718,-2.45c2.201,-0.958 12.945,-2.185 19.197,-2.11c-0,-0 11.339,-8.081 13.459,-8.899c2.121,-0.817 5.424,-1.932 25.175,-1.58c19.751,0.351 19.994,0.744 23.486,1.286c3.492,0.542 4.355,1.127 4.355,1.127l-0.556,1.096l-0.547,0.132c-0,0 -1.125,0.651 -0.833,1.089c0.291,0.439 4.636,5.543 4.498,6.497c-0,-0 0.504,0.753 0.573,1.177c0.069,0.425 -0.138,2.962 -0.122,4.136c0.016,1.175 0.861,1.817 0.881,2.394c0.02,0.578 0.001,1.154 0.001,1.154l0.595,0.644l0.111,2.238l0.3,0.199c0,-0 -0.302,2.961 -2.606,4.006c-2.305,1.046 -4.091,1.49 -5.726,1.618c-1.635,0.129 -19.959,0.518 -19.959,0.518c-0,0 -25.795,0.465 -33.093,0.404c-7.298,-0.062 -28.288,0.739 -31.312,0.365c-3.025,-0.374 -3.379,-1.124 -3.241,-2.728c0.139,-1.605 0.368,-1.465 0.368,-1.465l-0.353,-3.881c-0,-0 0.123,-0.428 0.478,-1.103c0.354,-0.674 0.691,-1.007 0.816,-1.567c0.126,-0.56 0.337,-4.297 0.337,-4.297Z\" style=\"fill:none;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/><circle cx=\"26.592\" cy=\"75.524\" r=\"8.417\" style=\"fill:#fff;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/><circle cx=\"90.616\" cy=\"75.524\" r=\"8.417\" style=\"fill:#fff;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/></g></svg>",
+            "vehicle/hyundai-inster": "<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 120 120\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;\"><g><path d=\"M12.259,77.673c0,-0 0.142,-2.626 -0.152,-3.748c-0.294,-1.121 0.24,-2.177 0.564,-2.708l0.027,-5.679c0,-0 1.61,-1.986 2.52,-3.526c0.91,-1.539 3.366,-2.821 7.018,-3.459c3.651,-0.637 11.399,-1.553 14.011,-1.363c0,0 10.356,-9.421 13.911,-10.85c3.555,-1.429 20.539,-2.25 46.52,-0.643c0,-0 1.282,0.005 0.178,1.786c-0,-0 5.014,4.608 9.317,8.663c-0,-0 0.689,5.607 0.145,6.566c-0,0 1.437,2.271 1.491,4.726c0.055,2.455 0.983,8.448 -2.131,9.871c-3.115,1.424 -20.343,2.63 -20.343,2.63c0,-0 -41.699,0.461 -47.356,0.387c-5.656,-0.075 -19.331,-0.235 -19.331,-0.235c0,0 -1.837,0.228 -3.841,-0.808c-2.003,-1.036 -2.548,-1.61 -2.548,-1.61Z\" style=\"fill:var(--evcc-accent-color, #4eb84b);\"/><path d=\"M13.617,64.353c-0,-0 3.232,-0.289 5.59,-1.148c2.358,-0.86 2.481,-1.677 2.481,-1.677l-5.195,0.413c-0,-0 -1.212,-0.002 -1.626,0.636c-0.497,0.767 -1.25,1.776 -1.25,1.776Z\" style=\"fill:#fff;\"/><path d=\"M13.648,67.027c0.058,-0.249 0.105,-0.616 0.452,-0.618c0.346,-0.002 0.803,-0.045 0.747,2.572c-0.056,2.617 -0.376,2.554 -0.764,2.56c-0.388,0.007 -0.409,-0.233 -0.455,-0.438c-0.096,-0.431 -0.129,-1.465 -0.126,-2.144c0.004,-0.652 0.046,-1.507 0.146,-1.932Z\" style=\"fill:#fff;\"/><path d=\"M106.503,60.025c-0.003,0.138 -1.064,-0.177 -2.16,-0.992c-1.532,-1.139 -3.247,-2.927 -3.247,-2.927c0,-0 2.771,-0.046 3.617,-0.04c0.487,0.004 1.46,0.08 1.46,0.08c-0,-0 0.345,3.201 0.33,3.879Z\" style=\"fill:#fff;\"/><path d=\"M40.38,58.648c0,-0 8.742,-7.87 11.214,-8.791c2.473,-0.921 12.031,-1.128 12.031,-1.128c-0,0 -0.299,7.281 -2.632,8.676c-2.334,1.395 -20.613,1.243 -20.613,1.243Z\" style=\"fill:#fff;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/><path d=\"M68.258,48.699c-0,-0 -0.717,8.24 -0,8.742c0.716,0.502 22.406,0.268 22.406,0.268c-0,-0 0.329,-2.328 0.01,-3.01c-0.319,-0.683 -3.589,-5.348 -4.613,-5.67c-1.025,-0.323 -17.803,-0.33 -17.803,-0.33Z\" style=\"fill:#fff;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/><path d=\"M12.259,77.673c0,-0 0.142,-2.626 -0.152,-3.748c-0.294,-1.121 0.24,-2.177 0.564,-2.708l0.027,-5.679c0,-0 1.61,-1.986 2.52,-3.526c0.91,-1.539 3.366,-2.821 7.018,-3.459c3.651,-0.637 11.399,-1.553 14.011,-1.363c0,0 10.356,-9.421 13.911,-10.85c3.555,-1.429 20.539,-2.25 46.52,-0.643c0,-0 1.282,0.005 0.178,1.786c-0,-0 5.014,4.608 9.317,8.663c-0,-0 0.689,5.607 0.145,6.566c-0,0 1.437,2.271 1.491,4.726c0.055,2.455 0.983,8.448 -2.131,9.871c-3.115,1.424 -20.343,2.63 -20.343,2.63c0,-0 -41.699,0.461 -47.356,0.387c-5.656,-0.075 -19.331,-0.235 -19.331,-0.235c0,0 -1.837,0.228 -3.841,-0.808c-2.003,-1.036 -2.548,-1.61 -2.548,-1.61Z\" style=\"fill:none;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/><circle cx=\"29.089\" cy=\"75.478\" r=\"8.47\" style=\"fill:#fff;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/><circle cx=\"95.184\" cy=\"75.476\" r=\"8.472\" style=\"fill:#fff;stroke:var(--evcc-outline-color, #000);stroke-width:2px;\"/></g></svg>",
+            "meter/e3dc-s10": "<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 7087 7087\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;\"><g><path d=\"M4789.16,1591.09c0,-60.244 -48.91,-109.155 -109.154,-109.155l-2257.61,0c-60.244,0 -109.154,48.911 -109.154,109.155l-0,2188.53c-0,60.244 48.91,109.154 109.154,109.154l2257.61,0c60.244,0 109.154,-48.91 109.154,-109.154l0,-2188.53Z\" style=\"fill:#4eb848;stroke:var(--evcc-outline-color, #000);stroke-width:112px;\"/><path d=\"M3541.53,1481.93l-425.769,0l0,2407.17l425.769,-0l0,-2407.17Zm0,573.947l-425.769,-0l0,193.286l425.769,0l0,-193.286Z\" style=\"fill:#fff;stroke:var(--evcc-outline-color, #000);stroke-width:112px;\"/></g><path d=\"M3344.88,4251.97l-0,1445.67l396.85,-0l0,-1445.67l708.662,-311.812l-300.473,5.67l-572.598,300.472l-232.441,5.67Z\" style=\"fill:#4eb848;\"/><path d=\"M3741.73,4251.97l0,1445.67l-396.85,-0l-0,-1445.67l-708.662,-311.812l300.473,5.67l572.598,300.472l232.441,5.67Z\" style=\"fill:#4eb848;\"/><path d=\"M2891.34,3888.77l583.328,334.179l193.364,-0.047l-249.448,-0l-101.875,-0.087l-927.998,-339.352l927.998,339.352l-0.173,142.537l0,1303.94l-793.7,0l1020.47,0\" style=\"fill:none;stroke:var(--evcc-outline-color, #000);stroke-width:112px;\"/><path d=\"M4195.28,3888.77l-583.329,334.179l157.959,-0.134l927.998,-339.352l-927.998,339.352l0.173,142.537l-0,1303.94l793.701,0l-1020.47,0\" style=\"fill:none;stroke:var(--evcc-outline-color, #000);stroke-width:112px;\"/></svg>",
+            "charger/keba-kecontact-p30": "<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 29528 29528\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;\">\n    <g transform=\"matrix(1,0,0,1,1108.66,-91.9352)\">\n        <g transform=\"matrix(-9.7477,0,0,9.7477,25562,-2274.13)\">\n            <path d=\"M1236.76,894.031L1507.33,894.031L1507.33,868.678C1576.07,868.579 1670.75,908.934 1670.75,908.934L1670.75,2517.65C1670.75,2517.65 1611.9,2601.74 1507.33,2638.73L1321.3,2638.73L1321.3,2629.25L1322.09,2638.42L1321.94,2629.62L1236.76,2629.62\" style=\"fill:rgb(78,184,72);stroke:var(--evcc-outline-color, #000);stroke-width:47.87px;\"/>\n        </g>\n        <g transform=\"matrix(9.7477,0,0,9.7477,1455.39,-2274.13)\">\n            <path d=\"M1226.39,894.031L1507.33,894.031L1507.33,868.678C1576.07,868.579 1670.75,908.934 1670.75,908.934L1670.75,2517.65C1670.75,2517.65 1611.9,2601.74 1507.33,2638.73L1321.3,2638.73L1321.3,2629.25L1322.09,2638.42L1321.94,2629.62L1226.39,2629.62\" style=\"fill:rgb(78,184,72);stroke:var(--evcc-outline-color, #000);stroke-width:47.87px;\"/>\n        </g>\n        <g transform=\"matrix(9.42245,0,0,9.7477,1883.49,-2274.13)\">\n            <rect x=\"954.427\" y=\"1366.66\" width=\"558.968\" height=\"863.695\" style=\"fill:white;stroke:var(--evcc-outline-color, #000);stroke-width:48.68px;\"/>\n        </g>\n        <g transform=\"matrix(9.31492,0,0,9.15777,-5285.11,-1429.8)\">\n            <path d=\"M1933.79,1774.86C1863.36,1809.31 1818.59,1881.6 1818.59,1960.88C1818.59,2074.87 1909.89,2167.42 2022.34,2167.42C2134.79,2167.42 2226.09,2074.87 2226.09,1960.88C2226.09,1881.6 2181.32,1809.31 2110.89,1774.86L1933.79,1774.86Z\" style=\"fill:rgb(78,184,72);stroke:var(--evcc-outline-color, #000);stroke-width:50.52px;\"/>\n        </g>\n        <g transform=\"matrix(9.7477,0,0,22.0302,1417.26,-22087.7)\">\n            <path d=\"M1434.33,1594.68C1434.33,1589.49 1424.8,1585.27 1413.07,1585.27L1074.54,1585.27C1062.8,1585.27 1053.27,1589.49 1053.27,1594.68L1053.27,1613.5C1053.27,1618.69 1062.8,1622.91 1074.54,1622.91L1413.07,1622.91C1424.8,1622.91 1434.33,1618.69 1434.33,1613.5L1434.33,1594.68Z\" style=\"fill:rgb(78,184,72);stroke:var(--evcc-outline-color, #000);stroke-width:27.4px;\"/>\n        </g>\n    </g>\n    <g transform=\"matrix(1,0,0,1,-34.5879,0)\">\n        <path d=\"M12017.9,6376.62L12017.9,23372\" style=\"fill:none;stroke:var(--evcc-outline-color, #000);stroke-width:466.67px;\"/>\n    </g>\n    <g transform=\"matrix(1,0,0,1,5236.73,0)\">\n        <path d=\"M12017.9,6376.62L12017.9,23372\" style=\"fill:none;stroke:var(--evcc-outline-color, #000);stroke-width:466.67px;\"/>\n    </g>\n</svg>",
+            "charger/easee-home": "<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 7087 7087\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;\"><g><path d=\"M3089.58,5425.15l62.738,43.08l-0,45.34c-0,-0 126.39,101.155 385.956,101.598\" style=\"fill:none;stroke:var(--evcc-outline-color, #000);stroke-width:112px;\"/><path d=\"M3642.56,1478.81l-1147.58,0l-363.78,146.239c-0,0 -66.077,45.383 -89.592,84.424c-23.516,39.04 -37.65,151.212 -37.65,151.212l17.853,2561.75c0,-0 9.082,136.186 32.204,199.495c23.122,63.31 45.477,113.791 77.185,137.326c31.708,23.535 960.647,666.135 960.647,666.135c-0,0 -57.151,-62.338 -47.891,-123.28c9.26,-60.942 9.002,-101.188 145.637,-233.624c1.463,-1.418 -0,0 -0,0c-3.411,1.222 172.208,40.372 346,39.832c167.626,1.669 -169.079,1.669 -1.453,0c173.793,0.54 349.412,-38.61 346.001,-39.832c-0,0 -1.464,-1.418 -0,0c136.635,132.436 136.377,172.682 145.637,233.624c9.26,60.942 -47.891,123.28 -47.891,123.28c-0,0 928.939,-642.6 960.647,-666.135c31.707,-23.535 54.062,-74.016 77.184,-137.326c23.122,-63.309 32.204,-199.495 32.204,-199.495l17.854,-2561.75c-0,-0 -14.134,-112.172 -37.65,-151.212c-23.516,-39.041 -89.592,-84.424 -89.592,-84.424l-363.78,-146.239l-1147.58,0\" style=\"fill:#4eb848;stroke:var(--evcc-outline-color, #000);stroke-width:112px;\"/><path d=\"M3181.01,5061.16l44.8,-50.759c0,0 12.093,-17.71 14.745,-48.372c3.179,-36.75 -0,-50.176 -0,-50.176l-742.756,-3431.23\" style=\"fill:none;stroke:var(--evcc-outline-color, #000);stroke-width:112px;\"/><path d=\"M3980.16,5425.15l-62.738,43.08l-0,45.34c-0,-0 -126.39,101.155 -385.957,101.598\" style=\"fill:none;stroke:var(--evcc-outline-color, #000);stroke-width:112px;\"/><path d=\"M3888.72,5061.16l-44.801,-50.759c0,0 -12.092,-17.71 -14.744,-48.372c-3.179,-36.75 -0,-50.176 -0,-50.176l742.756,-3431.23\" style=\"fill:none;stroke:var(--evcc-outline-color, #000);stroke-width:112px;\"/><path d=\"M3536.85,2678.24l-0,941.19\" style=\"fill:none;stroke:#fff;stroke-width:112px;\"/></g></svg>"
+        };
+
+        const searchInput = document.getElementById('search-input');
+        const iconsContainer = document.getElementById('icons-container');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalIcon = document.getElementById('modal-icon');
+        const modalTitle = document.getElementById('modal-title');
+        const modalCategory = document.getElementById('modal-category');
+        const modalClose = document.getElementById('modal-close');
+
+        const handleSearch = () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            renderIcons(searchTerm);
+        };
+
+        const showModal = (icon, category) => {
+            modalIcon.innerHTML = icon.svg;
+            modalTitle.textContent = icon.name.replace(/-/g, ' ');
+            modalCategory.textContent = category;
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const hideModal = () => {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        // Modal event listeners
+        modalClose.addEventListener('click', hideModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                hideModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                hideModal();
+            }
+        });
+
+        const renderIcons = (searchTerm = '') => {
+            const categories = {};
+
+            // Group icons by category
+            Object.keys(iconRegistry).forEach(key => {
+                const [category, name] = key.split('/');
+                if (!categories[category]) {
+                    categories[category] = [];
+                }
+
+                if (!searchTerm || name.toLowerCase().includes(searchTerm) || category.toLowerCase().includes(searchTerm)) {
+                    categories[category].push({ key, name, svg: iconRegistry[key] });
+                }
+            });
+
+            // Clear container
+            iconsContainer.innerHTML = '';
+
+            // Render categories
+            Object.keys(categories).sort().forEach(category => {
+                if (categories[category].length === 0) return;
+
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category';
+
+                const categoryTitle = document.createElement('h2');
+                categoryTitle.className = 'category-title';
+                categoryTitle.innerHTML = `${category}s <span class="category-count">(${categories[category].length})</span>`;
+                categoryDiv.appendChild(categoryTitle);
+
+                const iconsGrid = document.createElement('div');
+                iconsGrid.className = 'icons-grid';
+
+                categories[category].forEach(icon => {
+                    const iconCard = document.createElement('div');
+                    iconCard.className = 'icon-card';
+                    iconCard.setAttribute('tabindex', '0');
+                    iconCard.setAttribute('aria-label', `${icon.name} icon`);
+
+                    const iconDisplay = document.createElement('div');
+                    iconDisplay.className = 'icon-display';
+                    iconDisplay.innerHTML = icon.svg;
+
+                    const iconName = document.createElement('div');
+                    iconName.className = 'icon-name';
+                    iconName.textContent = icon.name.replace(/-/g, ' ');
+
+                    iconCard.appendChild(iconDisplay);
+                    iconCard.appendChild(iconName);
+
+                    // Add click handler to show modal
+                    const handleClick = () => {
+                        showModal(icon, category);
+                    };
+
+                    iconCard.addEventListener('click', handleClick);
+                    iconCard.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleClick();
+                        }
+                    });
+
+                    iconsGrid.appendChild(iconCard);
+                });
+
+                categoryDiv.appendChild(iconsGrid);
+                iconsContainer.appendChild(categoryDiv);
+            });
+        };
+
+        // Event listeners
+        searchInput.addEventListener('input', handleSearch);
+
+        // Initialize
+        renderIcons();
+    </script>
+</body>
+
+</html>
