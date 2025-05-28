@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  lint-and-typecheck:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,8 +22,38 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build packages
+      - name: Lint and type check
+        run: npm run lint
+
+      - name: Build core package
         run: npm run build
+
+      - name: Install React package dependencies
+        run: cd packages/react && npm ci
+
+      - name: TypeScript check React package
+        run: cd packages/react && npm run type-check
+
+      - name: Build React package
+        run: cd packages/react && npm run build
+
+      - name: Install Vue package dependencies
+        run: cd packages/vue && npm ci
+
+      - name: TypeScript check Vue package
+        run: cd packages/vue && npm run type-check
+
+      - name: Build Vue package
+        run: cd packages/vue && npm run build
+
+      - name: Install Web package dependencies
+        run: cd packages/web && npm ci
+
+      - name: TypeScript check Web package
+        run: cd packages/web && npm run type-check
+
+      - name: Build Web package
+        run: cd packages/web && npm run build
 
       - name: Test examples
         run: npm run test:examples

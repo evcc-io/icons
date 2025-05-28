@@ -32,8 +32,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build packages
+      - name: Lint and type check
+        run: npm run lint
+
+      - name: Build core package
         run: npm run build
+
+      - name: Install and build React package
+        run: cd packages/react && npm ci && npm run type-check && npm run build
+
+      - name: Install and build Vue package
+        run: cd packages/vue && npm ci && npm run type-check && npm run build
+
+      - name: Install and build Web package
+        run: cd packages/web && npm ci && npm run type-check && npm run build
+
+      - name: Test examples
+        run: npm run test:examples
 
       - name: Release
         id: release
@@ -43,11 +58,8 @@ jobs:
 
   publish:
     needs: release
-    if: needs.release.outputs.release_created == 'true'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package: [core, react, vue, web]
+    if: ${{ needs.release.outputs.release_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -55,7 +67,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "18"
           cache: "npm"
           registry-url: "https://registry.npmjs.org"
 
@@ -63,35 +75,28 @@ jobs:
         run: npm ci
 
       - name: Build packages
-        run: npm run build
-
-      - name: Update package versions
         run: |
-          VERSION="${{ needs.release.outputs.version }}"
-
-          # Update core package version
-          if [ "${{ matrix.package }}" = "core" ]; then
-            npm version $VERSION --no-git-tag-version
-          fi
-
-          # Update framework package versions
-          if [ "${{ matrix.package }}" != "core" ]; then
-            cd packages/${{ matrix.package }}
-            npm version $VERSION --no-git-tag-version
-            # Update dependency version
-            npm pkg set dependencies.@evcc/icons="^$VERSION"
-          fi
+          npm run build
+          cd packages/react && npm ci && npm run build
+          cd ../vue && npm ci && npm run build
+          cd ../web && npm ci && npm run build
 
       - name: Publish core package
-        if: matrix.package == 'core'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish framework package
-        if: matrix.package != 'core'
-        run: |
-          cd packages/${{ matrix.package }}
-          npm publish --access public
+      - name: Publish React package
+        run: cd packages/react && npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Vue package
+        run: cd packages/vue && npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Web package
+        run: cd packages/web && npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

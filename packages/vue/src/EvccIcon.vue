@@ -14,76 +14,84 @@
   <span v-else :class="`evcc-icon-error ${className}`">{{ error }}</span>
 </template>
 
-<script setup>
-import { ref, computed, watch } from "vue";
+<script setup lang="ts">
+import { computed, ref, watch } from "vue";
 
-const props = defineProps({
-  type: {
-    type: String,
-    required: true,
-    validator: (value) => ["vehicle", "meter", "charger"].includes(value),
-  },
-  name: { type: String, required: true },
-  accentColor: { type: String, default: "#4eb84b" },
-  outlineColor: { type: String, default: "#000" },
-  className: { type: String, default: "" },
-  size: { type: [String, Number], default: null },
-  width: { type: [String, Number], default: null },
-  height: { type: [String, Number], default: null },
+export type IconType = "vehicle" | "meter" | "charger";
+
+export interface EvccIconProps {
+	type: IconType;
+	name: string;
+	accentColor?: string;
+	outlineColor?: string;
+	className?: string;
+	size?: string | number;
+	width?: string | number;
+	height?: string | number;
+}
+
+const props = withDefaults(defineProps<EvccIconProps>(), {
+	accentColor: "#4eb84b",
+	outlineColor: "#000",
+	className: "",
+	size: undefined,
+	width: undefined,
+	height: undefined,
 });
 
-const svgContent = ref("");
-const loading = ref(true);
-const error = ref(null);
+const svgContent = ref<string>("");
+const loading = ref<boolean>(true);
+const error = ref<string | null>(null);
 
 const combinedStyle = computed(() => {
-  const style = {
-    "--evcc-accent-color": props.accentColor,
-    "--evcc-outline-color": props.outlineColor,
-    display: "inline-block",
-  };
+	const style: Record<string, string> = {
+		"--evcc-accent-color": props.accentColor,
+		"--evcc-outline-color": props.outlineColor,
+		display: "inline-block",
+	};
 
-  // Handle size prop (sets both width and height)
-  if (props.size) {
-    style.width =
-      typeof props.size === "number" ? `${props.size}px` : props.size;
-    style.height =
-      typeof props.size === "number" ? `${props.size}px` : props.size;
-  }
+	// Handle size prop (sets both width and height)
+	if (props.size) {
+		const sizeValue =
+			typeof props.size === "number" ? `${props.size}px` : props.size;
+		style.width = sizeValue;
+		style.height = sizeValue;
+	}
 
-  // Handle individual width/height props
-  if (props.width) {
-    style.width =
-      typeof props.width === "number" ? `${props.width}px` : props.width;
-  }
-  if (props.height) {
-    style.height =
-      typeof props.height === "number" ? `${props.height}px` : props.height;
-  }
+	// Handle individual width/height props
+	if (props.width) {
+		style.width =
+			typeof props.width === "number" ? `${props.width}px` : props.width;
+	}
+	if (props.height) {
+		style.height =
+			typeof props.height === "number" ? `${props.height}px` : props.height;
+	}
 
-  return style;
+	return style;
 });
 
-const loadSvg = async () => {
-  try {
-    loading.value = true;
-    error.value = null;
+const loadSvg = async (): Promise<void> => {
+	try {
+		loading.value = true;
+		error.value = null;
 
-    // Import the SVG registry
-    const { svgRegistry } = await import("./svg-registry.js");
-    const key = `${props.type}/${props.name}`;
-    const content = svgRegistry[key];
+		// Import the SVG registry
+		const { svgRegistry } = await import("@evcc/icons");
+		const key = `${props.type}/${props.name}`;
+		const content = svgRegistry[key];
 
-    if (content) {
-      svgContent.value = content;
-    } else {
-      error.value = `Icon not found: ${key}`;
-    }
-  } catch (err) {
-    error.value = `Failed to load icon: ${err.message}`;
-  } finally {
-    loading.value = false;
-  }
+		if (content) {
+			svgContent.value = content;
+		} else {
+			error.value = `Icon not found: ${key}`;
+		}
+	} catch (err) {
+		const errorMessage = err instanceof Error ? err.message : "Unknown error";
+		error.value = `Failed to load icon: ${errorMessage}`;
+	} finally {
+		loading.value = false;
+	}
 };
 
 // Watch for changes in type or name and reload

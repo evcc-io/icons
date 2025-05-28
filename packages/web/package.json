@@ -1,34 +1,36 @@
 {
-    "name": "@evcc/icons-web",
-    "version": "0.1.0",
-    "description": "Web Components for evcc icons",
-    "main": "dist/index.js",
-    "module": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "files": [
-        "dist",
-        "README.md"
-    ],
-    "scripts": {
-        "build": "npm run clean && npm run build:components",
-        "build:components": "mkdir -p dist && cp src/* dist/",
-        "clean": "rm -rf dist",
-        "prepare": "npm run build"
-    },
-    "dependencies": {
-        "@evcc/icons": "^0.1.0"
-    },
-    "keywords": [
-        "icons",
-        "evcc",
-        "web-components",
-        "custom-elements"
-    ],
-    "author": "naltatis, michael@evcc.io",
-    "license": "CC-BY-NC-SA-4.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/evcc-io/evcc-icons.git",
-        "directory": "packages/web"
-    }
+	"name": "@evcc/icons-web",
+	"version": "0.1.0",
+	"description": "Web Components for evcc icons",
+	"main": "dist/index.js",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": ["dist", "README.md"],
+	"scripts": {
+		"build": "npm run clean && npm run build:components",
+		"build:components": "tsc",
+		"clean": "rm -rf dist",
+		"prepare": "npm run build",
+		"type-check": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@evcc/icons": "file:../.."
+	},
+	"devDependencies": {
+		"typescript": "^5.3.0"
+	},
+	"keywords": [
+		"icons",
+		"evcc",
+		"web-components",
+		"custom-elements",
+		"typescript"
+	],
+	"author": "naltatis, michael@evcc.io",
+	"license": "CC-BY-NC-SA-4.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/evcc-io/evcc-icons.git",
+		"directory": "packages/web"
+	}
 }

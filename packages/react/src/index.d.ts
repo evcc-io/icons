@@ -1,15 +1,15 @@
-import React from "react";
+import type React from "react";
 
 export interface EvccIconProps {
-  type: "vehicle" | "meter" | "charger";
-  name: string;
-  accentColor?: string;
-  outlineColor?: string;
-  className?: string;
-  style?: React.CSSProperties;
-  size?: string | number;
-  width?: string | number;
-  height?: string | number;
+	type: "vehicle" | "meter" | "charger";
+	name: string;
+	accentColor?: string;
+	outlineColor?: string;
+	className?: string;
+	style?: React.CSSProperties;
+	size?: string | number;
+	width?: string | number;
+	height?: string | number;
 }
 
 declare const EvccIcon: React.FC<EvccIconProps>;
