@@ -48,8 +48,7 @@ const EvccIcon: React.FC<EvccIconProps> = ({
           setError(`Icon not found: ${key}`);
         }
       } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : "Unknown error";
+        const errorMessage = err instanceof Error ? err.message : "Unknown error";
         setError(`Failed to load icon: ${errorMessage}`);
       } finally {
         setLoading(false);
