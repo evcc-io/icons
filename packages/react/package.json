@@ -1,11 +1,14 @@
 {
   "name": "@evcc/icons-react",
-  "version": "0.1.0",
+  "version": "0.3.1",
   "description": "React components for evcc icons",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "npm run clean && npm run build:components",
     "build:components": "tsc",
@@ -23,7 +26,13 @@
     "typescript": "^5.3.0",
     "@types/react": "^18.2.0"
   },
-  "keywords": ["icons", "evcc", "react", "components", "typescript"],
+  "keywords": [
+    "icons",
+    "evcc",
+    "react",
+    "components",
+    "typescript"
+  ],
   "author": "naltatis, michael@evcc.io",
   "license": "CC-BY-NC-SA-4.0",
   "repository": {
