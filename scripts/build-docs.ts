@@ -56,6 +56,11 @@ const buildDocs = async (): Promise<void> => {
     {} as Record<string, IconData[]>,
   );
 
+  // Sort icons by name within each type
+  Object.keys(iconsByType).forEach((type) => {
+    iconsByType[type].sort((a, b) => a.name.localeCompare(b.name));
+  });
+
   // Create SVG data object for JavaScript
   const svgData = icons.reduce(
     (acc, icon) => {
@@ -251,6 +256,46 @@ const buildDocs = async (): Promise<void> => {
             max-width: 100%;
             max-height: 100%;
         }
+        .overlay-nav {
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            color: #333;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin: 0 0.5rem;
+        }
+        .overlay-nav:hover {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: #999;
+        }
+        .overlay-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .overlay-nav:disabled:hover {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: #ddd;
+        }
+        .overlay-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+        .overlay-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
         .close-btn {
             position: absolute;
             top: 1rem;
@@ -260,6 +305,7 @@ const buildDocs = async (): Promise<void> => {
             font-size: 1.5rem;
             cursor: pointer;
             color: #666;
+            z-index: 1001;
         }
         .close-btn:hover {
             color: #000;
@@ -272,6 +318,51 @@ const buildDocs = async (): Promise<void> => {
         .overlay-type {
             color: #666;
             font-size: 1rem;
+        }
+        .overlay-counter {
+            color: #999;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Large screen styles */
+        @media (min-width: 1024px) {
+            .overlay-content {
+                padding: 3rem;
+                max-width: 600px;
+                max-height: 80vh;
+            }
+            .overlay-icon {
+                width: min(500px, 70vw);
+                height: min(500px, 50vh);
+                margin-bottom: 2rem;
+            }
+            .overlay-nav {
+                width: 50px;
+                height: 50px;
+                font-size: 1.8rem;
+                margin: 0 1rem;
+            }
+            .overlay-navigation {
+                margin-top: 2rem;
+                gap: 2rem;
+            }
+            .overlay-title {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+            .overlay-type {
+                font-size: 1.2rem;
+            }
+            .overlay-counter {
+                font-size: 1rem;
+                margin-top: 1rem;
+            }
+            .close-btn {
+                font-size: 2rem;
+                top: 1.5rem;
+                right: 1.5rem;
+            }
         }
         
         /* Mobile responsive styles */
@@ -286,6 +377,11 @@ const buildDocs = async (): Promise<void> => {
             .overlay-icon {
                 width: min(300px, 85vw);
                 height: min(300px, 50vh);
+            }
+            .overlay-nav {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
             }
             .overlay-title {
                 font-size: 1.2rem;
@@ -316,6 +412,11 @@ const buildDocs = async (): Promise<void> => {
             .overlay-icon {
                 width: min(250px, 90vw);
                 height: min(250px, 45vh);
+            }
+            .overlay-nav {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
             }
             .icon-grid {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -374,8 +475,15 @@ const buildDocs = async (): Promise<void> => {
         <div class="overlay-content" onclick="event.stopPropagation()">
             <button class="close-btn" onclick="hideOverlay()">&times;</button>
             <div class="overlay-icon" id="overlayIcon"></div>
-            <div class="overlay-title" id="overlayTitle"></div>
-            <div class="overlay-type" id="overlayType"></div>
+            <div class="overlay-info">
+                <div class="overlay-title" id="overlayTitle"></div>
+                <div class="overlay-type" id="overlayType"></div>
+                <div class="overlay-counter" id="overlayCounter"></div>
+            </div>
+            <div class="overlay-navigation">
+                <button class="overlay-nav overlay-nav-left" id="overlayNavLeft" onclick="navigateOverlay(-1)">‹</button>
+                <button class="overlay-nav overlay-nav-right" id="overlayNavRight" onclick="navigateOverlay(1)">›</button>
+            </div>
         </div>
     </div>
 
@@ -390,13 +498,58 @@ const buildDocs = async (): Promise<void> => {
         // SVG data object
         const svgData = ${JSON.stringify(svgData, null, 2)};
 
+        // Navigation state
+        let currentIconIndex = 0;
+        let currentIconList = [];
+        let currentType = '';
+
+        // Create a flat list of all icons for navigation
+        const allIcons = [
+            ${Object.entries(iconsByType)
+              .map(([type, typeIcons]) =>
+                typeIcons.map((icon) => `{ name: '${icon.name}', type: '${type}' }`).join(","),
+              )
+              .join(",")}
+        ];
+
         function showOverlay(name, type) {
             const svg = svgData[name];
             if (svg) {
-                document.getElementById('overlayIcon').innerHTML = svg;
-                document.getElementById('overlayTitle').textContent = name;
-                document.getElementById('overlayType').textContent = type;
+                // Find the current icon in the full list
+                currentIconIndex = allIcons.findIndex(icon => icon.name === name);
+                currentIconList = allIcons;
+                currentType = type;
+                
+                updateOverlayContent();
                 document.getElementById('overlay').style.display = 'flex';
+            }
+        }
+
+        function updateOverlayContent() {
+            const icon = currentIconList[currentIconIndex];
+            const svg = svgData[icon.name];
+            
+            if (svg) {
+                document.getElementById('overlayIcon').innerHTML = svg;
+                document.getElementById('overlayTitle').textContent = icon.name;
+                document.getElementById('overlayType').textContent = icon.type;
+                document.getElementById('overlayCounter').textContent = \`\${currentIconIndex + 1} of \${currentIconList.length}\`;
+                
+                // Update navigation button states
+                const leftBtn = document.getElementById('overlayNavLeft');
+                const rightBtn = document.getElementById('overlayNavRight');
+                
+                leftBtn.disabled = currentIconIndex === 0;
+                rightBtn.disabled = currentIconIndex === currentIconList.length - 1;
+            }
+        }
+
+        function navigateOverlay(direction) {
+            const newIndex = currentIconIndex + direction;
+            
+            if (newIndex >= 0 && newIndex < currentIconList.length) {
+                currentIconIndex = newIndex;
+                updateOverlayContent();
             }
         }
 
@@ -404,10 +557,23 @@ const buildDocs = async (): Promise<void> => {
             document.getElementById('overlay').style.display = 'none';
         }
 
-        // Close overlay with Escape key
+        // Close overlay with Escape key, navigate with arrow keys
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                hideOverlay();
+            const overlay = document.getElementById('overlay');
+            if (overlay.style.display === 'flex') {
+                switch(e.key) {
+                    case 'Escape':
+                        hideOverlay();
+                        break;
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        navigateOverlay(-1);
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        navigateOverlay(1);
+                        break;
+                }
             }
         });
 
