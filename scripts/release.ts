@@ -1,11 +1,12 @@
+import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { execSync } from "node:child_process";
 
 interface PackageJson {
   name: string;
   version: string;
-  [key: string]: any;
+  dependencies?: Record<string, string>;
+  [key: string]: unknown;
 }
 
 const PACKAGES = [
@@ -25,14 +26,12 @@ function writePackageJson(packagePath: string, packageJson: PackageJson): void {
   const packageJsonPath = path.join(packagePath, "package.json");
   fs.writeFileSync(
     packageJsonPath,
-    `${JSON.stringify(packageJson, null, 2)}\n`
+
+    `${JSON.stringify(packageJson, null, 2)}\n`,
   );
 }
 
-function incrementVersion(
-  version: string,
-  releaseType: "patch" | "minor" | "major"
-): string {
+function incrementVersion(version: string, releaseType: "patch" | "minor" | "major"): string {
   const [major, minor, patch] = version.split(".").map(Number);
 
   switch (releaseType) {
