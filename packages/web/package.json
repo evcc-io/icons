@@ -1,21 +1,23 @@
 {
   "name": "@evcc/icons-web",
-  "version": "0.1.0",
+  "version": "0.3.1",
   "description": "Web Components for evcc icons",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
-    "build": "npm run clean && npm run build:components",
+    "build": "npm run clean && npm run build:registry && npm run build:components",
+    "build:registry": "cd ../.. && npx tsx scripts/build-package-registry.ts web",
     "build:components": "tsc",
-    "clean": "rm -rf dist *.tsbuildinfo",
+    "clean": "rm -rf dist src/svg-registry.ts *.tsbuildinfo",
     "prepare": "npm run build",
     "type-check": "tsc --noEmit"
   },
-  "dependencies": {
-    "@evcc/icons": "file:../.."
-  },
+  "dependencies": {},
   "devDependencies": {
     "typescript": "^5.3.0"
   },

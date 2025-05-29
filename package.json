@@ -1,6 +1,6 @@
 {
   "name": "@evcc/icons",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A collection of evcc icons for vehicles, meters, and chargers. Core SVG registry with framework-specific packages available.",
   "main": "dist/svg-registry.js",
   "module": "dist/svg-registry.js",
@@ -33,13 +33,18 @@
     "test:examples": "tsx examples/test.ts",
     "type-check": "tsc --noEmit",
     "lint": "npx @biomejs/biome check . && npm run type-check",
+    "lint:fix": "npx @biomejs/biome check --write . && npm run type-check",
     "lint:svg": "tsx scripts/svg-quality-control.ts",
     "build:packages": "npm run build && npm run build:react && npm run build:vue && npm run build:web",
     "build:packages:clean": "npm run clean:all && npm run build:packages",
     "build:react": "cd packages/react && npm ci && npm run build",
     "build:vue": "cd packages/vue && npm ci && npm run build",
     "build:web": "cd packages/web && npm ci && npm run build",
-    "install:packages": "cd packages/react && npm ci && cd ../vue && npm ci && cd ../web && npm ci"
+    "install:packages": "cd packages/react && npm ci && cd ../vue && npm ci && cd ../web && npm ci",
+    "release": "tsx scripts/release.ts",
+    "release:patch": "tsx scripts/release.ts patch",
+    "release:minor": "tsx scripts/release.ts minor",
+    "release:major": "tsx scripts/release.ts major"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

@@ -1,47 +1,46 @@
 {
-	"name": "@evcc/icons-vue",
-	"version": "0.1.0",
-	"type": "module",
-	"description": "Vue components for evcc icons",
-	"main": "dist/index.js",
-	"module": "dist/index.js",
-	"types": "dist/index.d.ts",
-	"files": [
-		"dist",
-		"README.md"
-	],
-	"scripts": {
-		"build": "npm run clean && npm run build:components",
-		"build:components": "vite build && vue-tsc --declaration --emitDeclarationOnly",
-		"clean": "rm -rf dist *.tsbuildinfo",
-		"prepare": "npm run build",
-		"type-check": "vue-tsc --noEmit"
-	},
-	"peerDependencies": {
-		"vue": "^3.0.0"
-	},
-	"dependencies": {
-		"@evcc/icons": "file:../.."
-	},
-	"devDependencies": {
-		"@vitejs/plugin-vue": "^5.0.0",
-		"typescript": "^5.3.0",
-		"vite": "^6.3.5",
-		"vue": "^3.4.0",
-		"vue-tsc": "^2.0.0"
-	},
-	"keywords": [
-		"icons",
-		"evcc",
-		"vue",
-		"components",
-		"typescript"
-	],
-	"author": "naltatis, michael@evcc.io",
-	"license": "CC-BY-NC-SA-4.0",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/evcc-io/evcc-icons.git",
-		"directory": "packages/vue"
-	}
+  "name": "@evcc/icons-vue",
+  "version": "0.3.1",
+  "type": "module",
+  "description": "Vue components for evcc icons",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:registry && npm run build:components",
+    "build:registry": "cd ../.. && npx tsx scripts/build-package-registry.ts vue",
+    "build:components": "vite build && vue-tsc --declaration --emitDeclarationOnly",
+    "clean": "rm -rf dist src/svg-registry.ts *.tsbuildinfo",
+    "prepare": "npm run build",
+    "type-check": "vue-tsc --noEmit"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "typescript": "^5.3.0",
+    "vite": "^6.3.5",
+    "vue": "^3.4.0",
+    "vue-tsc": "^2.0.0"
+  },
+  "keywords": [
+    "icons",
+    "evcc",
+    "vue",
+    "components",
+    "typescript"
+  ],
+  "author": "naltatis, michael@evcc.io",
+  "license": "CC-BY-NC-SA-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evcc-io/evcc-icons.git",
+    "directory": "packages/vue"
+  }
 }

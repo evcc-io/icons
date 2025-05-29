@@ -37,8 +37,8 @@ const EvccIcon: React.FC<EvccIconProps> = ({
         setLoading(true);
         setError(null);
 
-        // Import the SVG registry
-        const { svgRegistry } = await import("@evcc/icons");
+        // Import the local SVG registry
+        const { svgRegistry } = await import("./svg-registry.js");
         const key = `${type}/${name}`;
         const content = svgRegistry[key];
 
@@ -48,7 +48,8 @@ const EvccIcon: React.FC<EvccIconProps> = ({
           setError(`Icon not found: ${key}`);
         }
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Unknown error";
+        const errorMessage =
+          err instanceof Error ? err.message : "Unknown error";
         setError(`Failed to load icon: ${errorMessage}`);
       } finally {
         setLoading(false);

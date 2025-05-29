@@ -7,6 +7,12 @@ yarn-error.log*
 # Build output
 dist/
 
+# Generated documentation
+docs/
+
+# Generated SVG registries (auto-generated, do not commit)
+packages/*/src/svg-registry.ts
+
 # TypeScript
 *.tsbuildinfo
 

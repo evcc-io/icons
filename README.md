@@ -6,9 +6,7 @@ A collection of evcc icons for vehicles, meters, and chargers. Available as sepa
 
 ## 📖 Documentation
 
-**[View all icons →](https://evcc-io.github.io/icons/)**
-
-Browse the complete collection of icons with search functionality and click-to-copy SVG code.
+**[View all icons](https://evcc-io.github.io/icons/)**
 
 ## Packages
 
@@ -42,9 +40,6 @@ npm install @evcc/icons
 - 📊 **Meter icons** - Energy meters and monitoring devices
 - 🎨 **Customizable colors** - Change accent and outline colors
 - 📱 **Framework support** - React, Vue, and Web Components
-- 🔧 **TypeScript support** - Full type definitions included
-- ♿ **Accessible** - ARIA labels and semantic markup
-- 📦 **No peer dependency conflicts** - Each framework has its own package
 
 ## Usage
 
@@ -228,7 +223,7 @@ This project is licensed under the [Creative Commons Attribution-NonCommercial-S
 - ✅ **Free for open source** - Use in open source projects
 - ✅ **Free for education** - Use in educational materials
 - ❌ **No commercial use** - Cannot be used in commercial products or services
-- 📝 **Attribution required** - Must credit "https://evcc.io"
+- 📝 **Attribution required** - Must credit https://evcc.io
 - 🔄 **Share-alike** - Derivatives must use the same license
 
 For commercial licensing options, please contact info@evcc.io.

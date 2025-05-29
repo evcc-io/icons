@@ -1,4 +1,4 @@
-import { svgRegistry } from "@evcc/icons";
+import { svgRegistry } from "./svg-registry.js";
 
 export type IconType = "vehicle" | "meter" | "charger";
 
