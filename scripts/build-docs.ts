@@ -393,7 +393,8 @@ const buildDocs = async (): Promise<void> => {
             }
             .playground-container {
                 display: flex !important;
-                flex-direction: column;
+                flex-direction: column !important;
+                align-items: stretch !important;
                 gap: 1.5rem;
                 margin: 0 auto;
                 padding: 0 2rem;
