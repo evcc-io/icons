@@ -72,6 +72,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build web
+        run: npm run build:web
+
       - name: Build documentation
         run: npm run build:docs
 
