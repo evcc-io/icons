@@ -73,8 +73,8 @@ const loadSvg = async (): Promise<void> => {
     loading.value = true;
     error.value = null;
 
-    // Import the SVG registry
-    const { svgRegistry } = await import("@evcc/icons");
+    // Import the local SVG registry
+    const { svgRegistry } = await import("./svg-registry.js");
     const key = `${props.type}/${props.name}`;
     const content = svgRegistry[key];
 

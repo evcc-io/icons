@@ -11,18 +11,17 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run clean && npm run build:components",
+    "build": "npm run clean && npm run build:registry && npm run build:components",
+    "build:registry": "cd ../.. && npx tsx scripts/build-package-registry.ts vue",
     "build:components": "vite build && vue-tsc --declaration --emitDeclarationOnly",
-    "clean": "rm -rf dist *.tsbuildinfo",
+    "clean": "rm -rf dist src/svg-registry.ts *.tsbuildinfo",
     "prepare": "npm run build",
     "type-check": "vue-tsc --noEmit"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
   },
-  "dependencies": {
-    "@evcc/icons": "file:../.."
-  },
+  "dependencies": {},
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",
     "typescript": "^5.3.0",

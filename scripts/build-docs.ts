@@ -6,7 +6,6 @@ interface IconData {
   type: string;
   name: string;
   path: string;
-  svg: string;
 }
 
 const buildDocs = async (): Promise<void> => {
@@ -23,14 +22,6 @@ const buildDocs = async (): Promise<void> => {
   console.log(`Found ${svgFiles.length} SVG files`);
 
   svgFiles.forEach((filePath) => {
-    const content = fs.readFileSync(filePath, "utf8");
-
-    // Clean SVG content
-    const cleanSvg = content
-      .replace(/^<\?xml[^>]*\?>/, "")
-      .replace(/<!DOCTYPE[^>]*>/, "")
-      .trim();
-
     // Extract type and name from path
     const relativePath = path.relative("src", filePath);
     const type = path.dirname(relativePath).replace(/s$/, ""); // remove 's' from vehicles -> vehicle
@@ -40,7 +31,6 @@ const buildDocs = async (): Promise<void> => {
       type,
       name,
       path: filePath,
-      svg: cleanSvg,
     });
   });
 
@@ -61,14 +51,23 @@ const buildDocs = async (): Promise<void> => {
     iconsByType[type].sort((a, b) => a.name.localeCompare(b.name));
   });
 
-  // Create SVG data object for JavaScript
-  const svgData = icons.reduce(
-    (acc, icon) => {
-      acc[icon.name] = icon.svg;
-      return acc;
-    },
-    {} as Record<string, string>,
-  );
+  // Copy the built files to docs directory
+  const webComponentsPath = "packages/web/dist/evcc-icon.js";
+  const svgRegistryPath = "packages/web/dist/svg-registry.js";
+
+  if (fs.existsSync(webComponentsPath)) {
+    fs.copyFileSync(webComponentsPath, "docs/evcc-icon.js");
+    console.log("Copied self-contained web components to docs/evcc-icon.js");
+  } else {
+    console.warn("Web components not found, make sure to run 'npm run build:web' first");
+  }
+
+  if (fs.existsSync(svgRegistryPath)) {
+    fs.copyFileSync(svgRegistryPath, "docs/svg-registry.js");
+    console.log("Copied self-contained SVG registry to docs/svg-registry.js");
+  } else {
+    console.warn("SVG registry not found, make sure to run 'npm run build:web' first");
+  }
 
   // Generate HTML documentation
   const htmlContent = `<!DOCTYPE html>
@@ -160,10 +159,9 @@ const buildDocs = async (): Promise<void> => {
             justify-content: center;
             padding: 1rem;
         }
-        .icon-display svg {
+        .icon-display evcc-icon {
             width: 100%;
             height: 100%;
-            object-fit: contain;
         }
         .icon-name {
             font-size: 1.2rem;
@@ -252,9 +250,9 @@ const buildDocs = async (): Promise<void> => {
             align-items: center;
             justify-content: center;
         }
-        .overlay-icon svg {
-            max-width: 100%;
-            max-height: 100%;
+        .overlay-icon evcc-icon {
+            width: 100%;
+            height: 100%;
         }
         .overlay-nav {
             background: rgba(0, 0, 0, 0.1);
@@ -370,6 +368,39 @@ const buildDocs = async (): Promise<void> => {
             body {
                 padding: 1rem;
             }
+            .playground {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            .playground-container {
+                display: flex !important;
+                flex-direction: column;
+                gap: 1.5rem;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+            .playground-controls {
+                order: 1;
+                padding: 1rem;
+            }
+            .playground-preview {
+                order: 2;
+                padding: 1rem;
+            }
+            .playground-preview {
+                order: 2;
+            }
+            .preview-area {
+                padding: 1.5rem;
+                min-height: 150px;
+            }
+            .color-input-group {
+                grid-template-columns: 50px 1fr;
+            }
+            .color-input-group input[type="color"] {
+                width: 50px;
+                height: 35px;
+            }
             .overlay-content {
                 padding: 1rem;
                 margin: 1rem;
@@ -409,6 +440,29 @@ const buildDocs = async (): Promise<void> => {
         }
         
         @media (max-width: 480px) {
+            body {
+                padding: 0.75rem;
+            }
+            .playground {
+                padding: 1rem;
+                margin: 1.5rem 0;
+            }
+            .playground-container {
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+            .playground-controls {
+                order: 1;
+                padding: 1rem;
+            }
+            .playground-preview {
+                order: 2;
+                padding: 1rem;
+            }
+            .preview-area {
+                padding: 1rem;
+                min-height: 120px;
+            }
             .overlay-icon {
                 width: min(250px, 90vw);
                 height: min(250px, 45vh);
@@ -429,6 +483,163 @@ const buildDocs = async (): Promise<void> => {
                 font-size: 0.75rem;
                 padding: 0.3rem 0.5rem;
             }
+        }
+        .playground {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e1e5e9;
+        }
+        .playground h2 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: #333;
+            text-align: center;
+        }
+        .playground p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .playground-container {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            align-items: start;
+        }
+        .playground-preview {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #e1e5e9;
+            text-align: center;
+            flex: 1;
+        }
+        .playground-controls {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #e1e5e9;
+            flex: 0 0 auto;
+        }
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+        .control-group select,
+        .control-group input[type="text"],
+        .control-group input[type="range"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: white;
+            transition: border-color 0.2s ease;
+        }
+        .control-group select:focus,
+        .control-group input[type="text"]:focus {
+            outline: none;
+            border-color: #4eb84b;
+            box-shadow: 0 0 0 3px rgba(78, 184, 75, 0.1);
+        }
+        .color-input-group {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .color-input-group input[type="color"] {
+            width: 60px;
+            height: 40px;
+            padding: 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            background: white;
+        }
+        .color-input-group input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 2px;
+        }
+        .color-input-group input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 4px;
+        }
+        .color-input-group input[type="text"] {
+            width: auto;
+            max-width: 100%;
+        }
+        .control-group input[type="range"] {
+            padding: 0;
+            height: 8px;
+            background: #e1e5e9;
+            appearance: none;
+        }
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4eb84b;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .control-group input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4eb84b;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .reset-btn {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .reset-btn:hover {
+            background: #5a6268;
+        }
+        .preview-area {
+            margin-bottom: 1.5rem;
+            padding: 2rem;
+            border: 2px dashed #e1e5e9;
+            border-radius: 8px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+        .preview-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #e1e5e9;
+        }
+        .preview-info code {
+            word-break: break-all;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -458,7 +669,7 @@ const buildDocs = async (): Promise<void> => {
                 (icon) => `
             <div class="icon-card" data-name="${icon.name}" onclick="showOverlay('${icon.name}', '${type}')">
                 <div class="icon-display">
-                    ${icon.svg}
+                    <evcc-icon type="${type}" name="${icon.name}"></evcc-icon>
                 </div>
                 <div class="icon-name">${icon.name}</div>
             </div>
@@ -474,7 +685,9 @@ const buildDocs = async (): Promise<void> => {
     <div class="overlay" id="overlay" onclick="hideOverlay()">
         <div class="overlay-content" onclick="event.stopPropagation()">
             <button class="close-btn" onclick="hideOverlay()">&times;</button>
-            <div class="overlay-icon" id="overlayIcon"></div>
+            <div class="overlay-icon" id="overlayIcon">
+                <evcc-icon id="overlayIconComponent" type="vehicle" name="kia-niro-ev"></evcc-icon>
+            </div>
             <div class="overlay-info">
                 <div class="overlay-title" id="overlayTitle"></div>
                 <div class="overlay-type" id="overlayType"></div>
@@ -487,6 +700,72 @@ const buildDocs = async (): Promise<void> => {
         </div>
     </div>
 
+    <div class="playground">
+        <h2>🎮 Interactive Playground</h2>
+        <p>Experiment with different icons, colors, and sizes using the evcc-icon web component:</p>
+        
+        <div class="playground-container">
+            <div class="playground-controls">
+                <div class="control-group">
+                    <label for="iconSelect">Icon:</label>
+                    <select id="iconSelect">
+                        ${Object.entries(iconsByType)
+                          .map(([type, typeIcons]) =>
+                            typeIcons
+                              .map(
+                                (icon) =>
+                                  `<option value="${type}/${icon.name}"${type === "vehicle" && icon.name === "kia-niro-ev" ? " selected" : ""}>${type}/${icon.name}</option>`,
+                              )
+                              .join(""),
+                          )
+                          .join("")}
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="accentColor">Accent Color:</label>
+                    <div class="color-input-group">
+                        <input type="color" id="accentColor" value="#4eb84b">
+                        <input type="text" id="accentColorText" value="#4eb84b" placeholder="#4eb84b">
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label for="outlineColor">Outline Color:</label>
+                    <div class="color-input-group">
+                        <input type="color" id="outlineColor" value="#000000">
+                        <input type="text" id="outlineColorText" value="#000000" placeholder="#000000">
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label for="sizeSlider">Size: <span id="sizeValue">128</span>px</label>
+                    <input type="range" id="sizeSlider" min="64" max="768" value="128" step="8">
+                </div>
+                
+                <div class="control-group">
+                    <button id="resetBtn" class="reset-btn">Reset to Defaults</button>
+                </div>
+            </div>
+            
+            <div class="playground-preview">
+                <div class="preview-area">
+                    <evcc-icon 
+                        id="playgroundIcon" 
+                        type="vehicle" 
+                        name="kia-niro-ev"
+                        accent-color="#4eb84b"
+                        outline-color="#000"
+                        size="128"
+                    ></evcc-icon>
+                </div>
+                <div class="preview-info">
+                    <code id="playgroundCode">&lt;evcc-icon type="vehicle" name="kia-niro-ev" accent-color="#4eb84b" outline-color="#000" size="128"&gt;&lt;/evcc-icon&gt;</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="footer">
         <div class="footer-links">
             <a href="https://evcc.io">evcc.io</a>
@@ -494,10 +773,9 @@ const buildDocs = async (): Promise<void> => {
         </div>
     </div>
 
-    <script>
-        // SVG data object
-        const svgData = ${JSON.stringify(svgData, null, 2)};
-
+    <script type="module" src="./svg-registry.js"></script>
+    <script type="module" src="./evcc-icon.js"></script>
+    <script type="module">
         // Navigation state
         let currentIconIndex = 0;
         let currentIconList = [];
@@ -513,35 +791,33 @@ const buildDocs = async (): Promise<void> => {
         ];
 
         function showOverlay(name, type) {
-            const svg = svgData[name];
-            if (svg) {
-                // Find the current icon in the full list
-                currentIconIndex = allIcons.findIndex(icon => icon.name === name);
-                currentIconList = allIcons;
-                currentType = type;
-                
-                updateOverlayContent();
-                document.getElementById('overlay').style.display = 'flex';
-            }
+            // Find the current icon in the full list
+            currentIconIndex = allIcons.findIndex(icon => icon.name === name);
+            currentIconList = allIcons;
+            currentType = type;
+            
+            updateOverlayContent();
+            document.getElementById('overlay').style.display = 'flex';
         }
 
         function updateOverlayContent() {
             const icon = currentIconList[currentIconIndex];
-            const svg = svgData[icon.name];
+            const overlayComponent = document.getElementById('overlayIconComponent');
             
-            if (svg) {
-                document.getElementById('overlayIcon').innerHTML = svg;
-                document.getElementById('overlayTitle').textContent = icon.name;
-                document.getElementById('overlayType').textContent = icon.type;
-                document.getElementById('overlayCounter').textContent = \`\${currentIconIndex + 1} of \${currentIconList.length}\`;
-                
-                // Update navigation button states
-                const leftBtn = document.getElementById('overlayNavLeft');
-                const rightBtn = document.getElementById('overlayNavRight');
-                
-                leftBtn.disabled = currentIconIndex === 0;
-                rightBtn.disabled = currentIconIndex === currentIconList.length - 1;
-            }
+            // Update the web component attributes
+            overlayComponent.setAttribute('type', icon.type);
+            overlayComponent.setAttribute('name', icon.name);
+            
+            document.getElementById('overlayTitle').textContent = icon.name;
+            document.getElementById('overlayType').textContent = icon.type;
+            document.getElementById('overlayCounter').textContent = \`\${currentIconIndex + 1} of \${currentIconList.length}\`;
+            
+            // Update navigation button states
+            const leftBtn = document.getElementById('overlayNavLeft');
+            const rightBtn = document.getElementById('overlayNavRight');
+            
+            leftBtn.disabled = currentIconIndex === 0;
+            rightBtn.disabled = currentIconIndex === currentIconList.length - 1;
         }
 
         function navigateOverlay(direction) {
@@ -588,12 +864,89 @@ const buildDocs = async (): Promise<void> => {
                 card.style.display = isVisible ? 'block' : 'none';
             });
         });
+
+        // Make functions global for onclick handlers
+        window.showOverlay = showOverlay;
+        window.hideOverlay = hideOverlay;
+        window.navigateOverlay = navigateOverlay;
+
+        // Playground functionality
+        const playgroundIcon = document.getElementById('playgroundIcon');
+        const playgroundCode = document.getElementById('playgroundCode');
+        const iconSelect = document.getElementById('iconSelect');
+        const accentColor = document.getElementById('accentColor');
+        const accentColorText = document.getElementById('accentColorText');
+        const outlineColor = document.getElementById('outlineColor');
+        const outlineColorText = document.getElementById('outlineColorText');
+        const sizeSlider = document.getElementById('sizeSlider');
+        const sizeValue = document.getElementById('sizeValue');
+        const resetBtn = document.getElementById('resetBtn');
+
+        const updatePlaygroundIcon = () => {
+            const [type, name] = iconSelect.value.split('/');
+            const accentColorVal = accentColor.value;
+            const outlineColorVal = outlineColor.value;
+            const sizeVal = sizeSlider.value;
+
+            // Update the web component
+            playgroundIcon.setAttribute('type', type);
+            playgroundIcon.setAttribute('name', name);
+            playgroundIcon.setAttribute('accent-color', accentColorVal);
+            playgroundIcon.setAttribute('outline-color', outlineColorVal);
+            playgroundIcon.setAttribute('size', sizeVal);
+
+            // Update the code display
+            playgroundCode.textContent = '<evcc-icon type="' + type + '" name="' + name + '" accent-color="' + accentColorVal + '" outline-color="' + outlineColorVal + '" size="' + sizeVal + '"></evcc-icon>';
+
+            // Update size display
+            sizeValue.textContent = sizeVal;
+
+            // Sync color inputs
+            accentColorText.value = accentColorVal;
+            outlineColorText.value = outlineColorVal;
+        };
+
+        const resetPlayground = () => {
+            iconSelect.value = 'vehicle/kia-niro-ev';
+            accentColor.value = '#4eb84b';
+            accentColorText.value = '#4eb84b';
+            outlineColor.value = '#000000';
+            outlineColorText.value = '#000000';
+            sizeSlider.value = '128';
+            updatePlaygroundIcon();
+        };
+
+        // Event listeners
+        iconSelect.addEventListener('change', updatePlaygroundIcon);
+        accentColor.addEventListener('input', updatePlaygroundIcon);
+        outlineColor.addEventListener('input', updatePlaygroundIcon);
+        sizeSlider.addEventListener('input', updatePlaygroundIcon);
+        resetBtn.addEventListener('click', resetPlayground);
+
+        // Sync text inputs with color pickers
+        accentColorText.addEventListener('input', (e) => {
+            const value = e.target.value;
+            const hexPattern = /^#[0-9A-Fa-f]{6}$/;
+            if (hexPattern.test(value)) {
+                accentColor.value = value;
+                updatePlaygroundIcon();
+            }
+        });
+
+        outlineColorText.addEventListener('input', (e) => {
+            const value = e.target.value;
+            const hexPattern = /^#[0-9A-Fa-f]{6}$/;
+            if (hexPattern.test(value)) {
+                outlineColor.value = value;
+                updatePlaygroundIcon();
+            }
+        });
     </script>
 </body>
 </html>`;
 
   fs.writeFileSync("docs/index.html", htmlContent);
-  console.log(`Documentation built with ${icons.length} icons`);
+  console.log(`Documentation built with ${icons.length} icons using web components`);
   console.log("Documentation available at: docs/index.html");
 };
 
