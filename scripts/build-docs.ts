@@ -45,19 +45,25 @@ const buildDocs = async (): Promise<void> => {
   });
 
   // Group icons by type
-  const iconsByType = icons.reduce((acc, icon) => {
-    if (!acc[icon.type]) {
-      acc[icon.type] = [];
-    }
-    acc[icon.type].push(icon);
-    return acc;
-  }, {} as Record<string, IconData[]>);
+  const iconsByType = icons.reduce(
+    (acc, icon) => {
+      if (!acc[icon.type]) {
+        acc[icon.type] = [];
+      }
+      acc[icon.type].push(icon);
+      return acc;
+    },
+    {} as Record<string, IconData[]>,
+  );
 
   // Create SVG data object for JavaScript
-  const svgData = icons.reduce((acc, icon) => {
-    acc[icon.name] = icon.svg;
-    return acc;
-  }, {} as Record<string, string>);
+  const svgData = icons.reduce(
+    (acc, icon) => {
+      acc[icon.name] = icon.svg;
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
 
   // Generate HTML documentation
   const htmlContent = `<!DOCTYPE html>
@@ -344,9 +350,7 @@ const buildDocs = async (): Promise<void> => {
       .map(
         ([type, typeIcons]) => `
     <div class="icon-section" data-type="${type}">
-        <h2>${type.charAt(0).toUpperCase() + type.slice(1)}s (${
-          typeIcons.length
-        })</h2>
+        <h2>${type.charAt(0).toUpperCase() + type.slice(1)}s (${typeIcons.length})</h2>
         <div class="icon-grid">
             ${typeIcons
               .map(
@@ -357,12 +361,12 @@ const buildDocs = async (): Promise<void> => {
                 </div>
                 <div class="icon-name">${icon.name}</div>
             </div>
-            `
+            `,
               )
               .join("")}
         </div>
     </div>
-    `
+    `,
       )
       .join("")}
 
