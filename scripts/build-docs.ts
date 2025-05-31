@@ -51,9 +51,17 @@ const buildDocs = async (): Promise<void> => {
     iconsByType[type].sort((a, b) => a.name.localeCompare(b.name));
   });
 
+  // Define desired order: charger, meter, vehicles
+  const typeOrder = ["charger", "meter", "vehicle"];
+  const orderedIconTypes = typeOrder
+    .filter((type) => iconsByType[type])
+    .map((type) => [type, iconsByType[type]] as [string, IconData[]]);
+
   // Copy the built files to docs directory
   const webComponentsPath = "packages/web/dist/evcc-icon.js";
   const svgRegistryPath = "packages/web/dist/svg-registry.js";
+  const webComponentsMapPath = "packages/web/dist/evcc-icon.js.map";
+  const svgRegistryMapPath = "packages/web/dist/svg-registry.js.map";
 
   if (fs.existsSync(webComponentsPath)) {
     fs.copyFileSync(webComponentsPath, "docs/evcc-icon.js");
@@ -67,6 +75,17 @@ const buildDocs = async (): Promise<void> => {
     console.log("Copied self-contained SVG registry to docs/svg-registry.js");
   } else {
     console.warn("SVG registry not found, make sure to run 'npm run build:web' first");
+  }
+
+  // Copy source map files if they exist
+  if (fs.existsSync(webComponentsMapPath)) {
+    fs.copyFileSync(webComponentsMapPath, "docs/evcc-icon.js.map");
+    console.log("Copied web components source map to docs/evcc-icon.js.map");
+  }
+
+  if (fs.existsSync(svgRegistryMapPath)) {
+    fs.copyFileSync(svgRegistryMapPath, "docs/svg-registry.js.map");
+    console.log("Copied SVG registry source map to docs/svg-registry.js.map");
   }
 
   // Generate HTML documentation
@@ -635,11 +654,14 @@ const buildDocs = async (): Promise<void> => {
             border: 1px solid #e1e5e9;
         }
         .preview-info code {
-            word-break: break-all;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
             font-family: 'Monaco', 'Consolas', monospace;
             font-size: 0.85rem;
             color: #666;
             line-height: 1.4;
+            text-align: left;
+            display: block;
         }
     </style>
 </head>
@@ -658,7 +680,7 @@ const buildDocs = async (): Promise<void> => {
         <input type="search" class="search-box" placeholder="Search icons..." id="searchBox">
     </div>
 
-    ${Object.entries(iconsByType)
+    ${orderedIconTypes
       .map(
         ([type, typeIcons]) => `
     <div class="icon-section" data-type="${type}">
@@ -709,7 +731,7 @@ const buildDocs = async (): Promise<void> => {
                 <div class="control-group">
                     <label for="iconSelect">Icon:</label>
                     <select id="iconSelect">
-                        ${Object.entries(iconsByType)
+                        ${orderedIconTypes
                           .map(([type, typeIcons]) =>
                             typeIcons
                               .map(
@@ -783,7 +805,7 @@ const buildDocs = async (): Promise<void> => {
 
         // Create a flat list of all icons for navigation
         const allIcons = [
-            ${Object.entries(iconsByType)
+            ${orderedIconTypes
               .map(([type, typeIcons]) =>
                 typeIcons.map((icon) => `{ name: '${icon.name}', type: '${type}' }`).join(","),
               )
@@ -798,6 +820,9 @@ const buildDocs = async (): Promise<void> => {
             
             updateOverlayContent();
             document.getElementById('overlay').style.display = 'flex';
+            
+            // Also update the playground preview when clicking on an icon tile
+            setPlaygroundIcon(type, name);
         }
 
         function updateOverlayContent() {
@@ -817,7 +842,7 @@ const buildDocs = async (): Promise<void> => {
             const rightBtn = document.getElementById('overlayNavRight');
             
             leftBtn.disabled = currentIconIndex === 0;
-            rightBtn.disabled = currentIconIndex === currentIconList.length - 1;
+            rightBtn.disabled = currentIconList.length === 1 || currentIconIndex === currentIconList.length - 1;
         }
 
         function navigateOverlay(direction) {
@@ -896,7 +921,16 @@ const buildDocs = async (): Promise<void> => {
             playgroundIcon.setAttribute('size', sizeVal);
 
             // Update the code display
-            playgroundCode.textContent = '<evcc-icon type="' + type + '" name="' + name + '" accent-color="' + accentColorVal + '" outline-color="' + outlineColorVal + '" size="' + sizeVal + '"></evcc-icon>';
+            const codeLines = [
+                '<evcc-icon',
+                '  type="' + type + '"',
+                '  name="' + name + '"',
+                '  accent-color="' + accentColorVal + '"',
+                '  outline-color="' + outlineColorVal + '"',
+                '  size="' + sizeVal + '"',
+                '></evcc-icon>'
+            ];
+            playgroundCode.textContent = codeLines.join('\\n');
 
             // Update size display
             sizeValue.textContent = sizeVal;
@@ -915,6 +949,22 @@ const buildDocs = async (): Promise<void> => {
             sizeSlider.value = '128';
             updatePlaygroundIcon();
         };
+
+        const setPlaygroundIcon = (type, name) => {
+            const iconSelect = document.getElementById('iconSelect');
+            const value = \`\${type}/\${name}\`;
+            iconSelect.value = value;
+            updatePlaygroundIcon();
+        };
+
+        // Make setPlaygroundIcon global after it's defined
+        window.setPlaygroundIcon = setPlaygroundIcon;
+
+        // Add click handler to overlay icon to set it in playground
+        document.getElementById('overlayIconComponent').addEventListener('click', function() {
+            const icon = currentIconList[currentIconIndex];
+            setPlaygroundIcon(icon.type, icon.name);
+        });
 
         // Event listeners
         iconSelect.addEventListener('change', updatePlaygroundIcon);

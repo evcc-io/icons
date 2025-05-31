@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "npm run clean && npm run build:registry && npm run build:components",
-    "build:registry": "cd ../.. && npx tsx scripts/build-package-registry.ts vue",
+    "build:registry": "cd ../.. && npx tsx scripts/build-svg-registry.ts --package vue",
     "build:components": "vite build && vue-tsc --declaration --emitDeclarationOnly",
     "clean": "rm -rf dist src/svg-registry.ts *.tsbuildinfo",
     "prepare": "npm run build",
