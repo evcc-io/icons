@@ -220,7 +220,6 @@ const buildDocs = async (): Promise<void> => {
             z-index: 1;
             font-weight: 500;
             border-radius: 0 0 8px 8px;
-            width: 100%;
             word-break: break-all;
         }
         .search-box {

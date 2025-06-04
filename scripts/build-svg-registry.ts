@@ -78,7 +78,7 @@ const generateRegistry = (iconKeys: string[]): string => {
 
   return `// This file is auto-generated. Do not edit manually.
 const registry = {
-${registryEntries}
+${registryEntries},
 };
 
 export default registry;
