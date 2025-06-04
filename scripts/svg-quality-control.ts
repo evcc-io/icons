@@ -101,6 +101,33 @@ const dimensionsMatch = (dims: SVGDimensions): boolean => {
   return dims.viewBox === STANDARD_DIMENSIONS.viewBox;
 };
 
+const validateFilename = (filePath: string): string[] => {
+  const errors: string[] = [];
+  const filename = filePath.split("/").pop()!;
+  const nameWithoutExtension = filename.replace(/\.svg$/i, "");
+
+  // Check if filename contains only alphanumeric characters and hyphens
+  const validFilenamePattern = /^[a-zA-Z0-9\-]+$/;
+
+  if (!validFilenamePattern.test(nameWithoutExtension)) {
+    errors.push(
+      `Invalid filename: "${filename}". SVG filenames must only contain alphanumeric characters and hyphens (a-z, A-Z, 0-9, -)`,
+    );
+  }
+
+  // Check for consecutive hyphens
+  if (nameWithoutExtension.includes("--")) {
+    errors.push(`Invalid filename: "${filename}". Consecutive hyphens are not allowed`);
+  }
+
+  // Check for leading or trailing hyphens
+  if (nameWithoutExtension.startsWith("-") || nameWithoutExtension.endsWith("-")) {
+    errors.push(`Invalid filename: "${filename}". Filenames cannot start or end with hyphens`);
+  }
+
+  return errors;
+};
+
 const validateSVGFile = async (filePath: string): Promise<ValidationResult> => {
   const result: ValidationResult = {
     file: filePath,
@@ -114,6 +141,10 @@ const validateSVGFile = async (filePath: string): Promise<ValidationResult> => {
       result.errors.push("File is not an SVG file (wrong extension)");
       return result;
     }
+
+    // Validate filename format
+    const filenameErrors = validateFilename(filePath);
+    result.errors.push(...filenameErrors);
 
     // Read and validate SVG content
     const content = await readFile(filePath, "utf-8");
@@ -178,7 +209,8 @@ const main = async (): Promise<void> => {
 
   console.log("🔍 Starting SVG Quality Control...\n");
   console.log(`📏 Standard dimensions: viewBox="${STANDARD_DIMENSIONS.viewBox}"`);
-  console.log(`🎨 Whitelisted colors: ${WHITELISTED_COLORS.join(", ")}\n`);
+  console.log(`🎨 Whitelisted colors: ${WHITELISTED_COLORS.join(", ")}`);
+  console.log("📝 Filename requirements: alphanumeric characters and hyphens only (a-z, A-Z, 0-9, -)\n");
 
   try {
     const allFiles = await getAllSVGFiles(srcDir);
