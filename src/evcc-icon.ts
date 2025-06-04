@@ -17,6 +17,9 @@ export class EvccIcon extends HTMLElement {
   private _isInViewport = false;
   private _loadAttempted = false;
   private _loadingPromise: Promise<void> | null = null;
+  private _currentKey: string | null = null;
+  private _type: IconType | null = null;
+  private _name: string | null = null;
 
   static get observedAttributes(): string[] {
     return ["type", "name", "accent-color", "outline-color", "size"];
@@ -29,6 +32,7 @@ export class EvccIcon extends HTMLElement {
   }
 
   connectedCallback(): void {
+    this._updateAttributes();
     this.render();
     this._startObserving();
   }
@@ -38,9 +42,31 @@ export class EvccIcon extends HTMLElement {
   }
 
   attributeChangedCallback(): void {
+    this._updateAttributes();
+
     if (!this._loading) {
       this.render();
     }
+  }
+
+  private _updateAttributes(): void {
+    const type = this.getAttribute("type") as IconType;
+    const name = this.getAttribute("name");
+    const newKey = type && name ? `${type}/${name}` : null;
+
+    // Reset loading state if the icon key has changed
+    if (newKey !== this._currentKey) {
+      this._currentKey = newKey;
+      this._loadAttempted = false;
+      this._loadingPromise = null;
+    }
+
+    this._type = type;
+    this._name = name;
+  }
+
+  private get _currentIconKey(): string | null {
+    return this._type && this._name ? `${this._type}/${this._name}` : null;
   }
 
   private _setupIntersectionObserver(): void {
@@ -114,19 +140,16 @@ export class EvccIcon extends HTMLElement {
   }
 
   private async render(): Promise<void> {
-    const type = this.getAttribute("type") as IconType;
-    const name = this.getAttribute("name");
-
-    if (!type || !name) {
+    if (!this._type || !this._name) {
       this._renderError("Both type and name attributes are required");
       return;
     }
 
-    const key = `${type}/${name}`;
+    const key = this._currentIconKey!;
 
     // Check if already loaded from cache
     if (iconCache.has(key)) {
-      this._renderIcon();
+      this._renderIcon(key);
       return;
     }
 
@@ -152,9 +175,7 @@ export class EvccIcon extends HTMLElement {
     this._loadAttempted = true;
     this._loading = true;
 
-    const type = this.getAttribute("type") as IconType;
-    const name = this.getAttribute("name")!;
-    const key = `${type}/${name}`;
+    const key = this._currentIconKey!;
 
     // Show loading state
     this._renderLoading();
@@ -164,23 +185,31 @@ export class EvccIcon extends HTMLElement {
         // Import the registry
         const registry = (await import("./svg-registry.js")).default;
 
-        // Check if icon exists in registry
-        const iconLoader = registry[key as keyof typeof registry];
+        // Try to find the specific icon first
+        let iconLoader = registry[key as keyof typeof registry];
+        let attemptedKey = key;
+
         if (!iconLoader) {
-          this._renderError(`Icon not found: ${key}`);
+          const genericKey = `${this._type}/generic`;
+          iconLoader = registry[genericKey as keyof typeof registry];
+          attemptedKey = genericKey;
+        }
+
+        if (!iconLoader) {
+          this._renderError(`Icon not found: ${key} (and no generic fallback available)`);
           return;
         }
 
-        // Load the icon module
         const iconModule = await iconLoader();
         const svgString = iconModule.default;
 
         if (svgString) {
-          // Cache the loaded icon
+          // Cache the icon content under the requested key
           iconCache.set(key, svgString);
-          this._renderIcon();
+
+          this._renderIcon(key);
         } else {
-          this._renderError(`Failed to load icon: ${key}`);
+          this._renderError(`Failed to load icon: ${attemptedKey}`);
         }
       } catch (error) {
         console.error(`Error loading icon ${key}:`, error);
@@ -193,10 +222,7 @@ export class EvccIcon extends HTMLElement {
     return this._loadingPromise;
   }
 
-  private _renderIcon(): void {
-    const type = this.getAttribute("type") as IconType;
-    const name = this.getAttribute("name")!;
-    const key = `${type}/${name}`;
+  private _renderIcon(key: string): void {
     const svgContent = iconCache.get(key);
 
     if (!svgContent) {
@@ -223,7 +249,7 @@ export class EvccIcon extends HTMLElement {
     `;
 
     // Set aria-label for accessibility
-    this.setAttribute("aria-label", `${type} ${name}`);
+    this.setAttribute("aria-label", `${this._type} ${this._name}`);
     this.setAttribute("role", "img");
   }
 

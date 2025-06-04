@@ -758,6 +758,11 @@ const buildDocs = async (): Promise<void> => {
                               .join(""),
                           )
                           .join("")}
+                        <optgroup label="Fallbacks">
+                            <option value="vehicle/nonexistent-car">vehicle/nonexistent-car</option>
+                            <option value="charger/nonexistent-charger">charger/nonexistent-charger</option>
+                            <option value="meter/nonexistent-meter">meter/nonexistent-meter</option>
+                        </optgroup>
                     </select>
                 </div>
                 
