@@ -1,15 +1,15 @@
 {
   "name": "@evcc/icons",
   "version": "0.3.1",
-  "description": "A collection of evcc icons for vehicles, meters, and chargers. Core SVG registry with framework-specific packages available.",
-  "main": "dist/svg-registry.js",
-  "module": "dist/svg-registry.js",
-  "types": "dist/svg-registry.d.ts",
+  "description": "A collection of evcc icons for vehicles, meters, and chargers with web components and SVG registry.",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/svg-registry.d.ts",
-      "import": "./dist/svg-registry.js",
-      "require": "./dist/svg-registry.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     },
     "./registry": {
       "types": "./dist/svg-registry.d.ts",
@@ -22,34 +22,22 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run clean && npm run build:registry",
+    "build": "npm run clean && npm run build:registry && npm run build:components",
     "build:registry": "tsx scripts/build-svg-registry.ts",
-    "build:docs": "tsx scripts/build-docs.ts",
-    "serve:docs": "tsx scripts/serve-docs.ts",
-    "clean": "rm -rf dist",
-    "clean:all": "npm run clean && cd packages/react && npm run clean && cd ../vue && npm run clean && cd ../web && npm run clean",
+    "build:components": "tsc",
+    "clean": "rm -rf dist src/svg-registry.ts *.tsbuildinfo",
     "prepare": "npm run build",
-    "dev": "npm run build && npm run test:examples",
-    "test:examples": "tsx examples/test.ts",
+    "dev": "npm run build && npx serve docs",
     "type-check": "tsc --noEmit",
     "lint": "npx @biomejs/biome check . && npm run type-check",
     "lint:fix": "npx @biomejs/biome check --write . && npm run type-check",
-    "lint:svg": "tsx scripts/svg-quality-control.ts",
-    "build:packages": "npm run build && npm run build:react && npm run build:vue && npm run build:web",
-    "build:packages:clean": "npm run clean:all && npm run build:packages",
-    "build:react": "cd packages/react && npm ci && npm run build",
-    "build:vue": "cd packages/vue && npm ci && npm run build",
-    "build:web": "cd packages/web && npm ci && npm run build",
-    "install:packages": "cd packages/react && npm ci && cd ../vue && npm ci && cd ../web && npm ci",
-    "release": "tsx scripts/release.ts",
-    "release:patch": "tsx scripts/release.ts patch",
-    "release:minor": "tsx scripts/release.ts minor",
-    "release:major": "tsx scripts/release.ts major"
+    "lint:svg": "tsx scripts/svg-quality-control.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/node": "^22.15.23",
     "glob": "^11.0.2",
+    "serve": "^14.2.4",
     "tsx": "^4.7.0",
     "typescript": "^5.3.0"
   },
@@ -61,6 +49,7 @@
     "meters",
     "svg",
     "registry",
+    "web-components",
     "typescript"
   ],
   "author": {

@@ -59,22 +59,44 @@ const buildDocs = async (): Promise<void> => {
 
   // Copy the built files to docs directory
   const webComponentsPath = "packages/web/dist/evcc-icon.js";
-  const svgRegistryPath = "packages/web/dist/svg-registry.js";
+  const lazyRegistryPath = "packages/web/dist/lazy-registry.js";
+  const iconLoaderPath = "packages/web/dist/icon-loader.js";
   const webComponentsMapPath = "packages/web/dist/evcc-icon.js.map";
-  const svgRegistryMapPath = "packages/web/dist/svg-registry.js.map";
+  const lazyRegistryMapPath = "packages/web/dist/lazy-registry.js.map";
+  const iconLoaderMapPath = "packages/web/dist/icon-loader.js.map";
 
   if (fs.existsSync(webComponentsPath)) {
     fs.copyFileSync(webComponentsPath, "docs/evcc-icon.js");
-    console.log("Copied self-contained web components to docs/evcc-icon.js");
+    console.log("Copied lazy-loading web components to docs/evcc-icon.js");
   } else {
     console.warn("Web components not found, make sure to run 'npm run build:web' first");
   }
 
-  if (fs.existsSync(svgRegistryPath)) {
-    fs.copyFileSync(svgRegistryPath, "docs/svg-registry.js");
-    console.log("Copied self-contained SVG registry to docs/svg-registry.js");
+  if (fs.existsSync(lazyRegistryPath)) {
+    fs.copyFileSync(lazyRegistryPath, "docs/lazy-registry.js");
+    console.log("Copied lazy registry to docs/lazy-registry.js");
   } else {
-    console.warn("SVG registry not found, make sure to run 'npm run build:web' first");
+    console.warn("Lazy registry not found, make sure to run 'npm run build:web' first");
+  }
+
+  if (fs.existsSync(iconLoaderPath)) {
+    fs.copyFileSync(iconLoaderPath, "docs/icon-loader.js");
+    console.log("Copied icon loader to docs/icon-loader.js");
+  } else {
+    console.warn("Icon loader not found, make sure to run 'npm run build:web' first");
+  }
+
+  // Copy the icons directory
+  const iconsDir = "packages/web/dist/icons";
+  const docsIconsDir = "docs/icons";
+  if (fs.existsSync(iconsDir)) {
+    if (fs.existsSync(docsIconsDir)) {
+      fs.rmSync(docsIconsDir, { recursive: true });
+    }
+    fs.cpSync(iconsDir, docsIconsDir, { recursive: true });
+    console.log("Copied individual icon modules to docs/icons/");
+  } else {
+    console.warn("Icons directory not found, make sure to run 'npm run build:web' first");
   }
 
   // Copy source map files if they exist
@@ -83,9 +105,14 @@ const buildDocs = async (): Promise<void> => {
     console.log("Copied web components source map to docs/evcc-icon.js.map");
   }
 
-  if (fs.existsSync(svgRegistryMapPath)) {
-    fs.copyFileSync(svgRegistryMapPath, "docs/svg-registry.js.map");
-    console.log("Copied SVG registry source map to docs/svg-registry.js.map");
+  if (fs.existsSync(lazyRegistryMapPath)) {
+    fs.copyFileSync(lazyRegistryMapPath, "docs/lazy-registry.js.map");
+    console.log("Copied lazy registry source map to docs/lazy-registry.js.map");
+  }
+
+  if (fs.existsSync(iconLoaderMapPath)) {
+    fs.copyFileSync(iconLoaderMapPath, "docs/icon-loader.js.map");
+    console.log("Copied icon loader source map to docs/icon-loader.js.map");
   }
 
   // Generate HTML documentation
@@ -648,6 +675,10 @@ const buildDocs = async (): Promise<void> => {
             justify-content: center;
             background: #fff;
         }
+        .preview-area evcc-icon {
+            width: 100%;
+            height: 100%;
+        }
         .preview-info {
             background: #f8f9fa;
             padding: 1rem;
@@ -762,11 +793,6 @@ const buildDocs = async (): Promise<void> => {
                 </div>
                 
                 <div class="control-group">
-                    <label for="sizeSlider">Size: <span id="sizeValue">128</span>px</label>
-                    <input type="range" id="sizeSlider" min="64" max="768" value="128" step="8">
-                </div>
-                
-                <div class="control-group">
                     <button id="resetBtn" class="reset-btn">Reset to Defaults</button>
                 </div>
             </div>
@@ -779,11 +805,10 @@ const buildDocs = async (): Promise<void> => {
                         name="kia-niro-ev"
                         accent-color="#4eb84b"
                         outline-color="#000"
-                        size="128"
                     ></evcc-icon>
                 </div>
                 <div class="preview-info">
-                    <code id="playgroundCode">&lt;evcc-icon type="vehicle" name="kia-niro-ev" accent-color="#4eb84b" outline-color="#000" size="128"&gt;&lt;/evcc-icon&gt;</code>
+                    <code id="playgroundCode">&lt;evcc-icon type="vehicle" name="kia-niro-ev" accent-color="#4eb84b" outline-color="#000"&gt;&lt;/evcc-icon&gt;</code>
                 </div>
             </div>
         </div>
@@ -796,7 +821,8 @@ const buildDocs = async (): Promise<void> => {
         </div>
     </div>
 
-    <script type="module" src="./svg-registry.js"></script>
+    <script type="module" src="./lazy-registry.js"></script>
+    <script type="module" src="./icon-loader.js"></script>
     <script type="module" src="./evcc-icon.js"></script>
     <script type="module">
         // Navigation state
@@ -904,22 +930,18 @@ const buildDocs = async (): Promise<void> => {
         const accentColorText = document.getElementById('accentColorText');
         const outlineColor = document.getElementById('outlineColor');
         const outlineColorText = document.getElementById('outlineColorText');
-        const sizeSlider = document.getElementById('sizeSlider');
-        const sizeValue = document.getElementById('sizeValue');
         const resetBtn = document.getElementById('resetBtn');
 
         const updatePlaygroundIcon = () => {
             const [type, name] = iconSelect.value.split('/');
             const accentColorVal = accentColor.value;
             const outlineColorVal = outlineColor.value;
-            const sizeVal = sizeSlider.value;
 
             // Update the web component
             playgroundIcon.setAttribute('type', type);
             playgroundIcon.setAttribute('name', name);
             playgroundIcon.setAttribute('accent-color', accentColorVal);
             playgroundIcon.setAttribute('outline-color', outlineColorVal);
-            playgroundIcon.setAttribute('size', sizeVal);
 
             // Update the code display
             const codeLines = [
@@ -928,13 +950,9 @@ const buildDocs = async (): Promise<void> => {
                 '  name="' + name + '"',
                 '  accent-color="' + accentColorVal + '"',
                 '  outline-color="' + outlineColorVal + '"',
-                '  size="' + sizeVal + '"',
                 '></evcc-icon>'
             ];
             playgroundCode.textContent = codeLines.join('\\n');
-
-            // Update size display
-            sizeValue.textContent = sizeVal;
 
             // Sync color inputs
             accentColorText.value = accentColorVal;
@@ -947,7 +965,6 @@ const buildDocs = async (): Promise<void> => {
             accentColorText.value = '#4eb84b';
             outlineColor.value = '#000000';
             outlineColorText.value = '#000000';
-            sizeSlider.value = '128';
             updatePlaygroundIcon();
         };
 
@@ -971,7 +988,6 @@ const buildDocs = async (): Promise<void> => {
         iconSelect.addEventListener('change', updatePlaygroundIcon);
         accentColor.addEventListener('input', updatePlaygroundIcon);
         outlineColor.addEventListener('input', updatePlaygroundIcon);
-        sizeSlider.addEventListener('input', updatePlaygroundIcon);
         resetBtn.addEventListener('click', resetPlayground);
 
         // Sync text inputs with color pickers

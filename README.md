@@ -1,229 +1,123 @@
 # evcc Icons
 
-🖍️ Work in progress 🖍️
+A collection of evcc icons for vehicles, meters, and chargers. Available as web components with SVG registry for direct access.
 
-A collection of evcc icons for vehicles, meters, and chargers. Available as separate packages for React, Vue, and Web Components.
-
-## 📖 Documentation
-
-**[View all icons](https://evcc-io.github.io/icons/)**
-
-## Packages
-
-- **`@evcc/icons`** - Core SVG registry (framework-agnostic)
-- **`@evcc/icons-react`** - React components
-- **`@evcc/icons-vue`** - Vue components
-- **`@evcc/icons-web`** - Web Components
-
-## Installation
-
-Choose the package for your framework:
+## 📦 Installation
 
 ```bash
-# React
-npm install @evcc/icons-react
-
-# Vue
-npm install @evcc/icons-vue
-
-# Web Components
-npm install @evcc/icons-web
-
-# Core registry only (for custom implementations)
 npm install @evcc/icons
 ```
 
-## Features
+## 🚀 Quick Start
 
-- 🚗 **Vehicle icons** - Electric vehicles and their variants
-- ⚡ **Charger icons** - Various charging station types
-- 📊 **Meter icons** - Energy meters and monitoring devices
-- 🎨 **Customizable colors** - Change accent and outline colors
-- 📱 **Framework support** - React, Vue, and Web Components
+### Web Components (Recommended)
 
-## Usage
+```javascript
+import '@evcc/icons';
+```
 
-### React
+```html
+<!-- Simple usage -->
+<evcc-icon type="vehicle" name="kia-niro-ev"></evcc-icon>
 
-```jsx
-import { EvccIcon } from "@evcc/icons-react";
+<!-- With custom colors and size -->
+<evcc-icon 
+  type="charger" 
+  name="tesla-wallconnector" 
+  size="48" 
+  accent-color="#ff6b35">
+</evcc-icon>
+```
 
-function App() {
-  return (
-    <div>
-      {/* Basic usage */}
-      <EvccIcon type="vehicle" name="kia-niro-ev" />
+### Direct Registry Access
 
-      {/* Custom colors */}
-      <EvccIcon
-        type="vehicle"
-        name="kia-niro-ev"
-        accentColor="#ff6b35"
-        outlineColor="#333"
-      />
+```javascript
+import { registry } from '@evcc/icons';
 
-      {/* Custom size */}
-      <EvccIcon type="vehicle" name="kia-niro-ev" size="64px" />
-
-      {/* Individual width/height */}
-      <EvccIcon type="vehicle" name="kia-niro-ev" width="100px" height="80px" />
-    </div>
-  );
+// Load an icon manually
+const iconLoader = registry['vehicle/kia-niro-ev'];
+if (iconLoader) {
+  const iconModule = await iconLoader();
+  const svgString = iconModule.default;
+  document.getElementById('my-icon').innerHTML = svgString;
 }
 ```
 
-### Vue
+## ✨ Features
 
-```vue
-<template>
-  <div>
-    <!-- Basic usage -->
-    <EvccIcon type="vehicle" name="kia-niro-ev" />
+- 🎨 **Customizable colors** - Accent and outline colors via CSS custom properties
+- 📱 **Web Components** - Native custom elements with lazy loading
+- 🔗 **Direct access** - SVG registry for custom implementations
+- 🚀 **Performance** - Lazy loading and caching built-in
+- 💪 **TypeScript** - Full type definitions included
 
-    <!-- Custom colors -->
-    <EvccIcon
-      type="vehicle"
-      name="kia-niro-ev"
-      accent-color="#ff6b35"
-      outline-color="#333"
-    />
+### Web Component API
 
-    <!-- Custom size -->
-    <EvccIcon type="vehicle" name="kia-niro-ev" :size="64" />
-  </div>
-</template>
+The `<evcc-icon>` web component supports the following attributes:
 
-<script setup>
-import { EvccIcon } from "@evcc/icons-vue";
-</script>
-```
+- `type` - Icon category: `vehicle`, `charger`, or `meter`
+- `name` - Specific icon name (e.g., `kia-niro-ev`)
+- `size` - Icon size in pixels or CSS units
+- `accent-color` - Custom accent color (default: `#4eb84b`)
+- `outline-color` - Custom outline color (default: `#000`)
 
-### Web Components
+Example with all options:
 
 ```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <script type="module">
-      import "@evcc/icons-web";
-    </script>
-  </head>
-  <body>
-    <!-- Basic usage -->
-    <evcc-icon type="vehicle" name="kia-niro-ev"></evcc-icon>
-
-    <!-- Custom colors -->
-    <evcc-icon
-      type="vehicle"
-      name="kia-niro-ev"
-      accent-color="#ff6b35"
-      outline-color="#333"
-    >
-    </evcc-icon>
-
-    <!-- Custom size -->
-    <evcc-icon type="vehicle" name="kia-niro-ev" size="64px"> </evcc-icon>
-  </body>
-</html>
+<evcc-icon 
+  type="vehicle" 
+  name="bmw-i3" 
+  size="64px"
+  accent-color="#1976d2"
+  outline-color="#333">
+</evcc-icon>
 ```
 
-### Core Registry (Custom Implementation)
+### Registry API
 
 ```javascript
-import { svgRegistry, getIcon, getIconsByType } from "@evcc/icons";
+import { registry } from '@evcc/icons';
 
-// Get a specific icon
-const iconSvg = getIcon("vehicle", "kia-niro-ev");
+// Get all available icons
+const availableIcons = Object.keys(registry);
 
-// Get all vehicle icons
-const vehicleIcons = getIconsByType("vehicle");
-
-// Access the full registry
-console.log(svgRegistry);
+// Load an icon
+const iconLoader = registry['charger/tesla-wallconnector'];
+const iconModule = await iconLoader();
+const svgString = iconModule.default;
 ```
 
-## Props/Attributes
+## 🎨 CSS Custom Properties
 
-| Prop/Attribute                   | Type                                | Required | Default   | Description                            |
-| -------------------------------- | ----------------------------------- | -------- | --------- | -------------------------------------- |
-| `type`                           | `'vehicle' \| 'meter' \| 'charger'` | ✅       | -         | Icon category                          |
-| `name`                           | `string`                            | ✅       | -         | Icon name (filename without extension) |
-| `accentColor` / `accent-color`   | `string`                            | ❌       | `#4eb84b` | Color for accent elements              |
-| `outlineColor` / `outline-color` | `string`                            | ❌       | `#000`    | Color for outlines and strokes         |
-| `size`                           | `string \| number`                  | ❌       | -         | Sets both width and height             |
-| `width`                          | `string \| number`                  | ❌       | -         | Icon width                             |
-| `height`                         | `string \| number`                  | ❌       | -         | Icon height                            |
-| `className` / `class`            | `string`                            | ❌       | -         | Additional CSS classes                 |
+Icons use CSS custom properties for theming:
 
-## Color Customization
-
-All icons use two main colors:
-
-- **Accent Color** (default: `#4eb84b`) - Used for highlights and branded elements
-- **Outline Color** (default: `#000`) - Used for outlines, strokes, and text
-
-You can customize these colors using the `accentColor`/`accent-color` and `outlineColor`/`outline-color` props.
-
-## TypeScript Support
-
-All packages include full TypeScript definitions:
-
-```typescript
-// React
-import { EvccIcon, EvccIconProps } from "@evcc/icons-react";
-
-// Vue
-import { EvccIcon } from "@evcc/icons-vue";
-
-// Core registry
-import { svgRegistry, getIcon } from "@evcc/icons";
+```css
+evcc-icon {
+  --evcc-accent-color: #ff6b35;
+  --evcc-outline-color: #333;
+}
 ```
 
-## Contributing
+## 📂 Available Icons
 
-1. Add your SVG files to the appropriate directory (`src/vehicles/`, `src/meters/`, or `src/chargers/`)
-2. Ensure SVGs use the standard colors (`#4eb84b` for accent, `#000` for outline)
-3. Run `npm run build` to generate the icon registry
-4. Test with the examples
+Icons are organized by category:
 
-## Development
+- **Vehicles** (`vehicle/`): Car models and EV brands
+- **Chargers** (`charger/`): Charging stations and wallboxes  
+- **Meters** (`meter/`): Energy meters and monitoring devices
+
+See the [full icon gallery](https://evcc-io.github.io/icons/) for all available icons.
+
+## 🔧 Development
 
 ```bash
-# Install dependencies
+git clone https://github.com/evcc-io/evcc-icons.git
+cd evcc-icons
 npm install
-
-# Build the core package
 npm run build
-
-# Build all packages (if using monorepo setup)
-npm run build:all
-
-# Clean build artifacts
-npm run clean
+npm run dev  # Serves docs at http://localhost:3000
 ```
 
-## Package Structure
+## 📄 License
 
-```
-@evcc/icons/                # Core SVG registry
-├── dist/svg-registry.js    # Framework-agnostic
-└── packages/
-    ├── react/              # @evcc/icons-react
-    ├── vue/                # @evcc/icons-vue
-    └── web/                # @evcc/icons-web
-```
-
-## License
-
-This project is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-
-### What this means:
-
-- ✅ **Free for personal use** - Use in your personal projects
-- ✅ **Free for open source** - Use in open source projects
-- ✅ **Free for education** - Use in educational materials
-- ❌ **No commercial use** - Cannot be used in commercial products or services
-- 📝 **Attribution required** - Must credit https://evcc.io
-- 🔄 **Share-alike** - Derivatives must use the same license
-
-For commercial licensing options, please contact info@evcc.io.
+This project is licensed under the [CC-BY-NC-SA-4.0](LICENSE) license.
