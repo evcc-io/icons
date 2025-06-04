@@ -58,36 +58,36 @@ const buildDocs = async (): Promise<void> => {
     .map((type) => [type, iconsByType[type]] as [string, IconData[]]);
 
   // Copy the built files to docs directory
-  const webComponentsPath = "packages/web/dist/evcc-icon.js";
-  const lazyRegistryPath = "packages/web/dist/lazy-registry.js";
-  const iconLoaderPath = "packages/web/dist/icon-loader.js";
-  const webComponentsMapPath = "packages/web/dist/evcc-icon.js.map";
-  const lazyRegistryMapPath = "packages/web/dist/lazy-registry.js.map";
-  const iconLoaderMapPath = "packages/web/dist/icon-loader.js.map";
+  const webComponentsPath = "dist/evcc-icon.js";
+  const lazyRegistryPath = "dist/svg-registry.js";
+  const iconLoaderPath = "dist/icon-loader.js";
+  const webComponentsMapPath = "dist/evcc-icon.js.map";
+  const lazyRegistryMapPath = "dist/svg-registry.js.map";
+  const iconLoaderMapPath = "dist/icon-loader.js.map";
 
   if (fs.existsSync(webComponentsPath)) {
     fs.copyFileSync(webComponentsPath, "docs/evcc-icon.js");
     console.log("Copied lazy-loading web components to docs/evcc-icon.js");
   } else {
-    console.warn("Web components not found, make sure to run 'npm run build:web' first");
+    console.warn("Web components not found, make sure to run 'npm run build' first");
   }
 
   if (fs.existsSync(lazyRegistryPath)) {
     fs.copyFileSync(lazyRegistryPath, "docs/lazy-registry.js");
     console.log("Copied lazy registry to docs/lazy-registry.js");
   } else {
-    console.warn("Lazy registry not found, make sure to run 'npm run build:web' first");
+    console.warn("Lazy registry not found, make sure to run 'npm run build' first");
   }
 
   if (fs.existsSync(iconLoaderPath)) {
     fs.copyFileSync(iconLoaderPath, "docs/icon-loader.js");
     console.log("Copied icon loader to docs/icon-loader.js");
   } else {
-    console.warn("Icon loader not found, make sure to run 'npm run build:web' first");
+    console.warn("Icon loader not found, make sure to run 'npm run build' first");
   }
 
   // Copy the icons directory
-  const iconsDir = "packages/web/dist/icons";
+  const iconsDir = "dist/icons";
   const docsIconsDir = "docs/icons";
   if (fs.existsSync(iconsDir)) {
     if (fs.existsSync(docsIconsDir)) {
@@ -96,7 +96,7 @@ const buildDocs = async (): Promise<void> => {
     fs.cpSync(iconsDir, docsIconsDir, { recursive: true });
     console.log("Copied individual icon modules to docs/icons/");
   } else {
-    console.warn("Icons directory not found, make sure to run 'npm run build:web' first");
+    console.warn("Icons directory not found, make sure to run 'npm run build' first");
   }
 
   // Copy source map files if they exist

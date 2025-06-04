@@ -22,16 +22,17 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run clean && npm run build:registry && npm run build:components",
-    "build:registry": "tsx scripts/build-svg-registry.ts",
+    "build": "npm run clean && npm run build:registry && npm run build:components && npm run build:docs",
     "build:components": "tsc",
-    "clean": "rm -rf dist src/svg-registry.ts *.tsbuildinfo",
-    "prepare": "npm run build",
+    "build:docs": "tsx scripts/build-docs.ts",
+    "build:registry": "tsx scripts/build-svg-registry.ts",
+    "clean": "rm -rf dist src/svg-registry.ts *.tsbuildinfo docs",
     "dev": "npm run build && npx serve docs",
-    "type-check": "tsc --noEmit",
-    "lint": "npx @biomejs/biome check . && npm run type-check",
-    "lint:fix": "npx @biomejs/biome check --write . && npm run type-check",
-    "lint:svg": "tsx scripts/svg-quality-control.ts"
+    "lint": "npx @biomejs/biome check . && npm run lint:ts && npm run lint:svg",
+    "lint:fix": "npx @biomejs/biome check --write . && npm run lint:ts",
+    "lint:svg": "tsx scripts/svg-quality-control.ts",
+    "lint:ts": "tsc --noEmit",
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
