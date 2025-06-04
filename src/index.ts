@@ -1,5 +1,9 @@
-// Export the web component
-export { EvccIcon, type IconType } from "./evcc-icon";
+export type IconType = "vehicle" | "meter" | "charger";
 
-// Export the registry for direct use
-export { default as registry } from "./svg-registry";
+export { default as registry } from "./svg-registry.js";
+
+if (typeof HTMLElement !== "undefined" && typeof customElements !== "undefined") {
+  import("./evcc-icon.js").then(({ EvccIcon }) => {
+    customElements.define("evcc-icon", EvccIcon);
+  });
+}

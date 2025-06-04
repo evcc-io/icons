@@ -60,8 +60,10 @@ const buildDocs = async (): Promise<void> => {
   // Copy the built files to docs directory
   const webComponentsPath = "dist/evcc-icon.js";
   const svgRegistryPath = "dist/svg-registry.js";
+  const indexPath = "dist/index.js";
   const webComponentsMapPath = "dist/evcc-icon.js.map";
   const svgRegistryMapPath = "dist/svg-registry.js.map";
+  const indexMapPath = "dist/index.js.map";
 
   if (fs.existsSync(webComponentsPath)) {
     fs.copyFileSync(webComponentsPath, "docs/evcc-icon.js");
@@ -75,6 +77,13 @@ const buildDocs = async (): Promise<void> => {
     console.log("Copied SVG registry to docs/svg-registry.js");
   } else {
     console.warn("SVG registry not found, make sure to run 'npm run build' first");
+  }
+
+  if (fs.existsSync(indexPath)) {
+    fs.copyFileSync(indexPath, "docs/index.js");
+    console.log("Copied index module to docs/index.js");
+  } else {
+    console.warn("Index module not found, make sure to run 'npm run build' first");
   }
 
   // Copy the icons directory
@@ -99,6 +108,11 @@ const buildDocs = async (): Promise<void> => {
   if (fs.existsSync(svgRegistryMapPath)) {
     fs.copyFileSync(svgRegistryMapPath, "docs/svg-registry.js.map");
     console.log("Copied SVG registry source map to docs/svg-registry.js.map");
+  }
+
+  if (fs.existsSync(indexMapPath)) {
+    fs.copyFileSync(indexMapPath, "docs/index.js.map");
+    console.log("Copied index source map to docs/index.js.map");
   }
 
   // Generate HTML documentation
@@ -812,7 +826,7 @@ const buildDocs = async (): Promise<void> => {
     </div>
 
     <script type="module" src="./svg-registry.js"></script>
-    <script type="module" src="./evcc-icon.js"></script>
+    <script type="module" src="./index.js"></script>
     <script type="module">
         // Navigation state
         let currentIconIndex = 0;
