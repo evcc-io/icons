@@ -162,7 +162,7 @@ export class EvccIcon extends HTMLElement {
     this._loadingPromise = (async () => {
       try {
         // Import the registry
-        const registry = (await import("./svg-registry")).default;
+        const registry = (await import("./svg-registry.js")).default;
 
         // Check if icon exists in registry
         const iconLoader = registry[key as keyof typeof registry];

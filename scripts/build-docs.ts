@@ -59,11 +59,9 @@ const buildDocs = async (): Promise<void> => {
 
   // Copy the built files to docs directory
   const webComponentsPath = "dist/evcc-icon.js";
-  const lazyRegistryPath = "dist/svg-registry.js";
-  const iconLoaderPath = "dist/icon-loader.js";
+  const svgRegistryPath = "dist/svg-registry.js";
   const webComponentsMapPath = "dist/evcc-icon.js.map";
-  const lazyRegistryMapPath = "dist/svg-registry.js.map";
-  const iconLoaderMapPath = "dist/icon-loader.js.map";
+  const svgRegistryMapPath = "dist/svg-registry.js.map";
 
   if (fs.existsSync(webComponentsPath)) {
     fs.copyFileSync(webComponentsPath, "docs/evcc-icon.js");
@@ -72,18 +70,11 @@ const buildDocs = async (): Promise<void> => {
     console.warn("Web components not found, make sure to run 'npm run build' first");
   }
 
-  if (fs.existsSync(lazyRegistryPath)) {
-    fs.copyFileSync(lazyRegistryPath, "docs/lazy-registry.js");
-    console.log("Copied lazy registry to docs/lazy-registry.js");
+  if (fs.existsSync(svgRegistryPath)) {
+    fs.copyFileSync(svgRegistryPath, "docs/svg-registry.js");
+    console.log("Copied SVG registry to docs/svg-registry.js");
   } else {
-    console.warn("Lazy registry not found, make sure to run 'npm run build' first");
-  }
-
-  if (fs.existsSync(iconLoaderPath)) {
-    fs.copyFileSync(iconLoaderPath, "docs/icon-loader.js");
-    console.log("Copied icon loader to docs/icon-loader.js");
-  } else {
-    console.warn("Icon loader not found, make sure to run 'npm run build' first");
+    console.warn("SVG registry not found, make sure to run 'npm run build' first");
   }
 
   // Copy the icons directory
@@ -105,14 +96,9 @@ const buildDocs = async (): Promise<void> => {
     console.log("Copied web components source map to docs/evcc-icon.js.map");
   }
 
-  if (fs.existsSync(lazyRegistryMapPath)) {
-    fs.copyFileSync(lazyRegistryMapPath, "docs/lazy-registry.js.map");
-    console.log("Copied lazy registry source map to docs/lazy-registry.js.map");
-  }
-
-  if (fs.existsSync(iconLoaderMapPath)) {
-    fs.copyFileSync(iconLoaderMapPath, "docs/icon-loader.js.map");
-    console.log("Copied icon loader source map to docs/icon-loader.js.map");
+  if (fs.existsSync(svgRegistryMapPath)) {
+    fs.copyFileSync(svgRegistryMapPath, "docs/svg-registry.js.map");
+    console.log("Copied SVG registry source map to docs/svg-registry.js.map");
   }
 
   // Generate HTML documentation
@@ -820,8 +806,7 @@ const buildDocs = async (): Promise<void> => {
         </div>
     </div>
 
-    <script type="module" src="./lazy-registry.js"></script>
-    <script type="module" src="./icon-loader.js"></script>
+    <script type="module" src="./svg-registry.js"></script>
     <script type="module" src="./evcc-icon.js"></script>
     <script type="module">
         // Navigation state
@@ -916,11 +901,6 @@ const buildDocs = async (): Promise<void> => {
             });
         });
 
-        // Make functions global for onclick handlers
-        window.showOverlay = showOverlay;
-        window.hideOverlay = hideOverlay;
-        window.navigateOverlay = navigateOverlay;
-
         // Playground functionality
         const playgroundIcon = document.getElementById('playgroundIcon');
         const playgroundCode = document.getElementById('playgroundCode');
@@ -1007,6 +987,11 @@ const buildDocs = async (): Promise<void> => {
                 updatePlaygroundIcon();
             }
         });
+
+        // Make functions global for onclick handlers
+        window.showOverlay = showOverlay;
+        window.hideOverlay = hideOverlay;
+        window.navigateOverlay = navigateOverlay;
     </script>
 </body>
 </html>`;
