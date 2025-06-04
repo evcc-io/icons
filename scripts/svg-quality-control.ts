@@ -165,7 +165,7 @@ const getAllSVGFiles = async (dir: string): Promise<string[]> => {
     if (stats.isDirectory()) {
       const subFiles = await getAllSVGFiles(fullPath);
       files.push(...subFiles);
-    } else {
+    } else if (extname(fullPath).toLowerCase() === ".svg") {
       files.push(fullPath);
     }
   }
