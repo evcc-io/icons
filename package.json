@@ -32,7 +32,10 @@
     "lint:fix": "npx @biomejs/biome check --write . && npm run lint:ts",
     "lint:svg": "tsx scripts/svg-quality-control.ts",
     "lint:ts": "tsc --noEmit",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "release": "tsx scripts/release.ts",
+    "release:minor": "tsx scripts/release.ts minor",
+    "release:major": "tsx scripts/release.ts major"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
