@@ -7,13 +7,12 @@ type VersionType = "patch" | "minor" | "major";
 
 function run(command: string, cwd?: string): string {
   console.log(`$ ${command}`);
-  return execSync(command, {
+  const result = execSync(command, {
     encoding: "utf8",
     stdio: "inherit",
     cwd,
-  })
-    .toString()
-    .trim();
+  });
+  return result?.toString().trim() || "";
 }
 
 function getCurrentVersion(): string {
