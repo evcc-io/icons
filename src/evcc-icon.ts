@@ -275,7 +275,9 @@ export class EvccIcon extends HTMLElement {
   }
 }
 
-// Define the custom element
-customElements.define("evcc-icon", EvccIcon);
+// Only define the custom element in browser environments
+if (typeof window !== "undefined" && typeof customElements !== "undefined") {
+  customElements.define("evcc-icon", EvccIcon);
+}
 
 export default EvccIcon;
