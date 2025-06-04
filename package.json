@@ -1,6 +1,6 @@
 {
   "name": "@evcc/icons",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A collection of evcc icons for vehicles, meters, and chargers with web components and SVG registry.",
   "main": "dist/index.js",
   "module": "dist/index.js",
