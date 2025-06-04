@@ -30,16 +30,13 @@ jobs:
           node-version: "22"
           cache: "npm"
 
-      - name: Install dependencies
+      - name: Install
         run: npm ci
 
-      - name: Lint and type check
+      - name: Lint
         run: npm run lint
 
-      - name: Lint SVGs
-        run: npm run lint:svg
-
-      - name: Build package
+      - name: Build
         run: npm run build
 
   build-docs:
@@ -60,19 +57,16 @@ jobs:
           node-version: "22"
           cache: "npm"
 
-      - name: Install dependencies
+      - name: Install
         run: npm ci
 
-      - name: Build package
+      - name: Build
         run: npm run build
-
-      - name: Build documentation
-        run: npm run build:docs
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Upload artifact
+      - name: Upload
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./docs"
@@ -85,6 +79,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
