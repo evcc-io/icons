@@ -13,7 +13,8 @@
       "**/node_modules/**",
       "**/*.min.js",
       "**/*.bundle.js",
-      "**/package.json"
+      "**/package.json",
+      "src/svg-registry.ts"
     ]
   },
   "formatter": {

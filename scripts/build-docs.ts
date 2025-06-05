@@ -528,6 +528,9 @@ const buildDocs = async (): Promise<void> => {
             .icon-name {
                 font-size: 0.8rem;
                 padding: 0.4rem 0.75rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .footer-links {
                 flex-direction: column;
@@ -578,6 +581,9 @@ const buildDocs = async (): Promise<void> => {
             .icon-name {
                 font-size: 0.75rem;
                 padding: 0.3rem 0.5rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
         .playground {
