@@ -8,6 +8,32 @@ interface IconData {
   path: string;
 }
 
+const resolveAliasFile = (aliasPath: string): string | null => {
+  try {
+    const content = fs.readFileSync(aliasPath, "utf8").trim();
+    const lines = content.split("\n").filter((line) => line.trim() !== "");
+
+    if (lines.length !== 1) {
+      console.warn(`Invalid alias file ${aliasPath}: must contain exactly one line`);
+      return null;
+    }
+
+    const referencedFile = lines[0].trim();
+    const aliasDir = path.dirname(aliasPath);
+    const referencedPath = path.join(aliasDir, referencedFile);
+
+    if (!fs.existsSync(referencedPath)) {
+      console.warn(`Alias file ${aliasPath} references non-existent file: ${referencedFile}`);
+      return null;
+    }
+
+    return referencedPath;
+  } catch (error) {
+    console.warn(`Failed to process alias file ${aliasPath}:`, error);
+    return null;
+  }
+};
+
 const buildDocs = async (): Promise<void> => {
   console.log("Building documentation...");
 
@@ -17,10 +43,12 @@ const buildDocs = async (): Promise<void> => {
   }
 
   const svgFiles = await glob("src/**/*.svg");
+  const aliasFiles = await glob("src/**/*.alias");
   const icons: IconData[] = [];
 
-  console.log(`Found ${svgFiles.length} SVG files`);
+  console.log(`Found ${svgFiles.length} SVG files and ${aliasFiles.length} alias files`);
 
+  // Process SVG files
   svgFiles.forEach((filePath) => {
     // Extract type and name from path
     const relativePath = path.relative("src", filePath);
@@ -31,6 +59,26 @@ const buildDocs = async (): Promise<void> => {
       type,
       name,
       path: filePath,
+    });
+  });
+
+  // Process alias files
+  aliasFiles.forEach((aliasPath) => {
+    const referencedSvgPath = resolveAliasFile(aliasPath);
+
+    if (!referencedSvgPath) {
+      return; // Skip invalid alias files
+    }
+
+    // Extract type and name from alias path (not the referenced SVG)
+    const relativePath = path.relative("src", aliasPath);
+    const type = path.dirname(relativePath).replace(/s$/, "");
+    const name = path.basename(relativePath, ".alias");
+
+    icons.push({
+      type,
+      name,
+      path: aliasPath,
     });
   });
 
@@ -210,7 +258,7 @@ const buildDocs = async (): Promise<void> => {
             height: 100%;
         }
         .icon-name {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #333;
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(4px);
@@ -220,7 +268,9 @@ const buildDocs = async (): Promise<void> => {
             z-index: 1;
             font-weight: 500;
             border-radius: 0 0 8px 8px;
-            word-break: break-all;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .search-box {
             width: 100%;
@@ -724,7 +774,9 @@ const buildDocs = async (): Promise<void> => {
                 <div class="icon-display">
                     <evcc-icon type="${type}" name="${icon.name}"></evcc-icon>
                 </div>
-                <div class="icon-name">${icon.name}</div>
+                <div class="icon-name">
+                    ${icon.name}
+                </div>
             </div>
             `,
               )
@@ -825,7 +877,6 @@ const buildDocs = async (): Promise<void> => {
         </div>
     </div>
 
-    <script type="module" src="./svg-registry.js"></script>
     <script type="module" src="./index.js"></script>
     <script type="module">
         // Navigation state
