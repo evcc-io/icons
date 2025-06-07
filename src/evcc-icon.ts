@@ -190,7 +190,7 @@ export class EvccIcon extends HTMLElement {
         let attemptedKey = key;
 
         if (!iconLoader) {
-          const genericKey = `${this._type}/generic`;
+          const genericKey = `${this._type}/generic.ext`;
           iconLoader = registry[genericKey as keyof typeof registry];
           attemptedKey = genericKey;
         }

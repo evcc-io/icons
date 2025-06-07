@@ -781,7 +781,7 @@ const buildDocs = async (): Promise<void> => {
                     <evcc-icon type="${type}" name="${icon.name}"></evcc-icon>
                 </div>
                 <div class="icon-name">
-                    ${icon.name}
+                    ${icon.name.replace(/\.ext$/, "")}
                 </div>
             </div>
             `,
@@ -825,7 +825,7 @@ const buildDocs = async (): Promise<void> => {
                             typeIcons
                               .map(
                                 (icon) =>
-                                  `<option value="${type}/${icon.name}"${type === "vehicle" && icon.name === "kia-niro-ev" ? " selected" : ""}>${type}/${icon.name}</option>`,
+                                  `<option value="${type}/${icon.name}"${type === "vehicle" && icon.name === "kia-niro-ev" ? " selected" : ""}>${type}/${icon.name.replace(/\.ext$/, "")}</option>`,
                               )
                               .join(""),
                           )
@@ -920,7 +920,7 @@ const buildDocs = async (): Promise<void> => {
             overlayComponent.setAttribute('type', icon.type);
             overlayComponent.setAttribute('name', icon.name);
             
-            document.getElementById('overlayTitle').textContent = icon.name;
+            document.getElementById('overlayTitle').textContent = icon.name.replace(/\.ext$/, '');
             document.getElementById('overlayType').textContent = icon.type;
             document.getElementById('overlayCounter').textContent = \`\${currentIconIndex + 1} of \${currentIconList.length}\`;
             

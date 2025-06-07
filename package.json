@@ -69,5 +69,8 @@
   "bugs": {
     "url": "https://github.com/evcc-io/evcc-icons/issues"
   },
-  "homepage": "https://github.com/evcc-io/evcc-icons#readme"
+  "homepage": "https://github.com/evcc-io/evcc-icons#readme",
+  "dependencies": {
+    "fuse.js": "^7.1.0"
+  }
 }
