@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import { access, readFile, readdir, stat } from "node:fs/promises";
-import { basename, dirname, extname, join } from "node:path";
+import { basename, dirname, extname, join, relative } from "node:path";
+import Fuse from "fuse.js";
 
 interface ValidationResult {
   file: string;
@@ -13,6 +14,15 @@ interface SVGDimensions {
   width?: string;
   height?: string;
   viewBox?: string;
+}
+
+interface ProductsData {
+  [type: string]: {
+    [productId: string]: {
+      brand: string;
+      description: string;
+    };
+  };
 }
 
 // Whitelisted colors (case-insensitive)
@@ -28,6 +38,105 @@ const STANDARD_DIMENSIONS = {
   viewBox: "0 0 120 120",
   width: "100%",
   height: "100%",
+};
+
+const loadProducts = async (): Promise<ProductsData | null> => {
+  try {
+    const productsContent = await readFile("products.json", "utf8");
+    return JSON.parse(productsContent);
+  } catch (error) {
+    console.warn("⚠️  products.json not found or invalid - skipping product validation");
+    return null;
+  }
+};
+
+const findSimilarProduct = (productName: string, products: ProductsData, type: string): string | null => {
+  if (!products[type]) return null;
+
+  const productNames = Object.keys(products[type]);
+
+  const fuse = new Fuse(productNames, {
+    threshold: 0.3, // 0.3 = 70% similarity threshold
+    includeScore: true,
+  });
+
+  const results = fuse.search(productName);
+
+  // Return best match if it's above our similarity threshold
+  if (results.length > 0 && results[0].score !== undefined && results[0].score <= 0.3) {
+    return results[0].item;
+  }
+
+  return null;
+};
+
+const findSimilarSVGFile = async (targetFile: string, directory: string): Promise<string | null> => {
+  try {
+    const items = await readdir(directory);
+    const svgFiles = items.filter((item) => extname(item).toLowerCase() === ".svg");
+
+    if (svgFiles.length === 0) return null;
+
+    const fuse = new Fuse(svgFiles, {
+      threshold: 0.3, // 0.3 = 70% similarity threshold
+      includeScore: true,
+    });
+
+    const results = fuse.search(targetFile);
+
+    // Return best match if it's above our similarity threshold
+    if (results.length > 0 && results[0].score !== undefined && results[0].score <= 0.3) {
+      return results[0].item;
+    }
+
+    return null;
+  } catch (error) {
+    return null;
+  }
+};
+
+const validateProductMatch = (filePath: string, products: ProductsData | null): string[] => {
+  const errors: string[] = [];
+
+  if (!products) {
+    return errors; // Skip validation if products.json is not available
+  }
+
+  const relativePath = filePath.replace(/^.*\/src\//, ""); // Remove everything before /src/
+  const type = dirname(relativePath).replace(/s$/, ""); // Remove 's' from vehicles -> vehicle
+  const isAlias = extname(filePath).toLowerCase() === ".alias";
+  const extension = isAlias ? ".alias" : ".svg";
+  const name = basename(relativePath, extension);
+
+  // Skip product validation for files with *.ext.svg pattern
+  if (!isAlias && name.endsWith(".ext")) {
+    return errors;
+  }
+
+  // Skip validation for vehicle type (for now)
+  if (type === "vehicle") {
+    return errors;
+  }
+
+  // Check if the type exists in products.json
+  if (!products[type]) {
+    errors.push(`🏷️  Unknown type: ${type}`);
+    return errors;
+  }
+
+  // Check if the product ID exists under the type
+  if (!products[type][name]) {
+    const suggestion = findSimilarProduct(name, products, type);
+    const baseError = `🏷️  Unknown product: ${name}`;
+
+    if (suggestion) {
+      errors.push(`${baseError} (did you mean "${suggestion}"?)`);
+    } else {
+      errors.push(baseError);
+    }
+  }
+
+  return errors;
 };
 
 const normalizeColor = (color: string): string => {
@@ -104,31 +213,32 @@ const dimensionsMatch = (dims: SVGDimensions): boolean => {
 const validateFilename = (filePath: string): string[] => {
   const errors: string[] = [];
   const filename = filePath.split("/").pop()!;
-  const nameWithoutExtension = filename.replace(/\.(svg|alias)$/i, "");
+  let nameWithoutExtension = filename.replace(/\.(svg|alias)$/i, "");
+
+  // Remove .ext suffix if present (for .ext.svg pattern)
+  nameWithoutExtension = nameWithoutExtension.replace(/\.ext$/, "");
 
   // Check if filename contains only alphanumeric characters and hyphens
   const validFilenamePattern = /^[a-zA-Z0-9\-]+$/;
 
   if (!validFilenamePattern.test(nameWithoutExtension)) {
-    errors.push(
-      `Invalid filename: "${filename}". Filenames must only contain alphanumeric characters and hyphens (a-z, A-Z, 0-9, -)`,
-    );
+    errors.push("📝  Invalid characters in filename (only a-z, A-Z, 0-9, - allowed)");
   }
 
   // Check for consecutive hyphens
   if (nameWithoutExtension.includes("--")) {
-    errors.push(`Invalid filename: "${filename}". Consecutive hyphens are not allowed`);
+    errors.push("📝  Consecutive hyphens not allowed");
   }
 
   // Check for leading or trailing hyphens
   if (nameWithoutExtension.startsWith("-") || nameWithoutExtension.endsWith("-")) {
-    errors.push(`Invalid filename: "${filename}". Filenames cannot start or end with hyphens`);
+    errors.push("📝  Filename cannot start or end with hyphen");
   }
 
   return errors;
 };
 
-const validateAliasFile = async (filePath: string): Promise<ValidationResult> => {
+const validateAliasFile = async (filePath: string, products: ProductsData | null): Promise<ValidationResult> => {
   const result: ValidationResult = {
     file: filePath,
     errors: [],
@@ -138,13 +248,17 @@ const validateAliasFile = async (filePath: string): Promise<ValidationResult> =>
   try {
     // Check if file has .alias extension
     if (extname(filePath).toLowerCase() !== ".alias") {
-      result.errors.push("File is not an alias file (wrong extension)");
+      result.errors.push("🔗  Wrong file extension");
       return result;
     }
 
     // Validate filename format
     const filenameErrors = validateFilename(filePath);
     result.errors.push(...filenameErrors);
+
+    // Validate product match (filename must match product key)
+    const productErrors = validateProductMatch(filePath, products);
+    result.errors.push(...productErrors);
 
     // Read file content
     const content = await readFile(filePath, "utf-8");
@@ -154,20 +268,20 @@ const validateAliasFile = async (filePath: string): Promise<ValidationResult> =>
 
     // Check if file has exactly one line
     if (lines.length === 0) {
-      result.errors.push("Alias file is empty");
+      result.errors.push("🔗  File is empty");
       return result;
     }
 
     if (lines.length > 1) {
-      result.errors.push(`Alias file must contain exactly one line, found ${lines.length} lines`);
+      result.errors.push(`🔗  Must contain exactly one line (found ${lines.length})`);
       return result;
     }
 
     const referencedFile = lines[0].trim();
 
-    // Check if the referenced file has .svg extension
+    // Validate alias content (referenced SVG file)
     if (extname(referencedFile).toLowerCase() !== ".svg") {
-      result.errors.push(`Referenced file "${referencedFile}" is not an SVG file`);
+      result.errors.push(`🔗  Alias must reference SVG file: ${referencedFile}`);
     }
 
     // Check if the referenced SVG file exists in the same directory
@@ -177,16 +291,23 @@ const validateAliasFile = async (filePath: string): Promise<ValidationResult> =>
     try {
       await access(referencedFilePath);
     } catch (error) {
-      result.errors.push(`Referenced SVG file "${referencedFile}" does not exist in the same directory`);
+      const suggestion = await findSimilarSVGFile(referencedFile, aliasDir);
+      const baseError = `🔗  Referenced SVG file not found: ${referencedFile}`;
+
+      if (suggestion) {
+        result.errors.push(`${baseError} (did you mean "${suggestion}"?)`);
+      } else {
+        result.errors.push(baseError);
+      }
     }
   } catch (error) {
-    result.errors.push(`Failed to process file: ${error instanceof Error ? error.message : "Unknown error"}`);
+    result.errors.push(`❌  Failed to process file: ${error instanceof Error ? error.message : "Unknown error"}`);
   }
 
   return result;
 };
 
-const validateSVGFile = async (filePath: string): Promise<ValidationResult> => {
+const validateSVGFile = async (filePath: string, products: ProductsData | null): Promise<ValidationResult> => {
   const result: ValidationResult = {
     file: filePath,
     errors: [],
@@ -196,7 +317,7 @@ const validateSVGFile = async (filePath: string): Promise<ValidationResult> => {
   try {
     // Check if file has .svg extension
     if (extname(filePath).toLowerCase() !== ".svg") {
-      result.errors.push("File is not an SVG file (wrong extension)");
+      result.errors.push("🖼️  Wrong file extension");
       return result;
     }
 
@@ -204,12 +325,16 @@ const validateSVGFile = async (filePath: string): Promise<ValidationResult> => {
     const filenameErrors = validateFilename(filePath);
     result.errors.push(...filenameErrors);
 
+    // Validate product match (filename must match product key)
+    const productErrors = validateProductMatch(filePath, products);
+    result.errors.push(...productErrors);
+
     // Read and validate SVG content
     const content = await readFile(filePath, "utf-8");
 
     // Check if it's a valid SVG
     if (!content.includes("<svg")) {
-      result.errors.push("File does not contain valid SVG content");
+      result.errors.push("🖼️  Invalid SVG content");
       return result;
     }
 
@@ -217,9 +342,7 @@ const validateSVGFile = async (filePath: string): Promise<ValidationResult> => {
     const dimensions = extractDimensionsFromSVG(content);
 
     if (!dimensionsMatch(dimensions)) {
-      result.errors.push(
-        `Dimensions mismatch. Expected viewBox: "${STANDARD_DIMENSIONS.viewBox}", ` + `got: "${dimensions.viewBox}"`,
-      );
+      result.errors.push(`📏  Wrong viewBox: "${dimensions.viewBox}" (expected: "${STANDARD_DIMENSIONS.viewBox}")`);
     }
 
     // Extract and validate colors
@@ -227,16 +350,14 @@ const validateSVGFile = async (filePath: string): Promise<ValidationResult> => {
     const invalidColors = colors.filter((color) => !isColorWhitelisted(color));
 
     if (invalidColors.length > 0) {
-      result.errors.push(
-        `Invalid colors found: ${invalidColors.join(", ")}. ` + `Only allowed: ${WHITELISTED_COLORS.join(", ")}`,
-      );
+      result.errors.push(`🎨  Invalid colors: ${invalidColors.join(", ")}`);
     }
 
     if (colors.length === 0) {
-      result.warnings.push("No colors found in SVG");
+      result.warnings.push("🎨  No colors found");
     }
   } catch (error) {
-    result.errors.push(`Failed to process file: ${error instanceof Error ? error.message : "Unknown error"}`);
+    result.errors.push(`❌  Failed to process file: ${error instanceof Error ? error.message : "Unknown error"}`);
   }
 
   return result;
@@ -276,9 +397,11 @@ const main = async (): Promise<void> => {
   console.log(`📏 Standard dimensions: viewBox="${STANDARD_DIMENSIONS.viewBox}"`);
   console.log(`🎨 Whitelisted colors: ${WHITELISTED_COLORS.join(", ")}`);
   console.log("📝 Filename requirements: alphanumeric characters and hyphens only (a-z, A-Z, 0-9, -)");
-  console.log("🔗 Alias requirements: exactly one line referencing an existing SVG file in the same directory\n");
+  console.log("🔗 Alias requirements: exactly one line referencing an existing SVG file in the same directory");
+  console.log("🏷️  Product validation: SVG and alias files must match valid product identifiers in products.json\n");
 
   try {
+    const products = await loadProducts();
     const allFiles = await getAllFiles(srcDir);
     const results: ValidationResult[] = [];
 
@@ -286,13 +409,13 @@ const main = async (): Promise<void> => {
 
     // Validate SVG files
     for (const file of allFiles.svg) {
-      const result = await validateSVGFile(file);
+      const result = await validateSVGFile(file, products);
       results.push(result);
     }
 
     // Validate alias files
     for (const file of allFiles.alias) {
-      const result = await validateAliasFile(file);
+      const result = await validateAliasFile(file, products);
       results.push(result);
     }
 
@@ -302,19 +425,19 @@ const main = async (): Promise<void> => {
 
     for (const result of results) {
       if (result.errors.length > 0 || result.warnings.length > 0) {
-        console.log(`📁 ${result.file}`);
+        console.log(relative(process.cwd(), result.file));
 
         if (result.errors.length > 0) {
           hasErrors = true;
           result.errors.forEach((error) => {
-            console.log(`  ❌ ERROR: ${error}`);
+            console.log(`  ${error}`);
           });
         }
 
         if (result.warnings.length > 0) {
           hasWarnings = true;
           result.warnings.forEach((warning) => {
-            console.log(`  ⚠️  WARNING: ${warning}`);
+            console.log(`  ${warning}`);
           });
         }
 
