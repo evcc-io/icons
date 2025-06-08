@@ -78,7 +78,7 @@ const createIconFileList = async (): Promise<IconFile[]> => {
 
   svgFiles.forEach((filePath) => {
     const relativePath = path.relative("src", filePath);
-    const type = path.dirname(relativePath).replace(/s$/, "");
+    const type = path.dirname(relativePath);
     const name = path.basename(relativePath, ".svg");
     const key = `${type}/${name}`;
 
@@ -103,7 +103,7 @@ const createIconFileList = async (): Promise<IconFile[]> => {
     }
 
     const relativePath = path.relative("src", aliasPath);
-    const type = path.dirname(relativePath).replace(/s$/, "");
+    const type = path.dirname(relativePath);
     const name = path.basename(aliasPath, ".alias");
     const key = `${type}/${name}`;
     const targetKey = svgPathToKey.get(referencedSvgPath);

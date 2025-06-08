@@ -52,7 +52,7 @@ const buildDocs = async (): Promise<void> => {
   svgFiles.forEach((filePath) => {
     // Extract type and name from path
     const relativePath = path.relative("src", filePath);
-    const type = path.dirname(relativePath).replace(/s$/, ""); // remove 's' from vehicles -> vehicle
+    const type = path.dirname(relativePath);
     const name = path.basename(relativePath, ".svg");
 
     icons.push({
@@ -72,7 +72,7 @@ const buildDocs = async (): Promise<void> => {
 
     // Extract type and name from alias path (not the referenced SVG)
     const relativePath = path.relative("src", aliasPath);
-    const type = path.dirname(relativePath).replace(/s$/, "");
+    const type = path.dirname(relativePath);
     const name = path.basename(relativePath, ".alias");
 
     icons.push({
@@ -99,7 +99,7 @@ const buildDocs = async (): Promise<void> => {
     iconsByType[type].sort((a, b) => a.name.localeCompare(b.name));
   });
 
-  // Define desired order: charger, meter, vehicles
+  // Define desired order: charger, meter, vehicle
   const typeOrder = ["charger", "meter", "vehicle"];
   const orderedIconTypes = typeOrder
     .filter((type) => iconsByType[type])

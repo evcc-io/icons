@@ -27,6 +27,7 @@
     "build:docs": "tsx scripts/build-docs.ts",
     "build:registry": "tsx scripts/build-svg-registry.ts",
     "clean": "rm -rf dist src/svg-registry.ts *.tsbuildinfo docs",
+    "coverage": "tsx scripts/coverage.ts",
     "dev": "npm run build && npx serve docs",
     "lint": "npx @biomejs/biome check . && npm run lint:ts && npm run lint:svg",
     "lint:fix": "npx @biomejs/biome check --write . && npm run lint:ts",

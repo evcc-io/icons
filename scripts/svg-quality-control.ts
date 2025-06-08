@@ -103,7 +103,7 @@ const validateProductMatch = (filePath: string, products: ProductsData | null): 
   }
 
   const relativePath = filePath.replace(/^.*\/src\//, ""); // Remove everything before /src/
-  const type = dirname(relativePath).replace(/s$/, ""); // Remove 's' from vehicles -> vehicle
+  const type = dirname(relativePath);
   const isAlias = extname(filePath).toLowerCase() === ".alias";
   const extension = isAlias ? ".alias" : ".svg";
   const name = basename(relativePath, extension);
