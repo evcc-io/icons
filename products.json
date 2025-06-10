@@ -1,4 +1,6 @@
 {
+  "heating": {},
+  "smartswitch": {},
   "charger": {
     "abb-terra-ac": {
       "brand": "ABB",
