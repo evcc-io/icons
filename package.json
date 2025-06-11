@@ -1,6 +1,6 @@
 {
   "name": "@evcc/icons",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "A collection of evcc icons for vehicles, meters, chargers, smartswitches, and heating systems with web components and SVG registry.",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -52,7 +52,7 @@
     "vehicles",
     "chargers",
     "meters",
-    "smartswitches", 
+    "smartswitches",
     "heating",
     "svg",
     "registry",
