@@ -113,11 +113,6 @@ const validateProductMatch = (filePath: string, products: ProductsData | null): 
     return errors;
   }
 
-  // Skip validation for vehicle type (for now)
-  if (type === "vehicle") {
-    return errors;
-  }
-
   // Check if the type exists in products.json
   if (!products[type]) {
     errors.push(`🏷️  Unknown type: ${type}`);

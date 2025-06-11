@@ -99,8 +99,8 @@ const buildDocs = async (): Promise<void> => {
     iconsByType[type].sort((a, b) => a.name.localeCompare(b.name));
   });
 
-  // Define desired order: charger, meter, vehicle
-  const typeOrder = ["charger", "meter", "vehicle"];
+  // Define desired order: charger, meter, vehicle, smartswitch, heating
+  const typeOrder = ["charger", "meter", "vehicle", "smartswitch", "heating"];
   const orderedIconTypes = typeOrder
     .filter((type) => iconsByType[type])
     .map((type) => [type, iconsByType[type]] as [string, IconData[]]);
@@ -831,9 +831,11 @@ const buildDocs = async (): Promise<void> => {
                           )
                           .join("")}
                         <optgroup label="Fallbacks">
-                            <option value="vehicle/nonexistent-car">vehicle/nonexistent-car</option>
-                            <option value="charger/nonexistent-charger">charger/nonexistent-charger</option>
-                            <option value="meter/nonexistent-meter">meter/nonexistent-meter</option>
+                                                <option value="vehicle/nonexistent-car">vehicle/nonexistent-car</option>
+                    <option value="charger/nonexistent-charger">charger/nonexistent-charger</option>
+                    <option value="meter/nonexistent-meter">meter/nonexistent-meter</option>
+                    <option value="smartswitch/nonexistent-switch">smartswitch/nonexistent-switch</option>
+                    <option value="heating/nonexistent-heating">heating/nonexistent-heating</option>
                         </optgroup>
                     </select>
                 </div>
