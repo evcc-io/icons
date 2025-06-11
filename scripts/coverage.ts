@@ -118,18 +118,26 @@ const main = async (): Promise<void> => {
 
   // Display ASCII progress indicators
   console.log("📊 Coverage Summary:");
-  console.log("┌──────────────────────────────────────────────────────────────────┐");
+
+  // Find the longest type name for proper alignment
+  const maxTypeLength = Math.max(...relevantStats.map((stat) => stat.type.length));
+
+  // Calculate table width: │ + space + typeName + space + progressBar + space + percentage + space + counts + space + │
+  const tableWidth = 2 + maxTypeLength + 1 + 40 + 1 + 6 + 1 + 7 + 2;
+  const borderLine = "─".repeat(tableWidth - 2);
+
+  console.log(`┌${borderLine}┐`);
 
   for (const stat of relevantStats) {
     const progressBar = createProgressBar(stat.coveredProducts, stat.totalProducts);
     const percentage = formatPercentage(stat.coveredProducts, stat.totalProducts);
     const counts = `${stat.coveredProducts.toString().padStart(3)}/${stat.totalProducts.toString().padStart(3)}`;
-    const typeName = stat.type.padEnd(8);
+    const typeName = stat.type.padEnd(maxTypeLength);
 
     console.log(`│ ${typeName} ${progressBar} ${percentage} ${counts} │`);
   }
 
-  console.log("└──────────────────────────────────────────────────────────────────┘");
+  console.log(`└${borderLine}┘`);
 
   // Summary stats
   const totalProducts = relevantStats.reduce((sum, stat) => sum + stat.totalProducts, 0);

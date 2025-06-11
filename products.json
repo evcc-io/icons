@@ -1,6 +1,4 @@
 {
-  "heating": {},
-  "smartswitch": {},
   "charger": {
     "abb-terra-ac": {
       "brand": "ABB",
@@ -10,9 +8,21 @@
       "brand": "ABB",
       "description": "Terra AC (OCPP)"
     },
-    "abl-em4-sbcx": {
+    "abl-em4-single-ocpp": {
       "brand": "ABL",
-      "description": "eM4 (SBCx)"
+      "description": "eM4 Single (OCPP)"
+    },
+    "abl-em4-single-sbcx": {
+      "brand": "ABL",
+      "description": "eM4 Single (SBCx)"
+    },
+    "abl-em4-twin-ocpp": {
+      "brand": "ABL",
+      "description": "eM4 Twin (OCPP)"
+    },
+    "abl-em4-twin-sbcx": {
+      "brand": "ABL",
+      "description": "eM4 Twin (SBCx)"
     },
     "abl-emh1": {
       "brand": "ABL",
@@ -22,17 +32,13 @@
       "brand": "ABL",
       "description": "eMH2"
     },
-    "abl-sursum-emh2": {
-      "brand": "ABL Sursum",
-      "description": "eMH2"
+    "abl-emh2-ocpp": {
+      "brand": "ABL",
+      "description": "eMH2 (OCPP)"
     },
-    "abl-sursum-emh3": {
-      "brand": "ABL Sursum",
-      "description": "eMH3"
-    },
-    "abl-sursum-emh4": {
-      "brand": "ABL Sursum",
-      "description": "eMH4"
+    "abl-emh3-ocpp": {
+      "brand": "ABL",
+      "description": "eMH3 (OCPP)"
     },
     "alfen-eve": {
       "brand": "Alfen",
@@ -41,10 +47,6 @@
     "alfen-eve-ocpp": {
       "brand": "Alfen",
       "description": "Eve (OCPP)"
-    },
-    "alpha-innotec": {
-      "brand": "alpha innotec",
-      "description": ""
     },
     "alphatec-ladesaule-twin": {
       "brand": "Alphatec",
@@ -73,10 +75,6 @@
     "amperfied-wallbox-energy-control": {
       "brand": "Amperfied",
       "description": "Wallbox Energy Control"
-    },
-    "ampure-live": {
-      "brand": "Ampure",
-      "description": "Live"
     },
     "ampure-next": {
       "brand": "Ampure",
@@ -110,10 +108,6 @@
       "brand": "Autoaid",
       "description": "Intelligent Wallbox"
     },
-    "avm-fritzdect": {
-      "brand": "AVM",
-      "description": "FritzDECT"
-    },
     "bender-cc612": {
       "brand": "Bender",
       "description": "CC612"
@@ -134,26 +128,6 @@
       "brand": "BMW",
       "description": "i Wallbox"
     },
-    "bosch-sg-ready": {
-      "brand": "Bosch",
-      "description": "SG Ready"
-    },
-    "bosch-x-change": {
-      "brand": "Bösch",
-      "description": "x-change"
-    },
-    "buderus-logamatic-hmc-20": {
-      "brand": "Buderus",
-      "description": "Logamatic HMC 20"
-    },
-    "buderus-logamatic-hmc-20-z": {
-      "brand": "Buderus",
-      "description": "Logamatic HMC 20 Z"
-    },
-    "buderus-sg-ready": {
-      "brand": "Buderus",
-      "description": "SG Ready"
-    },
     "cfos-power-brain": {
       "brand": "cFos",
       "description": "Power Brain"
@@ -170,13 +144,13 @@
       "brand": "Compleo",
       "description": "eBox"
     },
-    "cta-all-in-one-aeroplus": {
-      "brand": "CTA All-In-One",
-      "description": "Aeroplus"
-    },
-    "cubos-c11e-c22e": {
+    "cubos-c11e": {
       "brand": "CUBOS",
-      "description": "C11E, C22E"
+      "description": "C11E"
+    },
+    "cubos-c22e": {
+      "brand": "CUBOS",
+      "description": "C22E"
     },
     "cupra-charger-connect": {
       "brand": "Cupra",
@@ -205,10 +179,6 @@
     "daheimladen-wallbox": {
       "brand": "DaheimLaden",
       "description": "Wallbox"
-    },
-    "daikin-homehub-sg-ready": {
-      "brand": "Daikin",
-      "description": "HomeHub (SG Ready)"
     },
     "delta-ac-max-basic": {
       "brand": "Delta",
@@ -285,10 +255,6 @@
     "eebus-compatible": {
       "brand": "",
       "description": "EEBUS compatible"
-    },
-    "elco": {
-      "brand": "Elco",
-      "description": ""
     },
     "elecq-biz": {
       "brand": "Elecq",
@@ -390,6 +356,10 @@
       "brand": "Free2Move",
       "description": "eProWallbox"
     },
+    "free2move-eprowallbox-move": {
+      "brand": "Free2Move",
+      "description": "eProWallbox Move"
+    },
     "free2move-esolutions-eprowallbox": {
       "brand": "Free2move eSolutions",
       "description": "eProWallbox"
@@ -398,9 +368,21 @@
       "brand": "Fronius",
       "description": "Wattpilot (OCPP)"
     },
-    "garo-glb-glbplus-ls4-ls4-compact": {
+    "garo-glb": {
       "brand": "Garo",
-      "description": "GLB, GLB+, LS4, LS4 compact"
+      "description": "GLB"
+    },
+    "garo-glbplus": {
+      "brand": "Garo",
+      "description": "GLB+"
+    },
+    "garo-ls4": {
+      "brand": "Garo",
+      "description": "LS4"
+    },
+    "garo-ls4-compact": {
+      "brand": "Garo",
+      "description": "LS4 compact"
     },
     "go-e-charger-gemini": {
       "brand": "go-e",
@@ -434,6 +416,10 @@
       "brand": "go-e",
       "description": "Charger V3 (OCPP)"
     },
+    "hardy-barth-cph1": {
+      "brand": "Hardy Barth",
+      "description": "cPH1"
+    },
     "hardy-barth-cph2": {
       "brand": "Hardy Barth",
       "description": "cPH2"
@@ -441,10 +427,6 @@
     "hardy-barth-cpm2": {
       "brand": "Hardy Barth",
       "description": "cPμ2"
-    },
-    "hardy-barth-cph1": {
-      "brand": "HardyBarth",
-      "description": "cPH1"
     },
     "heidelberg-energy-control": {
       "brand": "Heidelberg",
@@ -458,21 +440,9 @@
       "brand": "Hesotec",
       "description": "eSat"
     },
-    "home-assistant-switch": {
-      "brand": "Home Assistant",
-      "description": "Switch"
-    },
     "homecharge-homecharger": {
       "brand": "Homecharge",
       "description": "Homecharger"
-    },
-    "homematic-ip": {
-      "brand": "Homematic IP",
-      "description": ""
-    },
-    "homewizard": {
-      "brand": "HomeWizard",
-      "description": ""
     },
     "huawei-scharger-22kt-s0": {
       "brand": "Huawei",
@@ -481,10 +451,6 @@
     "huawei-scharger-7ks-s0": {
       "brand": "Huawei",
       "description": "SCharger-7KS-S0"
-    },
-    "idm": {
-      "brand": "IDM",
-      "description": ""
     },
     "innogy-ebox": {
       "brand": "Innogy",
@@ -497,10 +463,6 @@
     "juice-charger-me": {
       "brand": "Juice",
       "description": "Charger Me"
-    },
-    "junkers-sg-ready": {
-      "brand": "Junkers",
-      "description": "SG Ready"
     },
     "kathrein-kwb-ac20": {
       "brand": "Kathrein",
@@ -546,10 +508,6 @@
       "brand": "KEBA",
       "description": "KeContact P40 Pro"
     },
-    "kermi-x-center-pro": {
-      "brand": "Kermi",
-      "description": "x-center pro"
-    },
     "kontron-solar-charger": {
       "brand": "Kontron Solar",
       "description": "Charger"
@@ -569,10 +527,6 @@
     "ladefoxx-mikro-2-0": {
       "brand": "LadeFoxx",
       "description": "Mikro 2.0"
-    },
-    "lambda-eu-l-series": {
-      "brand": "Lambda",
-      "description": "EU-L Series"
     },
     "lrt-home-essentialplus": {
       "brand": "LRT",
@@ -625,30 +579,6 @@
     "mennekes-smart-t-acu": {
       "brand": "Mennekes",
       "description": "Smart T (ACU)"
-    },
-    "my-pv-ac-elwa-2": {
-      "brand": "my-PV",
-      "description": "AC ELWA 2"
-    },
-    "my-pv-ac-thor": {
-      "brand": "my-PV",
-      "description": "AC•THOR"
-    },
-    "my-pv-ac-thor-9s": {
-      "brand": "my-PV",
-      "description": "AC•THOR 9s"
-    },
-    "mystrom-switch": {
-      "brand": "myStrom",
-      "description": "Switch"
-    },
-    "nibe-ap-aw10": {
-      "brand": "Nibe",
-      "description": "AP-AW10"
-    },
-    "novelan-wpr-net": {
-      "brand": "Novelan",
-      "description": "WPR NET"
     },
     "nrgkick-connect": {
       "brand": "NRGkick",
@@ -778,14 +708,6 @@
       "brand": "Qcells",
       "description": "Q.HOME EDRIVE A"
     },
-    "roth-thermoaura": {
-      "brand": "Roth",
-      "description": "ThermoAura"
-    },
-    "roth-thermoterra": {
-      "brand": "Roth",
-      "description": "ThermoTerra"
-    },
     "schneider-evlink-pro": {
       "brand": "Schneider",
       "description": "EVlink Pro"
@@ -801,10 +723,6 @@
     "senec-wallbox-pro-s": {
       "brand": "SENEC",
       "description": "Wallbox pro s"
-    },
-    "shelly": {
-      "brand": "Shelly",
-      "description": ""
     },
     "siemens-versicharge-gen3": {
       "brand": "Siemens",
@@ -866,14 +784,6 @@
       "brand": "Stark in Strom",
       "description": "Easy"
     },
-    "stiebel-eltron-lwa-lwz-sg-ready": {
-      "brand": "Stiebel Eltron",
-      "description": "LWA/LWZ (SG Ready)"
-    },
-    "stiebel-eltron-wpm-sg-ready": {
-      "brand": "Stiebel Eltron",
-      "description": "WPM (SG Ready)"
-    },
     "sungrow-ac011e": {
       "brand": "Sungrow",
       "description": "AC011E"
@@ -885,14 +795,6 @@
     "sungrow-ac22e-01": {
       "brand": "Sungrow",
       "description": "AC22E-01"
-    },
-    "tasmota-single-phase": {
-      "brand": "Tasmota",
-      "description": "single phase"
-    },
-    "tecalor-thz-sg-ready": {
-      "brand": "Tecalor",
-      "description": "THZ (SG Ready)"
     },
     "technisat-technivolt": {
       "brand": "TechniSat",
@@ -926,14 +828,6 @@
       "brand": "TinkerForge",
       "description": "WARP3 Charger Smart"
     },
-    "tp-link-h-series-smart-plug": {
-      "brand": "TP-Link",
-      "description": "H-Series Smart Plug"
-    },
-    "tp-link-tapo-p-series-smart-plug": {
-      "brand": "TP-Link",
-      "description": "Tapo P-Series Smart Plug"
-    },
     "ubitricity-heinz": {
       "brand": "Ubitricity",
       "description": "Heinz"
@@ -941,10 +835,6 @@
     "v2c-trydan": {
       "brand": "V2C Trydan",
       "description": ""
-    },
-    "vaillant-sensonet-sg-ready": {
-      "brand": "Vaillant",
-      "description": "SensoNET (SG Ready)"
     },
     "vestel-connect-plus": {
       "brand": "Vestel",
@@ -961,10 +851,6 @@
     "victron-ev-charging-station-via-gx": {
       "brand": "Victron",
       "description": "EV Charging Station (via GX)"
-    },
-    "viessmann-heatpump-sg-ready": {
-      "brand": "Viessmann",
-      "description": "Heatpump (SG Ready)"
     },
     "viridian-ev-evse-epc-2-0-plus": {
       "brand": "Viridian EV",
@@ -1070,14 +956,6 @@
       "brand": "Weidmüller",
       "description": "AC Smart"
     },
-    "wolf-bwl": {
-      "brand": "Wolf",
-      "description": "BWL"
-    },
-    "wolf-bws": {
-      "brand": "Wolf",
-      "description": "BWS"
-    },
     "zaptec-go": {
       "brand": "Zaptec",
       "description": "Go"
@@ -1094,29 +972,149 @@
       "brand": "Zaptec",
       "description": "Pro"
     },
-    "zewotherm-eu-l-series": {
-      "brand": "Zewotherm",
-      "description": "EU-L Series"
-    },
     "zj-beny-bcp-ev-charger": {
       "brand": "ZJ Beny",
       "description": "BCP EV charger"
     }
   },
-  "circuit": {},
-  "loadpoint": {},
+  "heating": {
+    "alpha-innotec": {
+      "brand": "alpha innotec",
+      "description": ""
+    },
+    "bosch-sg-ready": {
+      "brand": "Bosch",
+      "description": "SG Ready"
+    },
+    "bosch-x-change": {
+      "brand": "Bösch",
+      "description": "x-change"
+    },
+    "buderus-logamatic-hmc-20": {
+      "brand": "Buderus",
+      "description": "Logamatic HMC 20"
+    },
+    "buderus-logamatic-hmc-20-z": {
+      "brand": "Buderus",
+      "description": "Logamatic HMC 20 Z"
+    },
+    "buderus-sg-ready": {
+      "brand": "Buderus",
+      "description": "SG Ready"
+    },
+    "cta-all-in-one-aeroplus": {
+      "brand": "CTA All-In-One",
+      "description": "Aeroplus"
+    },
+    "daikin-homehub-sg-ready": {
+      "brand": "Daikin",
+      "description": "HomeHub (SG Ready)"
+    },
+    "elco": {
+      "brand": "Elco",
+      "description": ""
+    },
+    "idm": {
+      "brand": "IDM",
+      "description": ""
+    },
+    "junkers-sg-ready": {
+      "brand": "Junkers",
+      "description": "SG Ready"
+    },
+    "kermi-x-center-pro": {
+      "brand": "Kermi",
+      "description": "x-center pro"
+    },
+    "lambda-eu-l-series": {
+      "brand": "Lambda",
+      "description": "EU-L Series"
+    },
+    "my-pv-ac-elwa-2": {
+      "brand": "my-PV",
+      "description": "AC ELWA 2"
+    },
+    "my-pv-ac-thor": {
+      "brand": "my-PV",
+      "description": "AC•THOR"
+    },
+    "my-pv-ac-thor-9s": {
+      "brand": "my-PV",
+      "description": "AC•THOR 9s"
+    },
+    "nibe-ap-aw10": {
+      "brand": "Nibe",
+      "description": "AP-AW10"
+    },
+    "novelan-wpr-net": {
+      "brand": "Novelan",
+      "description": "WPR NET"
+    },
+    "roth-thermoaura": {
+      "brand": "Roth",
+      "description": "ThermoAura"
+    },
+    "roth-thermoterra": {
+      "brand": "Roth",
+      "description": "ThermoTerra"
+    },
+    "stiebel-eltron-lwa-lwz-sg-ready": {
+      "brand": "Stiebel Eltron",
+      "description": "LWA/LWZ (SG Ready)"
+    },
+    "stiebel-eltron-wpm-sg-ready": {
+      "brand": "Stiebel Eltron",
+      "description": "WPM (SG Ready)"
+    },
+    "tecalor-thz-sg-ready": {
+      "brand": "Tecalor",
+      "description": "THZ (SG Ready)"
+    },
+    "vaillant-sensonet-sg-ready": {
+      "brand": "Vaillant",
+      "description": "SensoNET (SG Ready)"
+    },
+    "viessmann-heatpump-sg-ready": {
+      "brand": "Viessmann",
+      "description": "Heatpump (SG Ready)"
+    },
+    "wolf-bwl": {
+      "brand": "Wolf",
+      "description": "BWL"
+    },
+    "wolf-bws": {
+      "brand": "Wolf",
+      "description": "BWS"
+    },
+    "zewotherm-eu-l-series": {
+      "brand": "Zewotherm",
+      "description": "EU-L Series"
+    }
+  },
   "meter": {
     "a-tronix": {
       "brand": "A-Tronix",
       "description": ""
     },
-    "abb-a43-a44-b23-b24": {
+    "abb-a43": {
       "brand": "ABB",
-      "description": "A43, A44, B23, B24"
+      "description": "A43"
     },
-    "acrel-adw300-wireless-metering-meter": {
+    "abb-a44": {
+      "brand": "ABB",
+      "description": "A44"
+    },
+    "abb-b23": {
+      "brand": "ABB",
+      "description": "B23"
+    },
+    "abb-b24": {
+      "brand": "ABB",
+      "description": "B24"
+    },
+    "acrel-adw300": {
       "brand": "Acrel",
-      "description": "ADW300 Wireless Metering Meter"
+      "description": "ADW300"
     },
     "ads-tec-storaxe": {
       "brand": "Ads-tec",
@@ -1402,9 +1400,13 @@
       "brand": "IOmeter",
       "description": ""
     },
-    "janitza-b-series-umg-series": {
+    "janitza-b-series": {
       "brand": "Janitza",
-      "description": "B series, UMG series"
+      "description": "B series"
+    },
+    "janitza-umg-series": {
+      "brand": "Janitza",
+      "description": "UMG series"
     },
     "keba-kecontact-e10": {
       "brand": "KEBA",
@@ -1418,6 +1420,14 @@
       "brand": "Kostal",
       "description": "Energy Meter P (KEM-P)"
     },
+    "kostal-piko": {
+      "brand": "Kostal",
+      "description": "Piko"
+    },
+    "kostal-piko-ba": {
+      "brand": "Kostal",
+      "description": "Piko BA"
+    },
     "kostal-piko-hybrid": {
       "brand": "Kostal",
       "description": "Piko Hybrid"
@@ -1429,10 +1439,6 @@
     "kostal-piko-mp-plus": {
       "brand": "Kostal",
       "description": "Piko MP Plus"
-    },
-    "kostal-piko-piko-ba": {
-      "brand": "Kostal",
-      "description": "Piko, Piko BA"
     },
     "kostal-plenticore-hybrid": {
       "brand": "Kostal",
@@ -1502,9 +1508,13 @@
       "brand": "OpenEMS",
       "description": ""
     },
-    "orno-or-we-516-or-we-517": {
-      "brand": "Orno",
-      "description": "OR-WE-516, OR-WE-517"
+    "orno-or-we-516": {
+      "brand": "ORNO",
+      "description": "OR-WE-516"
+    },
+    "orno-or-we-517": {
+      "brand": "ORNO",
+      "description": "OR-WE-517"
     },
     "p1monitor-p1-monitor": {
       "brand": "P1Monitor",
@@ -1523,7 +1533,7 @@
       "description": "Poweropti"
     },
     "qcells-hybrid-inverter-cloud": {
-      "brand": "QCells",
+      "brand": "Qcells",
       "description": "Hybrid-Inverter (Cloud)"
     },
     "qcells-q-home-ess-hyb-g3": {
@@ -1534,9 +1544,13 @@
       "brand": "RCT",
       "description": "Power"
     },
-    "saia-burgess-controls-ale3-awd3": {
-      "brand": "Saia-Burgess Controls",
-      "description": "ALE3, AWD3"
+    "saia-burgess-controls-sbc-ale3": {
+      "brand": "Saia-Burgess Controls (SBC)",
+      "description": "ALE3"
+    },
+    "saia-burgess-controls-sbc-awd3": {
+      "brand": "Saia-Burgess Controls (SBC)",
+      "description": "AWD3"
     },
     "saj-h1-series-hybrid-solar-inverter": {
       "brand": "SAJ",
@@ -1566,17 +1580,45 @@
       "brand": "Senergy",
       "description": "SE 4/5/6KTL-S1/G2 Inverter"
     },
-    "shelly-1pm-em-plug-s-pro-3em-in-monophase-mode": {
+    "shelly-1pm": {
       "brand": "Shelly",
-      "description": "1PM, EM, Plug S, Pro 3EM in monophase mode"
+      "description": "1PM"
+    },
+    "shelly-1pm-mini": {
+      "brand": "Shelly",
+      "description": "1PM mini"
     },
     "shelly-3em": {
       "brand": "Shelly",
       "description": "3EM"
     },
+    "shelly-em": {
+      "brand": "Shelly",
+      "description": "EM"
+    },
+    "shelly-plug-s": {
+      "brand": "Shelly",
+      "description": "Plug S"
+    },
+    "shelly-pm-mini": {
+      "brand": "Shelly",
+      "description": "PM mini"
+    },
+    "shelly-pro-1pm": {
+      "brand": "Shelly",
+      "description": "Pro 1PM"
+    },
     "shelly-pro-3-em": {
       "brand": "Shelly",
       "description": "Pro 3 EM"
+    },
+    "shelly-pro-3em-monophase-mode": {
+      "brand": "Shelly",
+      "description": "Pro 3EM (monophase mode)"
+    },
+    "shelly-pro-em": {
+      "brand": "Shelly",
+      "description": "Pro EM"
     },
     "siemens-7kt1665": {
       "brand": "Siemens",
@@ -1634,13 +1676,41 @@
       "brand": "SMA",
       "description": "Wechselrichter (Modbus)"
     },
-    "smartfox-box-reg-reg-extended": {
+    "smartfox-box": {
       "brand": "Smartfox",
-      "description": "Box, Reg, Reg extended"
+      "description": "Box"
     },
-    "smartfox-pro-pro-2-pro-light-pro-light-2-light-em2-firmware": {
+    "smartfox-light-em2-firmware": {
       "brand": "Smartfox",
-      "description": "Pro, Pro 2, Pro Light, Pro Light 2, Light (EM2 firmware)"
+      "description": "Light (EM2 firmware)"
+    },
+    "smartfox-pro": {
+      "brand": "Smartfox",
+      "description": "Pro"
+    },
+    "smartfox-pro-2": {
+      "brand": "Smartfox",
+      "description": "Pro 2"
+    },
+    "smartfox-pro-light": {
+      "brand": "Smartfox",
+      "description": "Pro Light"
+    },
+    "smartfox-pro-light-2": {
+      "brand": "Smartfox",
+      "description": "Pro Light 2"
+    },
+    "smartfox-reg": {
+      "brand": "Smartfox",
+      "description": "Reg"
+    },
+    "smartfox-reg-extended": {
+      "brand": "Smartfox",
+      "description": "Reg extended"
+    },
+    "sofarsolar-hybrid-inverter": {
+      "brand": "SofarSolar",
+      "description": "Hybrid Inverter"
     },
     "sofarsolar-hyd-3-6k-ep": {
       "brand": "SofarSolar",
@@ -1650,9 +1720,9 @@
       "brand": "SofarSolar",
       "description": "HYD 5…20K-3PH"
     },
-    "sofarsolar-inverter-hybrid-inverter": {
+    "sofarsolar-inverter": {
       "brand": "SofarSolar",
-      "description": "Inverter, Hybrid Inverter"
+      "description": "Inverter"
     },
     "sofarsolar-sofar-5-24ktl-g3": {
       "brand": "SofarSolar",
@@ -1690,9 +1760,13 @@
       "brand": "SolarMax",
       "description": "SP Series Inverter"
     },
-    "solarwatt-energymanager-energymanager-pro": {
+    "solarwatt-energymanager": {
       "brand": "Solarwatt",
-      "description": "EnergyManager, EnergyManager Pro"
+      "description": "EnergyManager"
+    },
+    "solarwatt-energymanager-pro": {
+      "brand": "Solarwatt",
+      "description": "EnergyManager Pro"
     },
     "solarwatt-manager-flex": {
       "brand": "Solarwatt",
@@ -1722,9 +1796,21 @@
       "brand": "Solinteng",
       "description": ""
     },
-    "sonnen-comfort-eco-5-eco-6-oem-6-5": {
+    "sonnen-comfort": {
       "brand": "Sonnen",
-      "description": "comfort, eco 5, eco 6, oem 6.5"
+      "description": "comfort"
+    },
+    "sonnen-eco-5": {
+      "brand": "Sonnen",
+      "description": "eco 5"
+    },
+    "sonnen-eco-6": {
+      "brand": "Sonnen",
+      "description": "eco 6"
+    },
+    "sonnen-oem-6-5": {
+      "brand": "Sonnen",
+      "description": "oem 6.5"
     },
     "sonnen-sonnenbatterie": {
       "brand": "Sonnen",
@@ -1826,9 +1912,17 @@
       "brand": "TQ",
       "description": "Energy Manager EM420"
     },
-    "varta-pulse-pulse-neo-element": {
+    "varta-element": {
       "brand": "VARTA",
-      "description": "pulse, pulse neo, element"
+      "description": "element"
+    },
+    "varta-pulse": {
+      "brand": "VARTA",
+      "description": "pulse"
+    },
+    "varta-pulse-neo": {
+      "brand": "VARTA",
+      "description": "pulse neo"
     },
     "victron-em24": {
       "brand": "Victron",
@@ -1894,9 +1988,13 @@
       "brand": "Youless",
       "description": "Energy Monitor"
     },
-    "zcs-azzurro-inverter-hybrid-inverter": {
+    "zcs-azzurro-hybrid-inverter": {
       "brand": "ZCS Azzurro",
-      "description": "Inverter, Hybrid Inverter"
+      "description": "Hybrid Inverter"
+    },
+    "zcs-azzurro-inverter": {
+      "brand": "ZCS Azzurro",
+      "description": "Inverter"
     },
     "zendure-hyper-2000": {
       "brand": "Zendure",
@@ -1915,102 +2013,54 @@
       "description": "SlimmeLezer(+) V2"
     }
   },
-  "tariff": {
-    "amber-electric": {
-      "brand": "Amber Electric",
+  "smartswitch": {
+    "avm-fritzdect": {
+      "brand": "AVM",
+      "description": "FritzDECT"
+    },
+    "home-assistant-switch": {
+      "brand": "Home Assistant",
+      "description": "Switch"
+    },
+    "homematic-ip": {
+      "brand": "Homematic IP",
       "description": ""
     },
-    "awattar": {
-      "brand": "Awattar",
+    "homewizard": {
+      "brand": "HomeWizard",
       "description": ""
     },
-    "electricity-maps-commercial-api": {
-      "brand": "Electricity Maps",
-      "description": "Commercial API"
+    "mystrom-switch": {
+      "brand": "myStrom",
+      "description": "Switch"
     },
-    "electricity-maps-free-api": {
-      "brand": "Electricity Maps",
-      "description": "Free API"
+    "shelly-1": {
+      "brand": "Shelly",
+      "description": "1"
     },
-    "energinet": {
-      "brand": "Energinet",
-      "description": ""
+    "shelly-plug-s": {
+      "brand": "Shelly",
+      "description": "Plug S"
     },
-    "enever": {
-      "brand": "Enever",
-      "description": ""
+    "shelly-plus-1": {
+      "brand": "Shelly",
+      "description": "Plus 1"
     },
-    "entso-e": {
-      "brand": "ENTSO-E",
-      "description": ""
+    "shelly-pro-1": {
+      "brand": "Shelly",
+      "description": "Pro 1"
     },
-    "forecast-solar": {
-      "brand": "Forecast.Solar",
-      "description": ""
+    "tasmota-single-phase": {
+      "brand": "Tasmota",
+      "description": "single phase"
     },
-    "fraunhofer-ise": {
-      "brand": "Fraunhofer ISE",
-      "description": ""
+    "tp-link-h-series-smart-plug": {
+      "brand": "TP-Link",
+      "description": "H-Series Smart Plug"
     },
-    "green-grid-compass": {
-      "brand": "Green Grid Compass",
-      "description": ""
-    },
-    "groupe-e-vario-plus": {
-      "brand": "Groupe E",
-      "description": "Vario Plus"
-    },
-    "grunstromindex": {
-      "brand": "Grünstromindex",
-      "description": ""
-    },
-    "national-grid-eso": {
-      "brand": "National Grid ESO",
-      "description": ""
-    },
-    "nordpool-spot-prices": {
-      "brand": "Nordpool spot prices",
-      "description": ""
-    },
-    "octopus-energy-api": {
-      "brand": "Octopus Energy",
-      "description": "API"
-    },
-    "octopus-energy-product-code": {
-      "brand": "Octopus Energy",
-      "description": "Product Code"
-    },
-    "open-meteo": {
-      "brand": "Open-Meteo",
-      "description": ""
-    },
-    "ostrom": {
-      "brand": "Ostrom",
-      "description": ""
-    },
-    "pun-orario": {
-      "brand": "PUN Orario",
-      "description": ""
-    },
-    "smartenergy-smartcontrol": {
-      "brand": "SmartEnergy",
-      "description": "smartCONTROL"
-    },
-    "solcast": {
-      "brand": "Solcast",
-      "description": ""
-    },
-    "spotty-energie": {
-      "brand": "Spotty Energie",
-      "description": ""
-    },
-    "tibber": {
-      "brand": "Tibber",
-      "description": ""
-    },
-    "victron-vrm-solar-forecast": {
-      "brand": "Victron",
-      "description": "VRM Solar Forecast"
+    "tp-link-tapo-p-series-smart-plug": {
+      "brand": "TP-Link",
+      "description": "Tapo P-Series Smart Plug"
     }
   },
   "vehicle": {
