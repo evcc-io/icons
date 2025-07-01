@@ -214,10 +214,10 @@ const validateFilename = (filePath: string): string[] => {
   nameWithoutExtension = nameWithoutExtension.replace(/\.ext$/, "");
 
   // Check if filename contains only alphanumeric characters and hyphens
-  const validFilenamePattern = /^[a-zA-Z0-9\-]+$/;
+  const validFilenamePattern = /^[a-zA-Z0-9\-_]+$/;
 
   if (!validFilenamePattern.test(nameWithoutExtension)) {
-    errors.push("📝  Invalid characters in filename (only a-z, A-Z, 0-9, - allowed)");
+    errors.push("📝  Invalid characters in filename (only a-z, A-Z, 0-9, -, _ allowed)");
   }
 
   // Check for consecutive hyphens
