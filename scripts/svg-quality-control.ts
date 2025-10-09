@@ -340,6 +340,11 @@ const validateSVGFile = async (filePath: string, products: ProductsData | null):
       result.errors.push(`📏  Wrong viewBox: "${dimensions.viewBox}" (expected: "${STANDARD_DIMENSIONS.viewBox}")`);
     }
 
+    // Check for forbidden <image> tags
+    if (content.includes("<image")) {
+      result.errors.push("🚫  SVG contains <image> tag (embedded images not allowed)");
+    }
+
     // Extract and validate colors
     const colors = extractColorsFromSVG(content);
     const invalidColors = colors.filter((color) => !isColorWhitelisted(color));

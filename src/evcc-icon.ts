@@ -4,6 +4,7 @@ export type IconType = "vehicle" | "meter" | "charger";
 const CONFIG = {
   DEFAULT_ACCENT_COLOR: "#4eb84b",
   DEFAULT_OUTLINE_COLOR: "#000",
+  DEFAULT_HIGHLIGHT_COLOR: "#fff",
   INTERSECTION_ROOT_MARGIN: "50px",
   INTERSECTION_THRESHOLD: 0.1,
 } as const;
@@ -22,7 +23,7 @@ export class EvccIcon extends HTMLElement {
   private _name: string | null = null;
 
   static get observedAttributes(): string[] {
-    return ["type", "name", "accent-color", "outline-color", "size"];
+    return ["type", "name", "accent-color", "outline-color", "highlight-color", "size"];
   }
 
   constructor() {
@@ -232,6 +233,7 @@ export class EvccIcon extends HTMLElement {
 
     const accentColor = this.getAttribute("accent-color") || CONFIG.DEFAULT_ACCENT_COLOR;
     const outlineColor = this.getAttribute("outline-color") || CONFIG.DEFAULT_OUTLINE_COLOR;
+    const highlightColor = this.getAttribute("highlight-color") || CONFIG.DEFAULT_HIGHLIGHT_COLOR;
 
     this.shadowRoot!.innerHTML = `
       <style>
@@ -239,6 +241,7 @@ export class EvccIcon extends HTMLElement {
         :host {
           --evcc-accent-color: ${accentColor};
           --evcc-outline-color: ${outlineColor};
+          --evcc-highlight-color: ${highlightColor};
         }
         svg {
           width: 100%;

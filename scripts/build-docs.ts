@@ -857,6 +857,14 @@ const buildDocs = async (): Promise<void> => {
                 </div>
                 
                 <div class="control-group">
+                    <label for="highlightColor">Highlight Color:</label>
+                    <div class="color-input-group">
+                        <input type="color" id="highlightColor" value="#ffffff">
+                        <input type="text" id="highlightColorText" value="#ffffff" placeholder="#ffffff">
+                    </div>
+                </div>
+                
+                <div class="control-group">
                     <button id="resetBtn" class="reset-btn">Reset to Defaults</button>
                 </div>
             </div>
@@ -869,10 +877,11 @@ const buildDocs = async (): Promise<void> => {
                         name="kia-niro-ev"
                         accent-color="#4eb84b"
                         outline-color="#000"
+                        highlight-color="#fff"
                     ></evcc-icon>
                 </div>
                 <div class="preview-info">
-                    <code id="playgroundCode">&lt;evcc-icon type="vehicle" name="kia-niro-ev" accent-color="#4eb84b" outline-color="#000"&gt;&lt;/evcc-icon&gt;</code>
+                    <code id="playgroundCode">&lt;evcc-icon type="vehicle" name="kia-niro-ev" accent-color="#4eb84b" outline-color="#000" highlight-color="#fff"&gt;&lt;/evcc-icon&gt;</code>
                 </div>
             </div>
         </div>
@@ -987,18 +996,27 @@ const buildDocs = async (): Promise<void> => {
         const accentColorText = document.getElementById('accentColorText');
         const outlineColor = document.getElementById('outlineColor');
         const outlineColorText = document.getElementById('outlineColorText');
+        const highlightColor = document.getElementById('highlightColor');
+        const highlightColorText = document.getElementById('highlightColorText');
         const resetBtn = document.getElementById('resetBtn');
 
         const updatePlaygroundIcon = () => {
-            const [type, name] = iconSelect.value.split('/');
+            const selectedValue = iconSelect.value;
+            if (!selectedValue || !selectedValue.includes('/')) {
+                return; // Guard against invalid values
+            }
+            
+            const [type, name] = selectedValue.split('/');
             const accentColorVal = accentColor.value;
             const outlineColorVal = outlineColor.value;
+            const highlightColorVal = highlightColor.value;
 
             // Update the web component
             playgroundIcon.setAttribute('type', type);
             playgroundIcon.setAttribute('name', name);
             playgroundIcon.setAttribute('accent-color', accentColorVal);
             playgroundIcon.setAttribute('outline-color', outlineColorVal);
+            playgroundIcon.setAttribute('highlight-color', highlightColorVal);
 
             // Update the code display
             const codeLines = [
@@ -1007,6 +1025,7 @@ const buildDocs = async (): Promise<void> => {
                 '  name="' + name + '"',
                 '  accent-color="' + accentColorVal + '"',
                 '  outline-color="' + outlineColorVal + '"',
+                '  highlight-color="' + highlightColorVal + '"',
                 '></evcc-icon>'
             ];
             playgroundCode.textContent = codeLines.join('\\n');
@@ -1014,6 +1033,7 @@ const buildDocs = async (): Promise<void> => {
             // Sync color inputs
             accentColorText.value = accentColorVal;
             outlineColorText.value = outlineColorVal;
+            highlightColorText.value = highlightColorVal;
         };
 
         const resetPlayground = () => {
@@ -1022,6 +1042,8 @@ const buildDocs = async (): Promise<void> => {
             accentColorText.value = '#4eb84b';
             outlineColor.value = '#000000';
             outlineColorText.value = '#000000';
+            highlightColor.value = '#ffffff';
+            highlightColorText.value = '#ffffff';
             updatePlaygroundIcon();
         };
 
@@ -1045,6 +1067,7 @@ const buildDocs = async (): Promise<void> => {
         iconSelect.addEventListener('change', updatePlaygroundIcon);
         accentColor.addEventListener('input', updatePlaygroundIcon);
         outlineColor.addEventListener('input', updatePlaygroundIcon);
+        highlightColor.addEventListener('input', updatePlaygroundIcon);
         resetBtn.addEventListener('click', resetPlayground);
 
         // Sync text inputs with color pickers
@@ -1062,6 +1085,15 @@ const buildDocs = async (): Promise<void> => {
             const hexPattern = /^#[0-9A-Fa-f]{6}$/;
             if (hexPattern.test(value)) {
                 outlineColor.value = value;
+                updatePlaygroundIcon();
+            }
+        });
+
+        highlightColorText.addEventListener('input', (e) => {
+            const value = e.target.value;
+            const hexPattern = /^#[0-9A-Fa-f]{6}$/;
+            if (hexPattern.test(value)) {
+                highlightColor.value = value;
                 updatePlaygroundIcon();
             }
         });

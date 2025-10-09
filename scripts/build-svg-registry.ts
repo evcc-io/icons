@@ -17,6 +17,9 @@ const processSvgColors = (svgContent: string): string => {
     svgContent
       // Replace the green accent color
       .replace(/fill:#4eb84b/g, "fill:var(--evcc-accent-color, #4eb84b)")
+      // Replace white highlight colors
+      .replace(/fill:#fff/g, "fill:var(--evcc-highlight-color, #fff)")
+      .replace(/stroke:#fff/g, "stroke:var(--evcc-highlight-color, #fff)")
       // Replace black outline/stroke colors
       .replace(/stroke:#000/g, "stroke:var(--evcc-outline-color, #000)")
       .replace(/fill:#000/g, "fill:var(--evcc-outline-color, #000)")
